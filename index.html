@@ -22,7 +22,9 @@
   html,body{margin:0;background:var(--bg2);color:var(--text);
     font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
   button{font:inherit;color:inherit}
-  .wrap{max-width:720px;margin:0 auto;padding:14px 14px 96px}
+  :root{--safe-top:calc(var(--tg-safe-area-inset-top,0px) + var(--tg-content-safe-area-inset-top,0px))}
+  .wrap{max-width:720px;margin:0 auto;padding:calc(14px + var(--safe-top)) 14px 96px}
+  .fs{margin-left:auto;border:0;background:var(--bg);border-radius:12px;width:40px;height:40px;font-size:18px;cursor:pointer;flex:none}
   .card{background:var(--bg);border-radius:16px;padding:16px;margin-top:12px}
   h2.sec{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--hint);margin:0 0 10px;font-weight:700}
   .meta{color:var(--hint);font-size:13px}
@@ -99,7 +101,7 @@
 
   /* imtihon */
   .exam{padding-bottom:110px}
-  .ehead{position:sticky;top:0;z-index:4;background:var(--bg);margin:-14px -14px 0;padding:10px 14px 0;
+  .ehead{position:sticky;top:0;z-index:4;background:var(--bg);margin:calc(-14px - var(--safe-top)) -14px 0;padding:calc(10px + var(--safe-top)) 14px 0;
     border-bottom:1px solid var(--line)}
   .ehead .l1{display:flex;align-items:center;gap:10px}
   .ehead .ttl{flex:1;min-width:0;font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -176,7 +178,16 @@
 
 <script>
 const tg = window.Telegram && Telegram.WebApp;
-if (tg) { tg.ready(); tg.expand(); }
+const canFS = () => !!(tg && tg.isVersionAtLeast && tg.isVersionAtLeast("8.0") && tg.requestFullscreen);
+if (tg) {
+  tg.ready(); tg.expand();
+  try { if (tg.isVersionAtLeast("7.7")) tg.disableVerticalSwipes(); } catch (e) {}   // tasodifan yopilib ketmasin
+  if (canFS()) {
+    try { tg.requestFullscreen(); } catch (e) {}                                    // katta oynada ochilsin
+    tg.onEvent("fullscreenChanged", () => { if (route.v === "home") render(); });
+    tg.onEvent("fullscreenFailed", () => {});
+  }
+}
 const $app = document.getElementById("app"), $nav = document.getElementById("nav");
 const params = new URLSearchParams(location.search);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -269,7 +280,8 @@ function viewHome() {
   const avg = tests.length ? Math.round(tests.reduce((a, t) => a + 100 * t[2] / t[3], 0) / tests.length) : 0;
   const best = tests.length ? Math.min(...tests.map(t => t[5] || 99)) : 0;
   $app.innerHTML = `
-    <div class="top"><div class="logo">SP</div><div><b>Science Pro</b><span class="meta">Dream School · Ibn Sinoga tayyorlov</span></div></div>
+    <div class="top"><div class="logo">SP</div><div><b>Science Pro</b><span class="meta">Dream School · Ibn Sinoga tayyorlov</span></div>
+      ${canFS() ? `<button class="fs" id="fs" title="To'liq ekran">${tg.isFullscreen ? "🗗" : "⛶"}</button>` : ""}</div>
     <div class="hello">Assalomu alaykum${ME ? ", " + esc(ME.name.split(" ").slice(-1)[0] || ME.name) : ""}!</div>
     <div class="h1">Qaysi testni ishlamoqchisiz?</div>
     <div class="meta" style="margin:0 2px">Bo'limni tanlang va testni boshlang.</div>
@@ -290,6 +302,8 @@ function viewHome() {
     }).join("")}
     <footer>Yangilangan: ${esc(DATA.updated)}</footer>`;
   $app.querySelectorAll(".cat").forEach(b => b.onclick = () => { haptic("sel"); go("section", {k: b.dataset.k}); });
+  const fs = document.getElementById("fs");
+  if (fs) fs.onclick = () => { haptic("sel"); tg.isFullscreen ? tg.exitFullscreen() : tg.requestFullscreen(); };
 }
 
 // ---------------- Bo'lim ----------------
