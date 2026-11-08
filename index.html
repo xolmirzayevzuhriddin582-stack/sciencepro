@@ -5,48 +5,75 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Science Pro</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
 <style>
+  /* Science Pro: laboratoriya daftari — millimetrovka fon, zumrad + qahrabo */
   :root{
-    --bg: var(--tg-theme-bg-color, #ffffff);
-    --bg2: var(--tg-theme-secondary-bg-color, #f1f3f6);
-    --text: var(--tg-theme-text-color, #14171c);
-    --hint: var(--tg-theme-hint-color, #8a909a);
-    --accent: var(--tg-theme-button-color, #2b7de9);
-    --accent-text: var(--tg-theme-button-text-color, #ffffff);
-    --line: color-mix(in srgb, var(--hint) 22%, transparent);
-    --soft: color-mix(in srgb, var(--accent) 12%, transparent);
-    --good:#2fa66a; --mid:#e0a12b; --bad:#e2554f;
-    --c-mock:#6d5bd0; --c-sinf5:#1aa3b8; --c-sinf6:#2fa66a; --c-mavzu:#e0a12b;
+    --page:#EDF3F0; --bg:#FFFFFF; --bg2:#EDF3F0; --text:#102A2B; --hint:#5F7B78;
+    --accent:#0E6E61; --accent-text:#FFFFFF; --amber:#F0A23B;
+    --hero:#0F3D3E; --hero2:#155552; --on-hero:#F2FBF8;
+    --grid:rgba(14,110,97,.075);
+    --line:rgba(16,42,43,.10); --soft:rgba(14,110,97,.10);
+    --good:#1F9D6B; --mid:#D9901F; --bad:#D9544C;
+    --c-mock:#E08A1E; --c-sinf5:#1F9D6B; --c-sinf6:#2D7FC1; --c-mavzu:#8A6AD0;
+    --display:"Unbounded",system-ui,sans-serif;
+    --shadow:0 1px 0 rgba(16,42,43,.06),0 6px 18px -10px rgba(16,42,43,.25);
+  }
+  :root[data-theme="dark"]{
+    --page:#0B1718; --bg:#132627; --bg2:#0F1E1F; --text:#E4EFEC; --hint:#86A19D;
+    --accent:#3DBBA2; --accent-text:#05201B; --hero:#0E3536; --hero2:#124846;
+    --grid:rgba(61,187,162,.06); --line:rgba(228,239,236,.09); --soft:rgba(61,187,162,.14);
+    --shadow:0 1px 0 rgba(0,0,0,.25);
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;background:var(--bg2);color:var(--text);
-    font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  html,body{margin:0;background-color:var(--page);color:var(--text);
+    font:15px/1.5 "Golos Text",-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  html{min-height:100%;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:22px 22px;background-attachment:fixed}
+  body{background:transparent;min-height:100vh}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
   button{font:inherit;color:inherit}
   :root{--safe-top:calc(var(--tg-safe-area-inset-top,0px) + var(--tg-content-safe-area-inset-top,0px))}
   .wrap{max-width:720px;margin:0 auto;padding:calc(14px + var(--safe-top)) 14px 96px}
   .fs{margin-left:auto;border:0;background:var(--bg);border-radius:12px;width:40px;height:40px;font-size:18px;cursor:pointer;flex:none}
-  .card{background:var(--bg);border-radius:16px;padding:16px;margin-top:12px}
-  h2.sec{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--hint);margin:0 0 10px;font-weight:700}
+  .card{background:var(--bg);border-radius:18px;padding:16px;margin-top:12px;box-shadow:var(--shadow)}
+  h2.sec{font-size:14px;color:var(--hint);margin:0 0 10px;font-weight:600}
   .meta{color:var(--hint);font-size:13px}
   .empty{color:var(--hint);text-align:center;padding:28px 12px}
 
-  /* bosh sahifa */
-  .top{display:flex;align-items:center;gap:12px;padding:4px 2px 6px}
-  .logo{width:42px;height:42px;border-radius:12px;background:var(--accent);color:var(--accent-text);
-    display:grid;place-items:center;font-weight:800;font-size:16px;flex:none}
-  .top b{display:block;font-size:17px;line-height:1.2}
-  .hello{color:var(--accent);font-weight:700;font-size:14px;margin:18px 2px 2px}
-  .h1{font-size:25px;font-weight:750;line-height:1.2;margin:2px 2px 4px;letter-spacing:-.3px}
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);background:var(--bg);border-radius:16px;margin-top:16px;overflow:hidden}
-  .stats div{padding:14px 6px;text-align:center}
-  .stats div+div{border-left:1px solid var(--line)}
-  .stats b{display:block;font-size:21px}
-  .stats span{font-size:12px;color:var(--hint)}
-  .cat{display:flex;align-items:center;gap:14px;background:var(--bg);border-radius:16px;padding:16px;margin-top:10px;
-    border-left:4px solid var(--c);cursor:pointer;width:100%;text-align:left;border-top:0;border-right:0;border-bottom:0}
-  .badge{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:17px;flex:none;
-    background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c)}
-  .cat .t{font-weight:700;font-size:16px}
+  /* bosh sahifa: zumrad "laboratoriya" bloki */
+  .hero{position:relative;overflow:hidden;color:var(--on-hero);
+    background:radial-gradient(120% 90% at 85% 0%,var(--hero2),var(--hero) 60%);
+    margin:calc(-14px - var(--safe-top)) -14px 0;padding:calc(16px + var(--safe-top)) 18px 22px;border-radius:0 0 30px 30px}
+  .hero .art{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .hero > *:not(.art){position:relative}
+  .top{display:flex;align-items:center;gap:12px}
+  .logo{width:44px;height:44px;border-radius:14px;background:var(--amber);color:#2A1700;
+    display:grid;place-items:center;font:700 15px/1 var(--display);flex:none;letter-spacing:-.5px}
+  .top b{display:block;font:700 16px/1.2 var(--display);letter-spacing:-.2px}
+  .top .meta{color:rgba(242,251,248,.68)}
+  .hero .fs{background:rgba(255,255,255,.12);color:var(--on-hero)}
+  .hello{color:var(--amber);font-weight:600;font-size:15px;margin:26px 0 4px}
+  .h1{font:700 26px/1.18 var(--display);letter-spacing:-.6px;margin:0;max-width:15ch}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:22px;border-radius:16px;overflow:hidden;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
+  .stats div{padding:12px 6px;text-align:center}
+  .stats div+div{border-left:1px solid rgba(255,255,255,.12)}
+  .stats b{display:block;font:700 19px/1.3 var(--display)}
+  .stats span{font-size:12px;color:rgba(242,251,248,.7)}
+  .catalog-h{font:700 17px/1.3 var(--display);margin:22px 4px 2px;letter-spacing:-.3px}
+  .cat{display:flex;align-items:center;gap:14px;background:var(--bg);border-radius:20px;padding:14px 14px 14px 12px;margin-top:10px;
+    cursor:pointer;width:100%;text-align:left;border:0;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .cat::after{content:"";position:absolute;right:-18px;bottom:-18px;width:86px;height:86px;border-radius:50%;
+    background:color-mix(in srgb,var(--c) 9%,transparent)}
+  .cat:active{transform:scale(.985)}
+  .badge{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font:700 17px/1 var(--display);flex:none;
+    background:color-mix(in srgb,var(--c) 15%,transparent);color:var(--c)}
+  .badge svg{width:28px;height:28px}
+  .cat .t{font:700 16px/1.25 var(--display);letter-spacing:-.2px}
+  .cat .chev{position:relative;z-index:1}
+  .stats .light{color:var(--on-hero)}
   .chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;margin-top:6px;
     background:color-mix(in srgb,var(--c, var(--accent)) 14%,transparent);color:var(--c, var(--accent))}
   .chev{margin-left:auto;color:var(--hint);font-size:22px;flex:none}
@@ -54,7 +81,8 @@
   /* bo'lim */
   .titlebar{display:flex;align-items:center;gap:10px;margin:4px 2px 0}
   .titlebar .badge{width:40px;height:40px;font-size:14px;border-radius:12px}
-  .titlebar h1{font-size:21px;margin:0}
+  .titlebar h1{font:700 21px/1.2 var(--display);margin:0;letter-spacing:-.4px}
+  .intro h1,.tst h3{font-family:var(--display);letter-spacing:-.3px}
   .tst{cursor:pointer}
   .tst h3{margin:0 0 4px;font-size:16px}
   .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -84,7 +112,9 @@
   .nav{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--line);
     display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom));z-index:5}
   .nav button{flex:1;border:0;background:none;padding:6px 0;font-size:11px;font-weight:600;color:var(--hint);cursor:pointer}
-  .nav button i{display:block;font-style:normal;font-size:20px;line-height:1.2}
+  .nav button i{display:block;height:24px;margin-bottom:2px}
+  .nav svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .nav button.on i{color:var(--accent)}
   .nav button.on{color:var(--accent)}
 
   /* test oldi */
@@ -171,16 +201,30 @@
 <body>
 <div class="wrap" id="app"><div class="empty">Yuklanmoqda…</div></div>
 <nav class="nav" id="nav">
-  <button data-go="home" class="on"><i>📝</i>Testlar</button>
-  <button data-go="rating"><i>🏆</i>Reyting</button>
-  <button data-go="me"><i>👤</i>Natijam</button>
+  <button data-go="home" class="on"><i><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6.2L4.6 18.4A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.6L14 9.2V3"/><path d="M7.3 15h9.4"/></svg></i>Testlar</button>
+  <button data-go="rating"><i><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0Z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg></i>Reyting</button>
+  <button data-go="me"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></i>Natijam</button>
 </nav>
 
 <script>
 const tg = window.Telegram && Telegram.WebApp;
 const canFS = () => !!(tg && tg.isVersionAtLeast && tg.isVersionAtLeast("8.0") && tg.requestFullscreen);
+function applyTheme() {
+  const dark = tg && tg.colorScheme ? tg.colorScheme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+}
+function paintChrome() {   // Telegram sarlavha rangi sahifaga mos bo'lsin
+  if (!tg || !tg.isVersionAtLeast || !tg.isVersionAtLeast("6.9")) return;
+  const cs = getComputedStyle(document.documentElement);
+  try {
+    tg.setHeaderColor((route.v === "home" ? cs.getPropertyValue("--hero") : cs.getPropertyValue("--page")).trim());
+    tg.setBackgroundColor(cs.getPropertyValue("--page").trim());
+  } catch (e) {}
+}
+applyTheme();
 if (tg) {
   tg.ready(); tg.expand();
+  tg.onEvent("themeChanged", () => { applyTheme(); render(); });
   try { if (tg.isVersionAtLeast("7.7")) tg.disableVerticalSwipes(); } catch (e) {}   // tasodifan yopilib ketmasin
   if (canFS()) {
     try { tg.requestFullscreen(); } catch (e) {}                                    // katta oynada ochilsin
@@ -200,12 +244,30 @@ const store = {
   get(k, d) { try { const v = localStorage.getItem("sp:" + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem("sp:" + k, JSON.stringify(v)); } catch (e) {} },
 };
+const ICO = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
 const SEC = {
-  mock:  {badge: "MX", c: "var(--c-mock)",  desc: "Ibn Sino formatidagi to'liq sinovlar"},
-  sinf5: {badge: "5",  c: "var(--c-sinf5)", desc: "5-sinf mavzulari bo'yicha testlar"},
-  sinf6: {badge: "6",  c: "var(--c-sinf6)", desc: "6-sinf mavzulari bo'yicha testlar"},
-  mavzu: {badge: "MT", c: "var(--c-mavzu)", desc: "Mavzulashtirilgan testlar"},
+  mock:  {badge: "MX", c: "var(--c-mock)",  desc: "Ibn Sino formatidagi to'liq sinovlar",
+          icon: ICO('<path d="M9 3h6M10 3v6.2L4.6 18.4A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.6L14 9.2V3"/><path d="M7.3 15h9.4"/>')},
+  sinf5: {badge: "5",  c: "var(--c-sinf5)", desc: "Mavzular bo'yicha testlar, natija darhol",
+          icon: ICO('<path d="M5 20C5 11 11 5 20 5c0 9-6 15-15 15Z"/><path d="M5 20l8-8"/>')},
+  sinf6: {badge: "6",  c: "var(--c-sinf6)", desc: "Mavzular bo'yicha testlar, natija darhol",
+          icon: ICO('<circle cx="12" cy="12" r="1.4" fill="currentColor"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(120 12 12)"/>')},
+  mavzu: {badge: "MT", c: "var(--c-mavzu)", desc: "Mavzulashtirilgan testlar",
+          icon: ICO('<path d="M4 5h16M4 12h16M4 19h10"/>')},
 };
+// Tepa blokdagi ilmiy chizmalar: atom, DNK, benzol halqasi, barg, kolba
+const HERO_ART = `<svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMaxYMin slice" fill="none"
+  stroke="rgba(242,251,248,.13)" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
+  <g transform="translate(330 70)"><circle r="4" fill="rgba(240,162,59,.55)" stroke="none"/>
+    <ellipse rx="40" ry="14"/><ellipse rx="40" ry="14" transform="rotate(60)"/><ellipse rx="40" ry="14" transform="rotate(120)"/>
+    <circle cx="40" cy="0" r="2.5" fill="rgba(242,251,248,.35)" stroke="none"/></g>
+  <g transform="translate(232 150)">
+    <path d="M0 0 C 20 18, 40 18, 60 0 S 100 -18, 120 0 S 160 18, 180 0"/>
+    <path d="M0 0 C 20 -18, 40 -18, 60 0 S 100 18, 120 0 S 160 -18, 180 0"/>
+    <path d="M15 -11v22M30 -14v28M45 -11v22M75 -11v22M90 -14v28M105 -11v22M135 -11v22M150 -14v28M165 -11v22"/></g>
+  <g transform="translate(250 40)"><path d="M0 -20l17.3 10v20L0 20l-17.3-10v-20Z"/><circle r="10"/></g>
+  <circle cx="200" cy="40" r="2" fill="rgba(242,251,248,.2)" stroke="none"/><circle cx="385" cy="150" r="3" fill="rgba(242,251,248,.18)" stroke="none"/>
+</svg>`;
 const secName = k => (DATA.sections.find(s => s[0] === k) || [k, k])[1];
 
 let DATA = null, ME = null, myHash = params.get("u") || "";
@@ -243,6 +305,7 @@ $nav.onclick = e => {
 
 function render() {
   clearInterval(window._tick);
+  paintChrome();
   const inExam = route.v === "exam";
   $nav.style.display = inExam ? "none" : "";
   [...$nav.children].forEach(b => b.classList.toggle("on", b.dataset.go === route.v ||
@@ -288,25 +351,28 @@ function viewHome() {
   const tests = ME ? ME.tests : [];
   const avg = tests.length ? Math.round(tests.reduce((a, t) => a + 100 * t[2] / t[3], 0) / tests.length) : 0;
   const best = tests.length ? Math.min(...tests.map(t => t[5] || 99)) : 0;
+  const first = ME ? (ME.name.split(" ").slice(-1)[0] || ME.name) : "";
   $app.innerHTML = `
-    <div class="top"><div class="logo">SP</div><div><b>Science Pro</b><span class="meta">Dream School · Ibn Sinoga tayyorlov</span></div>
-      ${canFS() ? `<button class="fs" id="fs" title="To'liq ekran">${tg.isFullscreen ? "🗗" : "⛶"}</button>` : ""}</div>
-    <div class="hello">Assalomu alaykum${ME ? ", " + esc(ME.name.split(" ").slice(-1)[0] || ME.name) : ""}!</div>
-    <div class="h1">Qaysi testni ishlamoqchisiz?</div>
-    <div class="meta" style="margin:0 2px">Bo'limni tanlang va testni boshlang.</div>
-    <div class="stats">
-      <div><b>${tests.length}</b><span>Ishlangan test</span></div>
-      <div><b style="color:${tests.length ? color(avg) : "inherit"}">${avg}%</b><span>O'rtacha natija</span></div>
-      <div><b>${best ? best + "-o'rin" : "—"}</b><span>Eng yaxshi o'rin</span></div>
-    </div>
-    <h2 class="sec" style="margin:22px 2px 0">Test katalogi</h2>
+    <section class="hero">
+      ${HERO_ART}
+      <div class="top"><div class="logo">SP</div><div><b>Science Pro</b><span class="meta">Dream School · Ibn Sinoga tayyorlov</span></div>
+        ${canFS() ? `<button class="fs" id="fs" aria-label="To'liq ekran">${tg.isFullscreen ? "🗗" : "⛶"}</button>` : ""}</div>
+      <div class="hello">Assalomu alaykum${first ? ", " + esc(first) : ""}!</div>
+      <h1 class="h1">Bugun qaysi testni ishlaymiz?</h1>
+      <div class="stats">
+        <div><b>${tests.length}</b><span>ishlangan test</span></div>
+        <div><b>${tests.length ? avg + "%" : "—"}</b><span>o'rtacha natija</span></div>
+        <div><b>${best ? best + "-o'rin" : "—"}</b><span>eng yaxshi o'rin</span></div>
+      </div>
+    </section>
+    <h2 class="catalog-h">Bo'limlar</h2>
     ${DATA.sections.map(([k, name]) => {
       const s = SEC[k] || SEC.mavzu, open = DATA.open.filter(t => t.kind === k);
       const fresh = open.filter(t => !isDone(t.code)).length;
       return `<button class="cat" style="--c:${s.c}" data-k="${k}">
-        <div class="badge">${s.badge}</div>
+        <div class="badge">${s.icon}</div>
         <div style="min-width:0"><div class="t">${esc(name)}</div><div class="meta">${s.desc}</div>
-          <span class="chip">${open.length ? open.length + " ta ochiq test" : "Hozircha test yo'q"}${fresh && fresh < open.length ? ` · ${fresh} ta yangi` : ""}</span></div>
+          <span class="chip">${open.length ? open.length + " ta ochiq test" : "Hozircha test yo'q"}${fresh && fresh < open.length ? `, ${fresh} tasi yangi` : ""}</span></div>
         <span class="chev">›</span></button>`;
     }).join("")}
     <footer>Yangilangan: ${esc(DATA.updated)}</footer>`;
@@ -320,7 +386,7 @@ function viewSection() {
   const k = route.k, s = SEC[k] || SEC.mavzu, open = DATA.open.filter(t => t.kind === k);
   const fin = (DATA.kinds[k] || {tests: [], rating: []});
   $app.innerHTML = `
-    <div class="titlebar" style="--c:${s.c}"><div class="badge">${s.badge}</div><h1>${esc(secName(k))}</h1></div>
+    <div class="titlebar" style="--c:${s.c}"><div class="badge">${s.icon}</div><h1>${esc(secName(k))}</h1></div>
     <h2 class="sec" style="margin:18px 2px 0">Ochiq testlar</h2>
     ${open.length ? open.map(t => `
       <div class="card tst" data-code="${esc(t.code)}">
