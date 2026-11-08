@@ -196,24 +196,187 @@
   .toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;
     border-radius:12px;font-weight:600;z-index:30;font-size:14px;max-width:90%;text-align:center}
   footer{color:var(--hint);font-size:12px;text-align:center;margin-top:18px}
+  /* fonlar (Profil → Fon) */
+  html[data-bg="plain"]{background-image:none}
+  html[data-bg="dots"]{background-image:radial-gradient(var(--dot) 1.4px,transparent 1.6px),radial-gradient(var(--dot) 1px,transparent 1.2px);
+    background-size:26px 26px,13px 13px;background-position:0 0,6px 9px}
+  html[data-bg="hex"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='48' viewBox='0 0 56 48'%3E%3Cpath d='M14 0l14 8v16l-14 8L0 24V8zM42 24l14 8v16M28 24l14-8' fill='none' stroke='%230E6E61' stroke-opacity='.10' stroke-width='1.2'/%3E%3C/svg%3E");background-size:56px 48px}
+  html[data-theme="dark"][data-bg="hex"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='48' viewBox='0 0 56 48'%3E%3Cpath d='M14 0l14 8v16l-14 8L0 24V8zM42 24l14 8v16M28 24l14-8' fill='none' stroke='%233DBBA2' stroke-opacity='.10' stroke-width='1.2'/%3E%3C/svg%3E")}
+  :root{--dot:rgba(14,110,97,.13)} :root[data-theme="dark"]{--dot:rgba(61,187,162,.12)}
+
+  /* avatar */
+  .ava{width:30px;height:30px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;font-size:12px;
+    color:#fff;background:var(--av,#0E6E61);overflow:hidden}
+  .ava img{width:100%;height:100%;object-fit:cover}
+  .ava.lg{width:92px;height:92px;font:700 30px/1 var(--display);box-shadow:0 0 0 4px var(--bg),0 0 0 6px var(--amber)}
+  .hero .me-btn{margin-left:auto;border:0;padding:0;background:none;cursor:pointer;border-radius:50%}
+  .hero .me-btn .ava{width:40px;height:40px;font-size:14px;box-shadow:0 0 0 2px rgba(242,251,248,.35)}
+  .hero .icon-btn{border:0;background:rgba(255,255,255,.12);color:var(--on-hero);width:40px;height:40px;border-radius:12px;cursor:pointer;flex:none;font-size:17px}
+
+  /* profil */
+  .prof-head{display:flex;flex-direction:column;align-items:center;text-align:center;padding:22px 16px 18px}
+  .prof-head .nm{font:700 19px/1.25 var(--display);margin-top:14px;letter-spacing:-.3px}
+  .photo-acts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;justify-content:center}
+  .pill{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;cursor:pointer}
+  .note{font-size:12px;color:var(--hint);margin-top:8px}
+  .field label{display:block;font-size:13px;color:var(--hint);font-weight:600;margin-bottom:6px}
+  .field input{width:100%;border:1.5px solid var(--line);background:var(--bg2);color:var(--text);border-radius:12px;padding:12px 14px;font:inherit;font-size:16px}
+  .field input:focus{outline:none;border-color:var(--accent)}
+  .setrow{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+  .setrow:first-child{border-top:0;padding-top:4px}
+  .setrow .tx{flex:1;min-width:0}
+  .setrow .tx b{display:block;font-weight:600}
+  .switch{width:50px;height:30px;border-radius:999px;background:var(--line);border:0;position:relative;cursor:pointer;flex:none;transition:background .2s}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;
+    box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+  .switch.on{background:var(--accent)} .switch.on::after{transform:translateX(20px)}
+  .swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+  .sw{border:2px solid var(--line);border-radius:14px;padding:0 0 6px;background:var(--bg);cursor:pointer;font-size:12px;font-weight:600;overflow:hidden}
+  .sw i{display:block;height:52px;margin-bottom:6px;background-color:var(--page)}
+  .sw.on{border-color:var(--accent);color:var(--accent)}
+  .sw[data-bg="grid"] i{background-image:linear-gradient(rgba(14,110,97,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(14,110,97,.28) 1px,transparent 1px);background-size:11px 11px}
+  .sw[data-bg="dots"] i{background-image:radial-gradient(rgba(14,110,97,.38) 1.6px,transparent 1.9px);background-size:10px 10px}
+  .sw[data-bg="hex"] i{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='24' viewBox='0 0 56 48'%3E%3Cpath d='M14 0l14 8v16l-14 8L0 24V8zM42 24l14 8v16M28 24l14-8' fill='none' stroke='%230E6E61' stroke-opacity='.3' stroke-width='1.6'/%3E%3C/svg%3E");background-size:28px 24px}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap" id="app"><div class="empty">Yuklanmoqda…</div></div>
+<div class="wrap" id="app"><div class="empty">…</div></div>
 <nav class="nav" id="nav">
-  <button data-go="home" class="on"><i><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6.2L4.6 18.4A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.6L14 9.2V3"/><path d="M7.3 15h9.4"/></svg></i>Testlar</button>
-  <button data-go="rating"><i><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0Z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg></i>Reyting</button>
-  <button data-go="me"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></i>Natijam</button>
+  <button data-go="home" class="on"><i><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6.2L4.6 18.4A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.6L14 9.2V3"/><path d="M7.3 15h9.4"/></svg></i><span data-t="nav_tests"></span></button>
+  <button data-go="rating"><i><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0Z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg></i><span data-t="nav_rating"></span></button>
+  <button data-go="me"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></i><span data-t="nav_profile"></span></button>
 </nav>
+<input type="file" id="photo" accept="image/*" hidden>
 
 <script>
+// ================= Tillar =================
+const L = {
+uz: {
+  nav_tests:"Testlar", nav_rating:"Reyting", nav_profile:"Profil", loading:"Yuklanmoqda…",
+  hello:"Assalomu alaykum!", hello_name:"Assalomu alaykum, {n}!", h1:"Bugun qaysi testni ishlaymiz?",
+  st_done:"ishlangan test", st_avg:"o'rtacha natija", st_best:"eng yaxshi o'rin", place:"{n}-o'rin",
+  sections:"Bo'limlar", open_n:"{n} ta ochiq test", none_yet:"Hozircha test yo'q", fresh:", {n} tasi yangi", updated:"Yangilangan: {d}",
+  k_mock:"Mock exam", k_sinf5:"5-sinf", k_sinf6:"6-sinf", k_mavzu:"Mavzulashtirilgan",
+  d_mock:"Ibn Sino formatidagi to'liq sinovlar", d_sinf:"Mavzular bo'yicha testlar, natija darhol", d_mavzu:"Mavzulashtirilgan testlar",
+  open_tests:"Ochiq testlar", no_open:"Hozircha ochiq test yo'q. Yangi test qo'shilganda shu yerda chiqadi va bot xabar beradi.",
+  finished:"Yakunlangan testlar", sec_rating:"{s} reytingi",
+  q_n:"{n} ta savol", min_n:"{n} daqiqa", instant:"Natija darhol", opens_at:"{t} da ochiladi", rating_n:"Reyting: {n} nafar",
+  people_n:"{n} nafar", tests_n:"{n} ta", done_tag:"✓ Topshirildi",
+  f_q:"savol", f_min:"daqiqa", f_until:"gacha", f_nolimit:"vaqt cheklanmagan", f_topics:"mavzu", topics_n:"{n} ta",
+  done_live:"✅ Siz bu testni topshirgansiz. Natijangiz botga yuborildi.",
+  done_wait:"✅ Siz bu testni topshirgansiz. Natija test yakunlangach botga keladi.",
+  soon:"⏳ Test {t} da boshlanadi ({d})", over:"⛔️ Test vaqti tugagan ({w}).",
+  r_window:"Test {w} oralig'ida ochiq.", r_autosend:"{t} da hamma javoblar avtomatik yuboriladi.",
+  r_minutes:"Vaqt {n} daqiqa — boshlagan paytingizdan sanaladi va to'xtamaydi; tugaganda javoblar o'zi yuboriladi.",
+  r_free:"Savollar orasida erkin o'tishingiz va javobni o'zgartirishingiz mumkin.", r_zoom:"Rasm ustiga bossangiz — kattalashadi.",
+  r_once:"Javoblar faqat bir marta yuboriladi.", r_instant:"Natija darhol chiqadi.",
+  warn_short:"⚠️ Oraliq tugashiga {t} qoldi — sizda {n} daqiqa emas, shuncha vaqt bo'ladi.",
+  start:"Testni boshlash", resume:"Davom ettirish", confirm_start:"Test boshlanadi. Sizda {n} daqiqa bor. Tayyormisiz?",
+  confirm_start2:"Testni boshlaysizmi?", not_found:"Test topilmadi yoki yakunlangan.",
+  loading_q:"Savollar yuklanmoqda…", load_fail:"Savollarni yuklab bo'lmadi. Internetni tekshirib, qayta oching.",
+  q_of:"Savol {i} / {n}", flag:"🚩 Belgilash", flagged:"🚩 Belgilangan", zoomhint:"🔍 Kattalashtirish uchun rasmni bosing",
+  prev:"‹ Oldingi", next:"Keyingi ›", finish:"Yakunlash ✓", five_left:"⚠️ 5 daqiqa qoldi!",
+  grid_title:"Savollar", lg_ans:"Javob berilgan", lg_empty:"Javobsiz", lg_flag:"Belgilangan",
+  confirm_empty:"{n} ta savolga javob berilmagan. Baribir yakunlaysizmi?", confirm_all:"Barcha savollarga javob berdingiz. Yakunlaysizmi?",
+  time_up:"Vaqt tugadi", finished_t:"Test yakunlandi",
+  open_via:"Ilovani botdagi pastki «📝 Testlar» tugmasi orqali oching. Hozircha javoblaringizni botga matn qilib yuboring:",
+  saved_running:"Test saqlandi. Vaqt davom etmoqda ⏱", close:"✕ Yopish",
+  r_title:"Reyting", r_avg:"{n} ta test bo'yicha o'rtacha", r_none:"Bu bo'limda hali natijalar yo'q.",
+  p_photo:"📷 Rasm qo'yish", p_photo_change:"📷 Almashtirish", p_photo_del:"O'chirish",
+  p_photo_note:"Rasm faqat shu qurilmada saqlanadi, boshqalarga ko'rinmaydi.",
+  p_name:"Ism va familiya", p_settings:"Sozlamalar", p_notify:"Bildirishnomalar", p_notify_d:"Yangi test qo'shilganda va boshlanganda tovushli xabar",
+  p_lang:"Til", p_bg:"Fon", bg_grid:"Katak", bg_dots:"Hujayra", bg_hex:"Molekula", bg_plain:"Toza",
+  p_save:"Saqlash", p_save_note:"Saqlaganda ilova yopiladi, bot tasdiqlab xabar yuboradi.",
+  p_open_bot:"Saqlash uchun ilovani botdagi «📝 Testlar» tugmasi orqali oching.", p_new:"Yangi o'quvchi",
+  my_results:"Natijalarim", no_results:"Hali natijalaringiz yo'q. Test topshirgach, natijangiz shu yerda chiqadi.",
+  st_tests:"test", st_avg2:"o'rtacha", st_best2:"eng yaxshi", weak:"📌 Ko'proq e'tibor bering: {t}",
+  by_topic:"Mavzular bo'yicha", history:"Testlar tarixi", place_of:"{p}-o'rin ({n} nafardan)",
+  refresh:"Yangilash", refreshed:"Yangilandi", load_err:"Ma'lumotlarni yuklab bo'lmadi. Keyinroq qayta oching.", name_short:"Ism juda qisqa",
+  today:"bugun", months:["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"],
+},
+ru: {
+  nav_tests:"Тесты", nav_rating:"Рейтинг", nav_profile:"Профиль", loading:"Загрузка…",
+  hello:"Здравствуйте!", hello_name:"Здравствуйте, {n}!", h1:"Какой тест решаем сегодня?",
+  st_done:"решено тестов", st_avg:"средний балл", st_best:"лучшее место", place:"{n}-е место",
+  sections:"Разделы", open_n:"Открытых тестов: {n}", none_yet:"Пока тестов нет", fresh:", новых: {n}", updated:"Обновлено: {d}",
+  k_mock:"Mock exam", k_sinf5:"5 класс", k_sinf6:"6 класс", k_mavzu:"Тематические",
+  d_mock:"Полные пробные экзамены в формате Ибн Сино", d_sinf:"Тесты по темам, результат сразу", d_mavzu:"Тематические тесты",
+  open_tests:"Открытые тесты", no_open:"Открытых тестов пока нет. Новый тест появится здесь, и бот пришлёт уведомление.",
+  finished:"Завершённые тесты", sec_rating:"Рейтинг: {s}",
+  q_n:"{n} вопросов", min_n:"{n} мин", instant:"Результат сразу", opens_at:"Откроется в {t}", rating_n:"Рейтинг: {n} чел.",
+  people_n:"{n} чел.", tests_n:"{n}", done_tag:"✓ Сдано",
+  f_q:"вопросов", f_min:"минут", f_until:"до", f_nolimit:"без ограничения", f_topics:"тем", topics_n:"{n}",
+  done_live:"✅ Вы уже сдали этот тест. Результат отправлен в бот.",
+  done_wait:"✅ Вы уже сдали этот тест. Результат придёт в бот после завершения теста.",
+  soon:"⏳ Тест начнётся в {t} ({d})", over:"⛔️ Время теста истекло ({w}).",
+  r_window:"Тест открыт в интервале {w}.", r_autosend:"В {t} все ответы отправятся автоматически.",
+  r_minutes:"Время — {n} мин. Отсчёт идёт с момента начала и не останавливается; по окончании ответы отправятся сами.",
+  r_free:"Можно свободно переходить между вопросами и менять ответы.", r_zoom:"Нажмите на картинку — она увеличится.",
+  r_once:"Ответы отправляются только один раз.", r_instant:"Результат — сразу.",
+  warn_short:"⚠️ До конца интервала осталось {t} — у вас будет столько, а не {n} мин.",
+  start:"Начать тест", resume:"Продолжить", confirm_start:"Тест начнётся. У вас {n} мин. Готовы?",
+  confirm_start2:"Начать тест?", not_found:"Тест не найден или завершён.",
+  loading_q:"Загрузка вопросов…", load_fail:"Не удалось загрузить вопросы. Проверьте интернет и откройте снова.",
+  q_of:"Вопрос {i} / {n}", flag:"🚩 Отметить", flagged:"🚩 Отмечен", zoomhint:"🔍 Нажмите на картинку, чтобы увеличить",
+  prev:"‹ Назад", next:"Далее ›", finish:"Завершить ✓", five_left:"⚠️ Осталось 5 минут!",
+  grid_title:"Вопросы", lg_ans:"Отвечен", lg_empty:"Без ответа", lg_flag:"Отмечен",
+  confirm_empty:"Без ответа: {n}. Всё равно завершить?", confirm_all:"Вы ответили на все вопросы. Завершить?",
+  time_up:"Время вышло", finished_t:"Тест завершён",
+  open_via:"Откройте приложение кнопкой «📝 Testlar» внизу чата с ботом. А пока отправьте ответы боту текстом:",
+  saved_running:"Тест сохранён. Время идёт ⏱", close:"✕ Закрыть",
+  r_title:"Рейтинг", r_avg:"Среднее по {n} тестам", r_none:"В этом разделе пока нет результатов.",
+  p_photo:"📷 Добавить фото", p_photo_change:"📷 Сменить", p_photo_del:"Удалить",
+  p_photo_note:"Фото хранится только на этом устройстве и не видно другим.",
+  p_name:"Имя и фамилия", p_settings:"Настройки", p_notify:"Уведомления", p_notify_d:"Сообщение со звуком, когда тест добавлен и когда начался",
+  p_lang:"Язык", p_bg:"Фон", bg_grid:"Сетка", bg_dots:"Клетки", bg_hex:"Молекулы", bg_plain:"Чистый",
+  p_save:"Сохранить", p_save_note:"После сохранения приложение закроется, бот пришлёт подтверждение.",
+  p_open_bot:"Чтобы сохранить, откройте приложение кнопкой «📝 Testlar» в боте.", p_new:"Новый ученик",
+  my_results:"Мои результаты", no_results:"Результатов пока нет. После первого теста они появятся здесь.",
+  st_tests:"тестов", st_avg2:"среднее", st_best2:"лучший", weak:"📌 Обратите внимание: {t}",
+  by_topic:"По темам", history:"История тестов", place_of:"{p}-е место из {n}",
+  refresh:"Обновить", refreshed:"Обновлено", load_err:"Не удалось загрузить данные. Попробуйте позже.", name_short:"Слишком короткое имя",
+  today:"сегодня", months:["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"],
+},
+};
+// O'zbek lotin → kirill (avtomatik)
+function toCyr(s) {
+  const map = {a:"а",b:"б",d:"д",e:"е",f:"ф",g:"г",h:"ҳ",i:"и",j:"ж",k:"к",l:"л",m:"м",n:"н",o:"о",p:"п",q:"қ",r:"р",
+    s:"с",t:"т",u:"у",v:"в",x:"х",y:"й",z:"з"};
+  return s.split(/(\{[^}]*\}|<[^>]*>)/).map((part, i) => i % 2 ? part : part
+    .replace(/([OoGg])['‘ʻ’]/g, (m, c) => ({O:"Ў",o:"ў",G:"Ғ",g:"ғ"})[c])
+    .replace(/Sh|SH|sh/g, m => m === "sh" ? "ш" : "Ш").replace(/Ch|CH|ch/g, m => m === "ch" ? "ч" : "Ч")
+    .replace(/Yo|yo/g, m => m[0] === "Y" ? "Ё" : "ё").replace(/Yu|yu/g, m => m[0] === "Y" ? "Ю" : "ю")
+    .replace(/Ya|ya/g, m => m[0] === "Y" ? "Я" : "я").replace(/Ye|ye/g, m => m[0] === "Y" ? "Е" : "е")
+    .replace(/(^|[^A-Za-z])([Ee])/g, (m, a, e) => a + (e === "E" ? "Э" : "э"))
+    .replace(/['ʼ’]/g, "ъ")
+    .replace(/[A-Za-z]/g, c => { const l = map[c.toLowerCase()]; return l ? (c === c.toLowerCase() ? l : l.toUpperCase()) : c; })
+  ).join("");
+}
+let LANG = "uz";
+const NOCYR = new Set(["k_mock"]);   // nomlar o'zgarishsiz qoladi
+function T(k, v = {}) {
+  const base = LANG === "ru" ? L.ru : L.uz;
+  let s = base[k] ?? L.uz[k] ?? k;
+  if (Array.isArray(s)) return LANG === "uzc" ? s.map(toCyr) : s;
+  if (LANG === "uzc" && !NOCYR.has(k)) s = toCyr(s);
+  return s.replace(/\{(\w+)\}/g, (m, x) => v[x] ?? m);
+}
+
+// ================= Telegram, mavzu, fon =================
 const tg = window.Telegram && Telegram.WebApp;
 const canFS = () => !!(tg && tg.isVersionAtLeast && tg.isVersionAtLeast("8.0") && tg.requestFullscreen);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("sp:" + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem("sp:" + k, JSON.stringify(v)); } catch (e) {} },
+  del(k) { try { localStorage.removeItem("sp:" + k); } catch (e) {} },
+};
 function applyTheme() {
   const dark = tg && tg.colorScheme ? tg.colorScheme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
   document.documentElement.dataset.theme = dark ? "dark" : "light";
+  document.documentElement.dataset.bg = store.get("bg", "grid");
 }
-function paintChrome() {   // Telegram sarlavha rangi sahifaga mos bo'lsin
+function paintChrome() {
   if (!tg || !tg.isVersionAtLeast || !tg.isVersionAtLeast("6.9")) return;
   const cs = getComputedStyle(document.documentElement);
   try {
@@ -225,37 +388,30 @@ applyTheme();
 if (tg) {
   tg.ready(); tg.expand();
   tg.onEvent("themeChanged", () => { applyTheme(); render(); });
-  try { if (tg.isVersionAtLeast("7.7")) tg.disableVerticalSwipes(); } catch (e) {}   // tasodifan yopilib ketmasin
+  try { if (tg.isVersionAtLeast("7.7")) tg.disableVerticalSwipes(); } catch (e) {}
   if (canFS()) {
-    try { tg.requestFullscreen(); } catch (e) {}                                    // katta oynada ochilsin
+    try { tg.requestFullscreen(); } catch (e) {}
     tg.onEvent("fullscreenChanged", () => { if (route.v === "home") render(); });
     tg.onEvent("fullscreenFailed", () => {});
   }
 }
+// Javob yubora oladimi? (faqat botdagi "📝 Testlar" tugmasi orqali ochilganda)
+const canSend = () => !!(tg && tg.sendData && tg.platform !== "unknown" && !(tg.initDataUnsafe && tg.initDataUnsafe.query_id));
+
 const $app = document.getElementById("app"), $nav = document.getElementById("nav");
 const params = new URLSearchParams(location.search);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-// Savol matni bot tomonidan tayyorlangan; baribir faqat xavfsiz teglarni qoldiramiz
 const safe = h => String(h ?? "").replace(/<(?!\/?(b|i|sub|sup|br)\s*\/?>)[^>]*>/gi, "");
 const color = p => p >= 75 ? "var(--good)" : p >= 50 ? "var(--mid)" : "var(--bad)";
 const medal = i => ["🥇","🥈","🥉"][i] || "";
 const haptic = t => { try { t === "sel" ? tg.HapticFeedback.selectionChanged() : tg.HapticFeedback.notificationOccurred(t); } catch (e) {} };
-const store = {
-  get(k, d) { try { const v = localStorage.getItem("sp:" + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
-  set(k, v) { try { localStorage.setItem("sp:" + k, JSON.stringify(v)); } catch (e) {} },
-};
 const ICO = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
 const SEC = {
-  mock:  {badge: "MX", c: "var(--c-mock)",  desc: "Ibn Sino formatidagi to'liq sinovlar",
-          icon: ICO('<path d="M9 3h6M10 3v6.2L4.6 18.4A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.6L14 9.2V3"/><path d="M7.3 15h9.4"/>')},
-  sinf5: {badge: "5",  c: "var(--c-sinf5)", desc: "Mavzular bo'yicha testlar, natija darhol",
-          icon: ICO('<path d="M5 20C5 11 11 5 20 5c0 9-6 15-15 15Z"/><path d="M5 20l8-8"/>')},
-  sinf6: {badge: "6",  c: "var(--c-sinf6)", desc: "Mavzular bo'yicha testlar, natija darhol",
-          icon: ICO('<circle cx="12" cy="12" r="1.4" fill="currentColor"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(120 12 12)"/>')},
-  mavzu: {badge: "MT", c: "var(--c-mavzu)", desc: "Mavzulashtirilgan testlar",
-          icon: ICO('<path d="M4 5h16M4 12h16M4 19h10"/>')},
+  mock:  {c: "var(--c-mock)",  d: "d_mock", icon: ICO('<path d="M9 3h6M10 3v6.2L4.6 18.4A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.6L14 9.2V3"/><path d="M7.3 15h9.4"/>')},
+  sinf5: {c: "var(--c-sinf5)", d: "d_sinf", icon: ICO('<path d="M5 20C5 11 11 5 20 5c0 9-6 15-15 15Z"/><path d="M5 20l8-8"/>')},
+  sinf6: {c: "var(--c-sinf6)", d: "d_sinf", icon: ICO('<circle cx="12" cy="12" r="1.4" fill="currentColor"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(120 12 12)"/>')},
+  mavzu: {c: "var(--c-mavzu)", d: "d_mavzu", icon: ICO('<path d="M4 5h16M4 12h16M4 19h10"/>')},
 };
-// Tepa blokdagi ilmiy chizmalar: atom, DNK, benzol halqasi, barg, kolba
 const HERO_ART = `<svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMaxYMin slice" fill="none"
   stroke="rgba(242,251,248,.13)" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
   <g transform="translate(330 70)"><circle r="4" fill="rgba(240,162,59,.55)" stroke="none"/>
@@ -268,9 +424,9 @@ const HERO_ART = `<svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xM
   <g transform="translate(250 40)"><path d="M0 -20l17.3 10v20L0 20l-17.3-10v-20Z"/><circle r="10"/></g>
   <circle cx="200" cy="40" r="2" fill="rgba(242,251,248,.2)" stroke="none"/><circle cx="385" cy="150" r="3" fill="rgba(242,251,248,.18)" stroke="none"/>
 </svg>`;
-const secName = k => (DATA.sections.find(s => s[0] === k) || [k, k])[1];
+const secName = k => { const t = T("k_" + k); return t === "k_" + k ? ((DATA.sections.find(s => s[0] === k) || [k, k])[1]) : t; };
 
-let DATA = null, ME = null, myHash = params.get("u") || "";
+let DATA = null, ME = null, PROFILE = null, myHash = params.get("u") || "";
 let route = {v: "home"}, history_ = [];
 let ratingKind = null;
 
@@ -284,6 +440,31 @@ function confirmBox(msg) {
     else res(window.confirm(msg));
   });
 }
+
+// ---------------- Avatar ----------------
+const AV_COLORS = ["#0E6E61", "#E08A1E", "#2D7FC1", "#8A6AD0", "#1F9D6B", "#C2526B", "#5B7A2E"];
+function initials(name) {
+  const p = String(name || "?").trim().split(/\s+/);
+  return ((p[0] || "?")[0] + (p[1] ? p[1][0] : "")).toUpperCase();
+}
+function avatar(name, cls = "", own = false) {
+  const img = own ? store.get("avatar", null) : null;
+  let h = 0; for (const c of String(name)) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return `<span class="ava ${cls}" style="--av:${AV_COLORS[h % AV_COLORS.length]}">${img ? `<img src="${img}" alt="">` : esc(initials(name))}</span>`;
+}
+document.getElementById("photo").onchange = e => {
+  const f = e.target.files[0]; e.target.value = "";
+  if (!f) return;
+  const img = new Image();
+  img.onload = () => {
+    const S = 320, c = document.createElement("canvas"); c.width = c.height = S;
+    const m = Math.min(img.width, img.height);
+    c.getContext("2d").drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, S, S);
+    store.set("avatar", c.toDataURL("image/jpeg", 0.85)); URL.revokeObjectURL(img.src);
+    haptic("success"); render();
+  };
+  img.src = URL.createObjectURL(f);
+};
 
 // ---------------- Navigatsiya ----------------
 function go(v, extra = {}, push = true) {
@@ -306,6 +487,8 @@ $nav.onclick = e => {
 function render() {
   clearInterval(window._tick);
   paintChrome();
+  document.documentElement.lang = LANG === "ru" ? "ru" : "uz";
+  $nav.querySelectorAll("[data-t]").forEach(el => el.textContent = T(el.dataset.t));
   const inExam = route.v === "exam";
   $nav.style.display = inExam ? "none" : "";
   [...$nav.children].forEach(b => b.classList.toggle("on", b.dataset.go === route.v ||
@@ -325,7 +508,7 @@ function rankRows(list, idx, fmt, limit = 1e6) {
   return list.slice(0, limit).map((r, i) => {
     const p = pl[i], mine = ME && r[0] === ME.name;
     return `<div class="row${mine ? " me" : ""}"><span class="rank${p <= 3 ? " m" : ""}">${p <= 3 ? medal(p - 1) : p}</span>
-      <span class="name">${esc(r[0])}</span>${fmt(r)}</div>`;
+      ${avatar(r[0], "", mine)}<span class="name">${esc(r[0])}</span>${fmt(r)}</div>`;
   }).join("");
 }
 function bars(topics) {
@@ -337,13 +520,12 @@ const fmtTime = s => { s = Math.max(0, Math.floor(s)); const m = Math.floor(s / 
   return m >= 60 ? `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")}:${String(x).padStart(2, "0")}` : `${m}:${String(x).padStart(2, "0")}`; };
 const isDone = code => store.get("done:" + code, false);
 const hm = ms => { const d = new Date(ms); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
-const MONTHS = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"];
 const dayTxt = ms => { const d = new Date(ms), n = new Date();
-  return d.toDateString() === n.toDateString() ? "bugun" : `${d.getDate()}-${MONTHS[d.getMonth()]}`; };
+  if (d.toDateString() === n.toDateString()) return T("today");
+  return LANG === "ru" ? `${d.getDate()} ${T("months")[d.getMonth()]}` : `${d.getDate()}-${T("months")[d.getMonth()]}`; };
 const winTxt = t => t.opens || t.closes ? `${t.opens ? hm(t.opens) : ""}–${t.closes ? hm(t.closes) : ""} (${dayTxt(t.opens || t.closes)})` : "";
-const state = t => { const now = Date.now();   // "soon" | "open" | "over"
+const state = t => { const now = Date.now();
   return t.opens && now < t.opens ? "soon" : t.closes && now > t.closes ? "over" : "open"; };
-// Testning tugash vaqti: boshlangandan + daqiqalar, lekin oraliq oxiridan oshmaydi
 const deadline = (t, start) => Math.min(t.minutes ? start + t.minutes * 60000 : Infinity, t.closes || Infinity);
 
 // ---------------- Bosh sahifa ----------------
@@ -351,34 +533,41 @@ function viewHome() {
   const tests = ME ? ME.tests : [];
   const avg = tests.length ? Math.round(tests.reduce((a, t) => a + 100 * t[2] / t[3], 0) / tests.length) : 0;
   const best = tests.length ? Math.min(...tests.map(t => t[5] || 99)) : 0;
-  const first = ME ? (ME.name.split(" ").slice(-1)[0] || ME.name) : "";
+  const name = PROFILE ? PROFILE.name : "";
+  const first = name ? (name.split(" ").slice(-1)[0] || name) : "";
   $app.innerHTML = `
     <section class="hero">
       ${HERO_ART}
-      <div class="top"><div class="logo">SP</div><div><b>Science Pro</b><span class="meta">Dream School · Ibn Sinoga tayyorlov</span></div>
-        ${canFS() ? `<button class="fs" id="fs" aria-label="To'liq ekran">${tg.isFullscreen ? "🗗" : "⛶"}</button>` : ""}</div>
-      <div class="hello">Assalomu alaykum${first ? ", " + esc(first) : ""}!</div>
-      <h1 class="h1">Bugun qaysi testni ishlaymiz?</h1>
+      <div class="top"><div class="logo">SP</div><div><b>Science Pro</b><span class="meta">Dream School · Ibn Sino</span></div>
+        <span style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <button class="icon-btn" id="rf" aria-label="${T("refresh")}">↻</button>
+          ${canFS() ? `<button class="icon-btn" id="fs" aria-label="Fullscreen">${tg.isFullscreen ? "🗗" : "⛶"}</button>` : ""}
+          <button class="me-btn" id="mebtn" aria-label="${T("nav_profile")}">${avatar(name || "?", "", true)}</button>
+        </span></div>
+      <div class="hello">${first ? esc(T("hello_name", {n: first})) : T("hello")}</div>
+      <h1 class="h1">${T("h1")}</h1>
       <div class="stats">
-        <div><b>${tests.length}</b><span>ishlangan test</span></div>
-        <div><b>${tests.length ? avg + "%" : "—"}</b><span>o'rtacha natija</span></div>
-        <div><b>${best ? best + "-o'rin" : "—"}</b><span>eng yaxshi o'rin</span></div>
+        <div><b>${tests.length}</b><span>${T("st_done")}</span></div>
+        <div><b>${tests.length ? avg + "%" : "—"}</b><span>${T("st_avg")}</span></div>
+        <div><b>${best ? T("place", {n: best}) : "—"}</b><span>${T("st_best")}</span></div>
       </div>
     </section>
-    <h2 class="catalog-h">Bo'limlar</h2>
-    ${DATA.sections.map(([k, name]) => {
+    <h2 class="catalog-h">${T("sections")}</h2>
+    ${DATA.sections.map(([k]) => {
       const s = SEC[k] || SEC.mavzu, open = DATA.open.filter(t => t.kind === k);
       const fresh = open.filter(t => !isDone(t.code)).length;
       return `<button class="cat" style="--c:${s.c}" data-k="${k}">
         <div class="badge">${s.icon}</div>
-        <div style="min-width:0"><div class="t">${esc(name)}</div><div class="meta">${s.desc}</div>
-          <span class="chip">${open.length ? open.length + " ta ochiq test" : "Hozircha test yo'q"}${fresh && fresh < open.length ? `, ${fresh} tasi yangi` : ""}</span></div>
+        <div style="min-width:0"><div class="t">${esc(secName(k))}</div><div class="meta">${T(s.d)}</div>
+          <span class="chip">${open.length ? T("open_n", {n: open.length}) : T("none_yet")}${fresh && fresh < open.length ? T("fresh", {n: fresh}) : ""}</span></div>
         <span class="chev">›</span></button>`;
     }).join("")}
-    <footer>Yangilangan: ${esc(DATA.updated)}</footer>`;
+    <footer>${T("updated", {d: esc(DATA.updated)})}</footer>`;
   $app.querySelectorAll(".cat").forEach(b => b.onclick = () => { haptic("sel"); go("section", {k: b.dataset.k}); });
   const fs = document.getElementById("fs");
   if (fs) fs.onclick = () => { haptic("sel"); tg.isFullscreen ? tg.exitFullscreen() : tg.requestFullscreen(); };
+  document.getElementById("mebtn").onclick = () => { haptic("sel"); history_ = []; route = {v: "me"}; render(); };
+  document.getElementById("rf").onclick = async () => { haptic("sel"); if (await load()) { toast(T("refreshed")); render(); } };
 }
 
 // ---------------- Bo'lim ----------------
@@ -387,29 +576,29 @@ function viewSection() {
   const fin = (DATA.kinds[k] || {tests: [], rating: []});
   $app.innerHTML = `
     <div class="titlebar" style="--c:${s.c}"><div class="badge">${s.icon}</div><h1>${esc(secName(k))}</h1></div>
-    <h2 class="sec" style="margin:18px 2px 0">Ochiq testlar</h2>
+    <h2 class="sec" style="margin:18px 2px 0">${T("open_tests")}</h2>
     ${open.length ? open.map(t => `
       <div class="card tst" data-code="${esc(t.code)}">
         <div style="display:flex;justify-content:space-between;gap:10px;align-items:start">
-          <h3>${esc(t.title)}</h3>${isDone(t.code) ? `<span class="done-tag">✓ Topshirildi</span>` : `<span class="chev">›</span>`}</div>
-        <div class="chips"><span>📋 ${t.n} ta savol</span>${t.minutes ? `<span>⏱ ${t.minutes} daqiqa</span>` : ""}
+          <h3>${esc(t.title)}</h3>${isDone(t.code) ? `<span class="done-tag">${T("done_tag")}</span>` : `<span class="chev">›</span>`}</div>
+        <div class="chips"><span>📋 ${T("q_n", {n: t.n})}</span>${t.minutes ? `<span>⏱ ${T("min_n", {n: t.minutes})}</span>` : ""}
           ${winTxt(t) ? `<span>🗓 ${esc(winTxt(t))}</span>` : `<span>📅 ${esc(t.date)}</span>`}
-          ${t.live ? `<span>⚡️ Natija darhol</span>` : ""}
-          ${state(t) === "soon" ? `<span style="color:var(--mid);font-weight:700">⏳ ${hm(t.opens)} da ochiladi</span>` : ""}</div>
+          ${t.live ? `<span>⚡️ ${T("instant")}</span>` : ""}
+          ${state(t) === "soon" ? `<span style="color:var(--mid);font-weight:700">⏳ ${T("opens_at", {t: hm(t.opens)})}</span>` : ""}</div>
         ${t.topics.length > 1 ? `<div class="meta" style="margin-top:8px">${t.topics.map(x => esc(x[0])).join(" · ")}</div>` : ""}
         ${t.live && t.results && t.results.length ? `<div class="fold" data-stop style="margin-top:10px">
-          <div class="meta" style="font-weight:700;color:var(--accent)">🏆 Reyting · ${t.results.length} nafar ›</div>
+          <div class="meta" style="font-weight:700;color:var(--accent)">🏆 ${T("rating_n", {n: t.results.length})} ›</div>
           <div class="results">${rankRows(t.results, 1, r => `<span class="score">${r[1]}/${t.n}</span>`, 50)}</div></div>` : ""}
-      </div>`).join("") : `<div class="card"><div class="empty">Hozircha ochiq test yo'q.<br>Yangi test qo'shilganda shu yerda chiqadi.</div></div>`}
-    ${fin.tests.length ? `<h2 class="sec" style="margin:22px 2px 0">Yakunlangan testlar</h2>` + fin.tests.map(t => `
+      </div>`).join("") : `<div class="card"><div class="empty">${T("no_open")}</div></div>`}
+    ${fin.tests.length ? `<h2 class="sec" style="margin:22px 2px 0">${T("finished")}</h2>` + fin.tests.map(t => `
       <div class="card fold">
-        <div style="display:flex;justify-content:space-between;gap:8px"><h3 style="margin:0;font-size:16px">${esc(t.title)}</h3><span class="chev">›</span></div>
-        <div class="meta">${esc(t.date)} · ${t.results.length} nafar · ${t.n} ta savol</div>
+        <div style="display:flex;justify-content:space-between;gap:8px"><h3 style="margin:0;font-size:16px;font-family:var(--display)">${esc(t.title)}</h3><span class="chev">›</span></div>
+        <div class="meta">${esc(t.date)} · ${T("people_n", {n: t.results.length})} · ${T("q_n", {n: t.n})}</div>
         ${bars([...t.topics].sort((a, b) => a[1] - b[1]))}
         <div class="results">${rankRows(t.results, 1, r => `<span class="score">${r[1]}/${t.n}</span>`)}</div>
       </div>`).join("") : ""}
-    ${fin.rating.length ? `<div class="card"><h2 class="sec">${esc(secName(k))} reytingi</h2>
-      ${rankRows(fin.rating, 1, r => `<span class="meta">${r[2]} ta</span><span class="score">${r[1]}%</span>`, 30)}</div>` : ""}`;
+    ${fin.rating.length ? `<div class="card"><h2 class="sec">${esc(T("sec_rating", {s: secName(k)}))}</h2>
+      ${rankRows(fin.rating, 1, r => `<span class="meta">${T("tests_n", {n: r[2]})}</span><span class="score">${r[1]}%</span>`, 30)}</div>` : ""}`;
   $app.querySelectorAll(".tst").forEach(el => el.onclick = e => { if (e.target.closest("[data-stop]")) return; haptic("sel"); go("intro", {code: el.dataset.code}); });
   $app.querySelectorAll(".fold").forEach(el => el.onclick = () => { el.classList.toggle("open"); haptic("sel"); });
 }
@@ -417,35 +606,33 @@ function viewSection() {
 // ---------------- Test oldi ----------------
 function viewIntro() {
   const t = DATA.open.find(x => x.code === route.code);
-  if (!t) { $app.innerHTML = `<div class="card"><div class="empty">Test topilmadi yoki yakunlangan.</div></div>`; return; }
+  if (!t) { $app.innerHTML = `<div class="card"><div class="empty">${T("not_found")}</div></div>`; return; }
   const st = store.get("ex:" + t.code, null), done = isDone(t.code), ws = state(t);
   let action;
-  if (done) action = `<div class="tip" style="background:color-mix(in srgb,var(--good) 14%,transparent)">✅ Siz bu testni topshirgansiz. ${
-      t.live ? "Natijangiz botga yuborildi." : "Natija test yakunlangach botga keladi."}</div>`;
+  if (done) action = `<div class="tip" style="background:color-mix(in srgb,var(--good) 14%,transparent)">${T(t.live ? "done_live" : "done_wait")}</div>`;
   else if (ws === "soon") action = `<div class="tip" style="background:color-mix(in srgb,var(--mid) 16%,transparent);text-align:center">
-      ⏳ Test <b>${hm(t.opens)}</b> da boshlanadi (${dayTxt(t.opens)})<br><b id="cd" style="font-size:22px"></b></div>
-      <button class="btn" disabled style="opacity:.5">Testni boshlash</button>`;
-  else if (ws === "over" && !st) action = `<div class="tip">⛔️ Test vaqti tugagan (${esc(winTxt(t))}).</div>`;
+      ${T("soon", {t: `<b>${hm(t.opens)}</b>`, d: dayTxt(t.opens)})}<br><b id="cd" style="font-size:22px"></b></div>
+      <button class="btn" disabled style="opacity:.5">${T("start")}</button>`;
+  else if (ws === "over" && !st) action = `<div class="tip">${T("over", {w: esc(winTxt(t))})}</div>`;
   else action = `<ul class="rules">
-        ${winTxt(t) ? `<li>Test <b>${esc(winTxt(t))}</b> oralig'ida ochiq. ${t.closes ? `<b>${hm(t.closes)}</b> da hamma testlar avtomatik yuboriladi.` : ""}</li>` : ""}
-        ${t.minutes ? `<li>Vaqt <b>${t.minutes} daqiqa</b> — boshlagan paytingizdan sanaladi, to'xtamaydi; tugaganda javoblar o'zi yuboriladi.</li>` : ""}
-        <li>Savollar orasida erkin o'tishingiz va javobni o'zgartirishingiz mumkin.</li>
-        <li>Rasm ustiga bossangiz — kattalashadi.</li>
-        <li>Javoblar faqat <b>bir marta</b> yuboriladi.${t.live ? " Natija darhol chiqadi." : ""}</li>
+        ${winTxt(t) ? `<li>${T("r_window", {w: `<b>${esc(winTxt(t))}</b>`})} ${t.closes ? T("r_autosend", {t: `<b>${hm(t.closes)}</b>`}) : ""}</li>` : ""}
+        ${t.minutes ? `<li>${T("r_minutes", {n: `<b>${t.minutes}</b>`})}</li>` : ""}
+        <li>${T("r_free")}</li><li>${T("r_zoom")}</li>
+        <li>${T("r_once")}${t.live ? " " + T("r_instant") : ""}</li>
       </ul>
-      ${!st && t.minutes && t.closes && Date.now() + t.minutes * 60000 > t.closes ? `<div class="tip">⚠️ Oraliq tugashiga ${fmtTime((t.closes - Date.now()) / 1000)} qoldi — sizda ${t.minutes} daqiqa emas, shuncha vaqt bo'ladi.</div>` : ""}
-      <button class="btn" id="go">${st ? "Davom ettirish" : "Testni boshlash"}</button>`;
+      ${!st && t.minutes && t.closes && Date.now() + t.minutes * 60000 > t.closes ? `<div class="tip">${T("warn_short", {t: fmtTime((t.closes - Date.now()) / 1000), n: t.minutes})}</div>` : ""}
+      <button class="btn" id="go">${st ? T("resume") : T("start")}</button>`;
   $app.innerHTML = `
     <div class="card intro" style="--c:${(SEC[t.kind] || SEC.mavzu).c}">
       <span class="chip">${esc(secName(t.kind))}</span>
       <h1>${esc(t.title)}</h1>
       <div class="facts">
-        <div><b>${t.n}</b><span>savol</span></div>
-        <div><b>${t.minutes || (t.closes ? hm(t.closes) : "∞")}</b><span>${t.minutes ? "daqiqa" : t.closes ? "gacha" : "vaqt cheklanmagan"}</span></div>
-        <div><b>${t.topics.length}</b><span>mavzu</span></div>
+        <div><b>${t.n}</b><span>${T("f_q")}</span></div>
+        <div><b>${t.minutes || (t.closes ? hm(t.closes) : "∞")}</b><span>${t.minutes ? T("f_min") : t.closes ? T("f_until") : T("f_nolimit")}</span></div>
+        <div><b>${t.topics.length}</b><span>${T("f_topics")}</span></div>
       </div>
-      ${t.topics.length > 1 ? `<div class="bars" style="gap:4px;margin-top:14px">${t.topics.map(([n, c]) =>
-        `<div class="row" style="padding:6px 0"><span class="name" style="white-space:normal">${esc(n)}</span><span class="meta">${c} ta</span></div>`).join("")}</div>` : ""}
+      ${t.topics.length > 1 ? `<div style="margin-top:14px">${t.topics.map(([n, c]) =>
+        `<div class="row" style="padding:6px 0"><span class="name" style="white-space:normal">${esc(n)}</span><span class="meta">${T("topics_n", {n: c})}</span></div>`).join("")}</div>` : ""}
       ${action}
     </div>`;
   if (ws === "soon" && !done) {
@@ -456,23 +643,23 @@ function viewIntro() {
   const b = document.getElementById("go");
   if (b) b.onclick = async () => {
     const mins = Math.floor((deadline(t, Date.now()) - Date.now()) / 60000);
-    if (!st && !(await confirmBox(isFinite(mins) ? `Test boshlanadi. Sizda ${mins} daqiqa bor. Tayyormisiz?` : "Testni boshlaysizmi?"))) return;
+    if (!st && !(await confirmBox(isFinite(mins) ? T("confirm_start", {n: mins}) : T("confirm_start2")))) return;
     haptic("success"); go("exam", {code: t.code});
   };
 }
 
 // ---------------- Imtihon ----------------
-let EX = null;  // {t, test, st, i}
+let EX = null;
 
 async function viewExam() {
   const t = DATA.open.find(x => x.code === route.code);
-  if (!t || isDone(t.code) || (state(t) === "soon") || (state(t) === "over" && !store.get("ex:" + t.code, null))) {
+  if (!t || isDone(t.code) || state(t) === "soon" || (state(t) === "over" && !store.get("ex:" + t.code, null))) {
     route = {v: "intro", code: route.code}; render(); return; }
   if (!EX || EX.t.code !== t.code) {
-    $app.innerHTML = `<div class="empty">Savollar yuklanmoqda…</div>`;
+    $app.innerHTML = `<div class="empty">${T("loading_q")}</div>`;
     let test;
     try { test = await (await fetch(t.src + "?v=" + encodeURIComponent(DATA.updated), {cache: "no-cache"})).json(); }
-    catch (e) { $app.innerHTML = `<div class="card"><div class="empty">Savollarni yuklab bo'lmadi. Internetni tekshirib, qayta oching.</div></div>`; return; }
+    catch (e) { $app.innerHTML = `<div class="card"><div class="empty">${T("load_fail")}</div></div>`; return; }
     const st = store.get("ex:" + t.code, null) || {start: Date.now(), ans: {}, flag: {}, i: 0};
     store.set("ex:" + t.code, st);
     EX = {t, test, st, base: t.src.replace(/test\.json$/, ""), warned: false};
@@ -483,7 +670,7 @@ async function viewExam() {
       const left = (deadline(EX.t, EX.st.start) - Date.now()) / 1000;
       const el = document.getElementById("timer");
       if (el) { el.textContent = "⏱ " + fmtTime(left); el.classList.toggle("warn", left <= 300); }
-      if (left <= 300 && !EX.warned) { EX.warned = true; haptic("warning"); toast("⚠️ 5 daqiqa qoldi!"); }
+      if (left <= 300 && !EX.warned) { EX.warned = true; haptic("warning"); toast(T("five_left")); }
       if (left <= 0) { clearInterval(window._tick); finish(true); }
     };
     tick(); window._tick = setInterval(tick, 1000);
@@ -496,7 +683,7 @@ function drawQ() {
   const {t, test, st} = EX, n = test.questions.length, i = Math.min(st.i, n - 1), q = test.questions[i];
   const answered = Object.keys(st.ans).length;
   const body = q.body.map(b => b.t ? `<div class="qtext">${safe(b.t)}</div>`
-    : b.img ? `<img class="qimg" src="${esc(EX.base + b.img)}" alt="Savol rasmi" loading="eager" data-zoom>`
+    : b.img ? `<img class="qimg" src="${esc(EX.base + b.img)}" alt="" loading="eager" data-zoom>`
     : b.table ? `<div class="tbl"><table>${b.table.map(r => `<tr>${r.map(c => `<td>${safe(c)}</td>`).join("")}</tr>`).join("")}</table></div>` : "").join("");
   const hasImg = q.body.some(b => b.img);
   $app.innerHTML = `<div class="exam">
@@ -504,19 +691,18 @@ function drawQ() {
       <div class="ttl">${esc(t.title)}</div>
       ${t.minutes || t.closes ? `<div class="timer" id="timer">⏱</div>` : ""}
     </div><div class="prog"><i style="width:${100 * answered / n}%"></i></div></div>
-    <div class="qnum"><b>Savol ${i + 1} / ${n}</b>
-      <button class="flag ${st.flag[i] ? "on" : ""}" id="flag">${st.flag[i] ? "🚩 Belgilangan" : "🚩 Belgilash"}</button></div>
+    <div class="qnum"><b>${T("q_of", {i: i + 1, n})}</b>
+      <button class="flag ${st.flag[i] ? "on" : ""}" id="flag">${st.flag[i] ? T("flagged") : T("flag")}</button></div>
     ${q.topic ? `<div class="topic">${esc(q.topic)}</div>` : ""}
-    <div class="qcard">${body}${hasImg ? `<div class="zoomhint">🔍 Kattalashtirish uchun rasmni bosing</div>` : ""}</div>
+    <div class="qcard">${body}${hasImg ? `<div class="zoomhint">${T("zoomhint")}</div>` : ""}</div>
     <div class="opts">${q.opts.map(o => `<button class="opt ${st.ans[i] === o.l.toLowerCase() ? "sel" : ""}" data-l="${o.l.toLowerCase()}">
       <span class="L">${esc(o.l)}</span><span>${safe(o.h)}${o.img ? `<img src="${esc(EX.base + o.img)}" alt="" data-zoom>` : ""}</span></button>`).join("")}</div>
   </div>
   <div class="ebar"><div class="in">
-    <button class="pv" id="pv" ${i === 0 ? "disabled" : ""}>‹ Oldingi</button>
+    <button class="pv" id="pv" ${i === 0 ? "disabled" : ""}>${T("prev")}</button>
     <button class="grid-btn" id="grid">▦ ${answered}/${n}</button>
-    ${i < n - 1 ? `<button class="nx" id="nx">Keyingi ›</button>` : `<button class="nx fin" id="fin">Yakunlash ✓</button>`}
+    ${i < n - 1 ? `<button class="nx" id="nx">${T("next")}</button>` : `<button class="nx fin" id="fin">${T("finish")}</button>`}
   </div></div>`;
-
   $app.querySelectorAll(".opt").forEach(b => b.onclick = e => {
     if (e.target.matches("[data-zoom]")) return;
     const l = b.dataset.l;
@@ -529,7 +715,6 @@ function drawQ() {
   const nx = document.getElementById("nx"); if (nx) nx.onclick = () => move(1);
   const fin = document.getElementById("fin"); if (fin) fin.onclick = () => finish(false);
   document.getElementById("grid").onclick = openGrid;
-  // keyingi savol rasmlarini oldindan yuklab qo'yish
   const nq = test.questions[i + 1];
   if (nq) nq.body.filter(b => b.img).forEach(b => { new Image().src = EX.base + b.img; });
   if (EX.t.minutes || EX.t.closes) { const left = (deadline(EX.t, st.start) - Date.now()) / 1000;
@@ -544,12 +729,12 @@ function move(d) {
 function openGrid() {
   const {st, test} = EX, n = test.questions.length;
   const s = document.createElement("div"); s.className = "sheet";
-  s.innerHTML = `<div class="box"><h3>Savollar</h3>
-    <div class="legend"><span><i style="background:var(--accent)"></i>Javob berilgan</span>
-      <span><i style="border:2px solid var(--line)"></i>Javobsiz</span><span><i style="background:var(--mid);border-radius:50%"></i>Belgilangan</span></div>
+  s.innerHTML = `<div class="box"><h3>${T("grid_title")}</h3>
+    <div class="legend"><span><i style="background:var(--accent)"></i>${T("lg_ans")}</span>
+      <span><i style="border:2px solid var(--line)"></i>${T("lg_empty")}</span><span><i style="background:var(--mid);border-radius:50%"></i>${T("lg_flag")}</span></div>
     <div class="cells">${Array.from({length: n}, (_, i) =>
       `<button data-i="${i}" class="${st.ans[i] ? "a" : ""} ${st.flag[i] ? "f" : ""} ${i === st.i ? "cur" : ""}">${i + 1}</button>`).join("")}</div>
-    <button class="btn fin" id="gfin" style="background:var(--good);color:#fff">Yakunlash ✓</button></div>`;
+    <button class="btn" id="gfin" style="background:var(--good);color:#fff">${T("finish")}</button></div>`;
   s.onclick = e => {
     const b = e.target.closest("[data-i]");
     if (b) { st.i = +b.dataset.i; save(); s.remove(); drawQ(); window.scrollTo({top: 0}); }
@@ -562,36 +747,32 @@ function openGrid() {
 async function finish(timeout) {
   const {t, st, test} = EX, n = test.questions.length;
   const empty = n - Object.keys(st.ans).length;
-  if (!timeout) {
-    const msg = empty ? `${empty} ta savolga javob berilmagan. Baribir yakunlaysizmi?` : "Barcha savollarga javob berdingiz. Yakunlaysizmi?";
-    if (!(await confirmBox(msg))) return;
-  }
+  if (!timeout && !(await confirmBox(empty ? T("confirm_empty", {n: empty}) : T("confirm_all")))) return;
   const a = Array.from({length: n}, (_, i) => st.ans[i] || "-").join("");
-  const payload = JSON.stringify({c: t.code, a, s: st.start});
   store.set("done:" + t.code, true);
   clearInterval(window._tick);
   haptic("success");
-  if (tg && tg.sendData && tg.platform !== "unknown" && !(tg.initDataUnsafe && tg.initDataUnsafe.query_id)) {
+  if (canSend()) {
     try { tg.disableClosingConfirmation(); } catch (e) {}
-    tg.sendData(payload);   // ilova yopiladi, bot javob qaytaradi
+    tg.sendData(JSON.stringify({c: t.code, a, s: st.start}));
   } else {
-    $app.innerHTML = `<div class="card"><h2 class="sec">${timeout ? "Vaqt tugadi" : "Test yakunlandi"}</h2>
-      <p>Ilovani botdagi pastki <b>📝 Testlar</b> tugmasi orqali oching. Hozircha javoblaringizni botga matn qilib yuboring:</p>
+    $app.innerHTML = `<div class="card"><h2 class="sec">${timeout ? T("time_up") : T("finished_t")}</h2>
+      <p>${T("open_via")}</p>
       <div class="qcard" style="background:var(--bg2);word-break:break-all;font-family:monospace">${esc(t.code)}*${esc(a)}</div></div>`;
   }
 }
 
 function leaveExam() {
-  route = {v: "intro", code: route.code}; EX = null; render();
-  if (store.get("ex:" + route.code, null) && !isDone(route.code)) toast("Test saqlandi. Vaqt davom etmoqda ⏱");
+  const code = route.code;
+  route = {v: "intro", code}; EX = null; render();
+  if (store.get("ex:" + code, null) && !isDone(code)) toast(T("saved_running"));
 }
 
-// ---------------- Rasm ko'ruvchi (kattalashtirish) ----------------
+// ---------------- Rasm ko'ruvchi ----------------
 function openViewer(src) {
   const v = document.createElement("div"); v.className = "viewer";
   v.innerHTML = `<div class="vbar"><span style="display:flex;gap:6px"><button data-z="-">−</button><button data-z="+">+</button></span>
-    <button data-x>✕ Yopish</button></div>
-    <div class="stage"><img src="${esc(src)}" alt=""></div>`;
+    <button data-x>${T("close")}</button></div><div class="stage"><img src="${esc(src)}" alt=""></div>`;
   document.body.appendChild(v);
   const stage = v.querySelector(".stage"), img = v.querySelector("img");
   let scale = 1, baseW = 0;
@@ -611,8 +792,7 @@ function openViewer(src) {
   const dist = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
   stage.addEventListener("touchstart", e => { if (e.touches.length === 2) pd = dist(e.touches); }, {passive: true});
   stage.addEventListener("touchmove", e => {
-    if (e.touches.length === 2 && pd) { e.preventDefault(); const d = dist(e.touches);
-      const r = stage.getBoundingClientRect();
+    if (e.touches.length === 2 && pd) { e.preventDefault(); const d = dist(e.touches); const r = stage.getBoundingClientRect();
       zoom(d / pd, (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left, (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top); pd = d; }
   }, {passive: false});
   stage.addEventListener("touchend", () => { pd = 0; });
@@ -620,59 +800,105 @@ function openViewer(src) {
 
 // ---------------- Reyting ----------------
 function viewRating() {
-  const kinds = DATA.sections.map(s => s[0]);
-  ratingKind = ratingKind || kinds[0];
+  ratingKind = ratingKind || DATA.sections[0][0];
   const k = DATA.kinds[ratingKind] || {rating: [], tests: []};
-  $app.innerHTML = `<div class="titlebar"><h1>🏆 Reyting</h1></div>
-    <div class="seg">${DATA.sections.map(([kk, nm]) => `<button data-k="${kk}" class="${kk === ratingKind ? "on" : ""}">${esc(nm)}</button>`).join("")}</div>
-    <div class="card">${k.rating.length ? `<h2 class="sec">${k.tests.length} ta test bo'yicha o'rtacha</h2>
-      ${rankRows(k.rating, 1, r => `<span class="meta">${r[2]} ta</span><span class="score">${r[1]}%</span>`)}`
-      : `<div class="empty">Bu bo'limda hali yakunlangan test yo'q.</div>`}</div>`;
+  $app.innerHTML = `<div class="titlebar"><h1>🏆 ${T("r_title")}</h1></div>
+    <div class="seg">${DATA.sections.map(([kk]) => `<button data-k="${kk}" class="${kk === ratingKind ? "on" : ""}">${esc(secName(kk))}</button>`).join("")}</div>
+    <div class="card">${k.rating.length ? `<h2 class="sec">${T("r_avg", {n: k.tests.length || "…"})}</h2>
+      ${rankRows(k.rating, 1, r => `<span class="meta">${T("tests_n", {n: r[2]})}</span><span class="score">${r[1]}%</span>`)}`
+      : `<div class="empty">${T("r_none")}</div>`}</div>`;
   $app.querySelectorAll(".seg button").forEach(b => b.onclick = () => { ratingKind = b.dataset.k; haptic("sel"); viewRating(); });
 }
 
-// ---------------- Mening natijam ----------------
+// ---------------- Profil ----------------
+let DRAFT = null;   // saqlanmagan o'zgarishlar
 function viewMe() {
-  if (!ME) {
-    $app.innerHTML = `<div class="titlebar"><h1>👤 Natijam</h1></div><div class="card"><div class="empty">
-      ${myHash ? "Hali yakunlangan testlaringiz yo'q.<br>Topshirgan testingiz yakunlangach, natijangiz shu yerda chiqadi."
-               : "Shaxsiy natijalar uchun ilovani botdagi <b>📝 Testlar</b> tugmasi orqali oching."}</div></div>`;
-    return;
-  }
-  const pcts = ME.tests.map(t => Math.round(100 * t[2] / t[3]));
-  const avg = Math.round(pcts.reduce((a, b) => a + b, 0) / pcts.length);
-  const weak = ME.topics.filter(t => t[1] < 60).map(t => t[0]);
-  $app.innerHTML = `<div class="titlebar"><h1>👤 ${esc(ME.name)}</h1></div>
-    <div class="stats">
-      <div><b>${ME.tests.length}</b><span>test</span></div>
-      <div><b style="color:${color(avg)}">${avg}%</b><span>o'rtacha</span></div>
-      <div><b style="color:${color(Math.max(...pcts))}">${Math.max(...pcts)}%</b><span>eng yaxshi</span></div>
-    </div>
-    ${weak.length ? `<div class="tip">📌 Ko'proq e'tibor bering: <b>${weak.map(esc).join(", ")}</b></div>` : ""}
-    <div class="card"><h2 class="sec">Mavzular bo'yicha</h2>${bars(ME.topics)}</div>
-    <div class="card"><h2 class="sec">Testlar tarixi</h2>
+  const server = PROFILE || {name: "", notify: true, lang: "uz"};
+  DRAFT = DRAFT || {name: server.name, notify: server.notify !== false};
+  const dirty = DRAFT.name.trim() !== server.name || DRAFT.notify !== (server.notify !== false) || LANG !== (server.lang || "uz");
+  const hasImg = !!store.get("avatar", null), bg = store.get("bg", "grid");
+  const langs = [["uz", "O'zbekcha"], ["uzc", "Ўзбекча"], ["ru", "Русский"]];
+  const bgs = ["grid", "dots", "hex", "plain"];
+  let results = `<div class="empty">${T("no_results")}</div>`;
+  if (ME && ME.tests.length) {
+    const pcts = ME.tests.map(t => Math.round(100 * t[2] / t[3]));
+    const avg = Math.round(pcts.reduce((a, b) => a + b, 0) / pcts.length);
+    const weak = ME.topics.filter(t => t[1] < 60).map(t => t[0]);
+    results = `<div class="facts" style="margin-top:0">
+        <div><b>${ME.tests.length}</b><span>${T("st_tests")}</span></div>
+        <div><b style="color:${color(avg)}">${avg}%</b><span>${T("st_avg2")}</span></div>
+        <div><b style="color:${color(Math.max(...pcts))}">${Math.max(...pcts)}%</b><span>${T("st_best2")}</span></div></div>
+      ${weak.length ? `<div class="tip">${T("weak", {t: `<b>${weak.map(esc).join(", ")}</b>`})}</div>` : ""}
+      <h2 class="sec" style="margin:18px 0 0">${T("by_topic")}</h2>${bars(ME.topics)}
+      <h2 class="sec" style="margin:18px 0 0">${T("history")}</h2>
       ${[...ME.tests].reverse().map(t => { const p = Math.round(100 * t[2] / t[3]);
         return `<div class="row"><span class="name" style="white-space:normal">${esc(t[0])}
-          <div class="meta">${esc(secName(t[1]))} · ${esc(t[4])}${t[5] ? ` · ${t[5]}/${t[6]}-o'rin` : ""}</div></span>
-          <span class="score" style="color:${color(p)}">${t[2]}/${t[3]}</span></div>`; }).join("")}
-    </div>`;
+          <div class="meta">${esc(secName(t[1]))} · ${esc(t[4])}${t[5] ? " · " + T("place_of", {p: t[5], n: t[6]}) : ""}</div></span>
+          <span class="score" style="color:${color(p)}">${t[2]}/${t[3]}</span></div>`; }).join("")}`;
+  }
+  $app.innerHTML = `
+    <div class="card prof-head">
+      ${avatar(DRAFT.name || "?", "lg", true)}
+      <div class="nm">${esc(DRAFT.name || T("p_new"))}</div>
+      <div class="photo-acts"><button class="pill" id="ph">${hasImg ? T("p_photo_change") : T("p_photo")}</button>
+        ${hasImg ? `<button class="pill" id="phd">${T("p_photo_del")}</button>` : ""}</div>
+      <div class="note">${T("p_photo_note")}</div>
+    </div>
+    <div class="card">
+      <div class="field"><label for="nm">${T("p_name")}</label><input id="nm" maxlength="60" autocomplete="name" value="${esc(DRAFT.name)}"></div>
+    </div>
+    <div class="card">
+      <div class="setrow"><div class="tx"><b>🔔 ${T("p_notify")}</b><span class="meta">${T("p_notify_d")}</span></div>
+        <button class="switch ${DRAFT.notify ? "on" : ""}" id="nt" role="switch" aria-checked="${DRAFT.notify}" aria-label="${T("p_notify")}"></button></div>
+      <div class="setrow" style="display:block"><b>🌐 ${T("p_lang")}</b>
+        <div class="seg" style="margin-top:10px;background:var(--bg2)">${langs.map(([c, n]) => `<button data-lang="${c}" class="${LANG === c ? "on" : ""}">${n}</button>`).join("")}</div></div>
+      <div class="setrow" style="display:block"><b>🎨 ${T("p_bg")}</b>
+        <div class="swatches">${bgs.map(b => `<button class="sw ${bg === b ? "on" : ""}" data-bg="${b}"><i></i>${T("bg_" + b)}</button>`).join("")}</div></div>
+    </div>
+    ${dirty ? `<button class="btn" id="sv">${T("p_save")}</button><div class="note" style="text-align:center">${T("p_save_note")}</div>` : ""}
+    <div class="card"><h2 class="sec">${T("my_results")}</h2>${results}</div>`;
+  const nm = document.getElementById("nm");
+  nm.oninput = () => { DRAFT.name = nm.value; const was = !!document.getElementById("sv"); const now = isDirty();
+    if (was !== now) { const pos = nm.selectionStart; viewMe(); const n2 = document.getElementById("nm"); n2.focus(); n2.setSelectionRange(pos, pos); } };
+  document.getElementById("ph").onclick = () => document.getElementById("photo").click();
+  const phd = document.getElementById("phd"); if (phd) phd.onclick = () => { store.del("avatar"); haptic("sel"); viewMe(); };
+  document.getElementById("nt").onclick = () => { DRAFT.notify = !DRAFT.notify; haptic("sel"); viewMe(); };
+  $app.querySelectorAll("[data-lang]").forEach(b => b.onclick = () => { LANG = b.dataset.lang; store.set("lang", LANG); haptic("sel"); render(); });
+  $app.querySelectorAll(".sw").forEach(b => b.onclick = () => { store.set("bg", b.dataset.bg); applyTheme(); haptic("sel"); viewMe(); });
+  const sv = document.getElementById("sv");
+  if (sv) sv.onclick = () => {
+    const name = DRAFT.name.trim().replace(/\s+/g, " ");
+    if (name.length < 3) { toast(T("name_short")); return; }
+    if (!canSend()) { toast(T("p_open_bot"), 3500); return; }
+    haptic("success");
+    tg.sendData(JSON.stringify({t: "profile", name, notify: DRAFT.notify, lang: LANG}));
+  };
+  function isDirty() { return DRAFT.name.trim() !== server.name || DRAFT.notify !== (server.notify !== false) || LANG !== (server.lang || "uz"); }
 }
 
-// ---------------- Ishga tushirish ----------------
-(async () => {
+// ---------------- Ma'lumotlarni yuklash ----------------
+async function load() {
   try {
     DATA = await (await fetch("data.json?t=" + Date.now(), {cache: "no-store"})).json();
   } catch (e) {
-    $app.innerHTML = `<div class="card"><div class="empty">Ma'lumotlarni yuklab bo'lmadi. Keyinroq qayta oching.</div></div>`;
-    return;
+    if (!DATA) $app.innerHTML = `<div class="card"><div class="empty">${T("load_err")}</div></div>`;
+    return false;
   }
   DATA.sections = DATA.sections || [["mock", "Mock exam"], ["sinf5", "5-sinf"], ["sinf6", "6-sinf"]];
   DATA.open = DATA.open || []; DATA.kinds = DATA.kinds || {}; DATA.students = DATA.students || {};
-  // Yopilgan testlarning eski saqlanmalarini tozalash
+  const me = myHash && DATA.students[myHash];
+  ME = me && me.tests && me.tests.length ? me : null;
+  PROFILE = me ? {name: me.name, notify: me.notify !== false, lang: me.lang || "uz"} : null;
+  DRAFT = null;
+  return true;
+}
+
+(async () => {
+  LANG = store.get("lang", null) || "uz";
+  if (!(await load())) return;
+  if (!store.get("lang", null) && PROFILE && PROFILE.lang) LANG = PROFILE.lang;
   try { Object.keys(localStorage).filter(k => k.startsWith("sp:ex:")).forEach(k => {
     if (!DATA.open.some(t => "sp:ex:" + t.code === k)) localStorage.removeItem(k); }); } catch (e) {}
-  ME = myHash && DATA.students[myHash] ? DATA.students[myHash] : null;
-  // Tugallanmagan test bo'lsa — davom ettirish
   const running = DATA.open.find(t => store.get("ex:" + t.code, null) && !isDone(t.code));
   if (running) { route = {v: "intro", code: running.code}; history_ = [{v: "home"}]; }
   render();
