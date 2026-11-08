@@ -273,6 +273,15 @@ function bars(topics) {
 const fmtTime = s => { s = Math.max(0, Math.floor(s)); const m = Math.floor(s / 60), x = s % 60;
   return m >= 60 ? `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")}:${String(x).padStart(2, "0")}` : `${m}:${String(x).padStart(2, "0")}`; };
 const isDone = code => store.get("done:" + code, false);
+const hm = ms => { const d = new Date(ms); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
+const MONTHS = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"];
+const dayTxt = ms => { const d = new Date(ms), n = new Date();
+  return d.toDateString() === n.toDateString() ? "bugun" : `${d.getDate()}-${MONTHS[d.getMonth()]}`; };
+const winTxt = t => t.opens || t.closes ? `${t.opens ? hm(t.opens) : ""}–${t.closes ? hm(t.closes) : ""} (${dayTxt(t.opens || t.closes)})` : "";
+const state = t => { const now = Date.now();   // "soon" | "open" | "over"
+  return t.opens && now < t.opens ? "soon" : t.closes && now > t.closes ? "over" : "open"; };
+// Testning tugash vaqti: boshlangandan + daqiqalar, lekin oraliq oxiridan oshmaydi
+const deadline = (t, start) => Math.min(t.minutes ? start + t.minutes * 60000 : Infinity, t.closes || Infinity);
 
 // ---------------- Bosh sahifa ----------------
 function viewHome() {
@@ -317,8 +326,14 @@ function viewSection() {
       <div class="card tst" data-code="${esc(t.code)}">
         <div style="display:flex;justify-content:space-between;gap:10px;align-items:start">
           <h3>${esc(t.title)}</h3>${isDone(t.code) ? `<span class="done-tag">✓ Topshirildi</span>` : `<span class="chev">›</span>`}</div>
-        <div class="chips"><span>📋 ${t.n} ta savol</span>${t.minutes ? `<span>⏱ ${t.minutes} daqiqa</span>` : ""}<span>📅 ${esc(t.date)}</span></div>
+        <div class="chips"><span>📋 ${t.n} ta savol</span>${t.minutes ? `<span>⏱ ${t.minutes} daqiqa</span>` : ""}
+          ${winTxt(t) ? `<span>🗓 ${esc(winTxt(t))}</span>` : `<span>📅 ${esc(t.date)}</span>`}
+          ${t.live ? `<span>⚡️ Natija darhol</span>` : ""}
+          ${state(t) === "soon" ? `<span style="color:var(--mid);font-weight:700">⏳ ${hm(t.opens)} da ochiladi</span>` : ""}</div>
         ${t.topics.length > 1 ? `<div class="meta" style="margin-top:8px">${t.topics.map(x => esc(x[0])).join(" · ")}</div>` : ""}
+        ${t.live && t.results && t.results.length ? `<div class="fold" data-stop style="margin-top:10px">
+          <div class="meta" style="font-weight:700;color:var(--accent)">🏆 Reyting · ${t.results.length} nafar ›</div>
+          <div class="results">${rankRows(t.results, 1, r => `<span class="score">${r[1]}/${t.n}</span>`, 50)}</div></div>` : ""}
       </div>`).join("") : `<div class="card"><div class="empty">Hozircha ochiq test yo'q.<br>Yangi test qo'shilganda shu yerda chiqadi.</div></div>`}
     ${fin.tests.length ? `<h2 class="sec" style="margin:22px 2px 0">Yakunlangan testlar</h2>` + fin.tests.map(t => `
       <div class="card fold">
@@ -329,7 +344,7 @@ function viewSection() {
       </div>`).join("") : ""}
     ${fin.rating.length ? `<div class="card"><h2 class="sec">${esc(secName(k))} reytingi</h2>
       ${rankRows(fin.rating, 1, r => `<span class="meta">${r[2]} ta</span><span class="score">${r[1]}%</span>`, 30)}</div>` : ""}`;
-  $app.querySelectorAll(".tst").forEach(el => el.onclick = () => { haptic("sel"); go("intro", {code: el.dataset.code}); });
+  $app.querySelectorAll(".tst").forEach(el => el.onclick = e => { if (e.target.closest("[data-stop]")) return; haptic("sel"); go("intro", {code: el.dataset.code}); });
   $app.querySelectorAll(".fold").forEach(el => el.onclick = () => { el.classList.toggle("open"); haptic("sel"); });
 }
 
@@ -337,30 +352,45 @@ function viewSection() {
 function viewIntro() {
   const t = DATA.open.find(x => x.code === route.code);
   if (!t) { $app.innerHTML = `<div class="card"><div class="empty">Test topilmadi yoki yakunlangan.</div></div>`; return; }
-  const st = store.get("ex:" + t.code, null), done = isDone(t.code);
+  const st = store.get("ex:" + t.code, null), done = isDone(t.code), ws = state(t);
+  let action;
+  if (done) action = `<div class="tip" style="background:color-mix(in srgb,var(--good) 14%,transparent)">✅ Siz bu testni topshirgansiz. ${
+      t.live ? "Natijangiz botga yuborildi." : "Natija test yakunlangach botga keladi."}</div>`;
+  else if (ws === "soon") action = `<div class="tip" style="background:color-mix(in srgb,var(--mid) 16%,transparent);text-align:center">
+      ⏳ Test <b>${hm(t.opens)}</b> da boshlanadi (${dayTxt(t.opens)})<br><b id="cd" style="font-size:22px"></b></div>
+      <button class="btn" disabled style="opacity:.5">Testni boshlash</button>`;
+  else if (ws === "over" && !st) action = `<div class="tip">⛔️ Test vaqti tugagan (${esc(winTxt(t))}).</div>`;
+  else action = `<ul class="rules">
+        ${winTxt(t) ? `<li>Test <b>${esc(winTxt(t))}</b> oralig'ida ochiq. ${t.closes ? `<b>${hm(t.closes)}</b> da hamma testlar avtomatik yuboriladi.` : ""}</li>` : ""}
+        ${t.minutes ? `<li>Vaqt <b>${t.minutes} daqiqa</b> — boshlagan paytingizdan sanaladi, to'xtamaydi; tugaganda javoblar o'zi yuboriladi.</li>` : ""}
+        <li>Savollar orasida erkin o'tishingiz va javobni o'zgartirishingiz mumkin.</li>
+        <li>Rasm ustiga bossangiz — kattalashadi.</li>
+        <li>Javoblar faqat <b>bir marta</b> yuboriladi.${t.live ? " Natija darhol chiqadi." : ""}</li>
+      </ul>
+      ${!st && t.minutes && t.closes && Date.now() + t.minutes * 60000 > t.closes ? `<div class="tip">⚠️ Oraliq tugashiga ${fmtTime((t.closes - Date.now()) / 1000)} qoldi — sizda ${t.minutes} daqiqa emas, shuncha vaqt bo'ladi.</div>` : ""}
+      <button class="btn" id="go">${st ? "Davom ettirish" : "Testni boshlash"}</button>`;
   $app.innerHTML = `
     <div class="card intro" style="--c:${(SEC[t.kind] || SEC.mavzu).c}">
       <span class="chip">${esc(secName(t.kind))}</span>
       <h1>${esc(t.title)}</h1>
       <div class="facts">
         <div><b>${t.n}</b><span>savol</span></div>
-        <div><b>${t.minutes || "∞"}</b><span>${t.minutes ? "daqiqa" : "vaqt cheklanmagan"}</span></div>
+        <div><b>${t.minutes || (t.closes ? hm(t.closes) : "∞")}</b><span>${t.minutes ? "daqiqa" : t.closes ? "gacha" : "vaqt cheklanmagan"}</span></div>
         <div><b>${t.topics.length}</b><span>mavzu</span></div>
       </div>
       ${t.topics.length > 1 ? `<div class="bars" style="gap:4px;margin-top:14px">${t.topics.map(([n, c]) =>
         `<div class="row" style="padding:6px 0"><span class="name" style="white-space:normal">${esc(n)}</span><span class="meta">${c} ta</span></div>`).join("")}</div>` : ""}
-      ${done ? `<div class="tip" style="background:color-mix(in srgb,var(--good) 14%,transparent)">✅ Siz bu testni topshirgansiz. Natija test yakunlangach botga keladi.</div>` : `
-      <ul class="rules">
-        ${t.minutes ? `<li>Vaqt <b>${t.minutes} daqiqa</b>. Boshlaganingizdan keyin to'xtamaydi, tugaganda javoblar o'zi yuboriladi.</li>` : ""}
-        <li>Savollar orasida erkin o'tishingiz va javobni o'zgartirishingiz mumkin.</li>
-        <li>Rasm ustiga bossangiz — kattalashadi.</li>
-        <li>Javoblar faqat <b>bir marta</b> yuboriladi.</li>
-      </ul>
-      <button class="btn" id="go">${st ? "Davom ettirish" : "Testni boshlash"}</button>`}
+      ${action}
     </div>`;
+  if (ws === "soon" && !done) {
+    const cd = () => { const left = (t.opens - Date.now()) / 1000; if (left <= 0) { render(); return; }
+      const el = document.getElementById("cd"); if (el) el.textContent = fmtTime(left); };
+    cd(); window._tick = setInterval(cd, 1000);
+  }
   const b = document.getElementById("go");
   if (b) b.onclick = async () => {
-    if (!st && !(await confirmBox(t.minutes ? `Test boshlanadi. Sizda ${t.minutes} daqiqa bor. Tayyormisiz?` : "Testni boshlaysizmi?"))) return;
+    const mins = Math.floor((deadline(t, Date.now()) - Date.now()) / 60000);
+    if (!st && !(await confirmBox(isFinite(mins) ? `Test boshlanadi. Sizda ${mins} daqiqa bor. Tayyormisiz?` : "Testni boshlaysizmi?"))) return;
     haptic("success"); go("exam", {code: t.code});
   };
 }
@@ -370,7 +400,8 @@ let EX = null;  // {t, test, st, i}
 
 async function viewExam() {
   const t = DATA.open.find(x => x.code === route.code);
-  if (!t || isDone(t.code)) { route = {v: "intro", code: route.code}; render(); return; }
+  if (!t || isDone(t.code) || (state(t) === "soon") || (state(t) === "over" && !store.get("ex:" + t.code, null))) {
+    route = {v: "intro", code: route.code}; render(); return; }
   if (!EX || EX.t.code !== t.code) {
     $app.innerHTML = `<div class="empty">Savollar yuklanmoqda…</div>`;
     let test;
@@ -381,9 +412,9 @@ async function viewExam() {
     EX = {t, test, st, base: t.src.replace(/test\.json$/, ""), warned: false};
   }
   drawQ();
-  if (EX.t.minutes) {
+  if (EX.t.minutes || EX.t.closes) {
     const tick = () => {
-      const left = EX.t.minutes * 60 - (Date.now() - EX.st.start) / 1000;
+      const left = (deadline(EX.t, EX.st.start) - Date.now()) / 1000;
       const el = document.getElementById("timer");
       if (el) { el.textContent = "⏱ " + fmtTime(left); el.classList.toggle("warn", left <= 300); }
       if (left <= 300 && !EX.warned) { EX.warned = true; haptic("warning"); toast("⚠️ 5 daqiqa qoldi!"); }
@@ -405,7 +436,7 @@ function drawQ() {
   $app.innerHTML = `<div class="exam">
     <div class="ehead"><div class="l1">
       <div class="ttl">${esc(t.title)}</div>
-      ${t.minutes ? `<div class="timer" id="timer">⏱</div>` : ""}
+      ${t.minutes || t.closes ? `<div class="timer" id="timer">⏱</div>` : ""}
     </div><div class="prog"><i style="width:${100 * answered / n}%"></i></div></div>
     <div class="qnum"><b>Savol ${i + 1} / ${n}</b>
       <button class="flag ${st.flag[i] ? "on" : ""}" id="flag">${st.flag[i] ? "🚩 Belgilangan" : "🚩 Belgilash"}</button></div>
@@ -435,7 +466,7 @@ function drawQ() {
   // keyingi savol rasmlarini oldindan yuklab qo'yish
   const nq = test.questions[i + 1];
   if (nq) nq.body.filter(b => b.img).forEach(b => { new Image().src = EX.base + b.img; });
-  if (EX.t.minutes) { const left = EX.t.minutes * 60 - (Date.now() - st.start) / 1000;
+  if (EX.t.minutes || EX.t.closes) { const left = (deadline(EX.t, st.start) - Date.now()) / 1000;
     const el = document.getElementById("timer"); if (el) { el.textContent = "⏱ " + fmtTime(left); el.classList.toggle("warn", left <= 300); } }
 }
 
@@ -470,7 +501,7 @@ async function finish(timeout) {
     if (!(await confirmBox(msg))) return;
   }
   const a = Array.from({length: n}, (_, i) => st.ans[i] || "-").join("");
-  const payload = JSON.stringify({c: t.code, a});
+  const payload = JSON.stringify({c: t.code, a, s: st.start});
   store.set("done:" + t.code, true);
   clearInterval(window._tick);
   haptic("success");
