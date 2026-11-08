@@ -332,7 +332,7 @@ uz: {
   st_done:"ishlangan test", st_avg:"o'rtacha natija", st_best:"eng yaxshi o'rin", place:"{n}-o'rin",
   g_card:"Science Battle", g_card_d:"Doskada 2 guruh bellashuvi, ustoz kodi bilan", g_title:"Science Battle",
   g_pin:"Ustoz kodini kiriting", g_pin_btn:"Kirish", g_pin_bad:"Kod noto'g'ri", g_nopin:"Science Battle uchun ustoz avval botda /pin buyrug'i bilan kod o'rnatishi kerak.",
-  g_pick:"Testni tanlang", g_teams:"Guruhlar", g_teams_hint:"nomini bosib o'zgartiring", g_t1:"1-guruh", g_t2:"2-guruh", g_secs:"Har savolga vaqt", g_sec:"{n} s",
+  g_pick:"Testni tanlang", g_nomine:"Battle uchun alohida test hali yo'q. Botga fayl yuborib «⚔️ Science Battle» ni tanlang.", g_others:"Boshqa bo'limlardagi testlar ({n})", g_teams:"Guruhlar", g_teams_hint:"nomini bosib o'zgartiring", g_t1:"1-guruh", g_t2:"2-guruh", g_secs:"Har savolga vaqt", g_sec:"{n} s",
   g_start:"Battle'ni boshlash", g_q:"Savol {i} / {n}", g_next:"Keyingi savol ›", g_finish:"Natijalar ›", g_first:"✅ {t} birinchi topdi! +1",
   g_second:"✅ {t} to'g'ri topdi! +1", g_wrong:"❌ Xato", g_correct:"✅ +1", g_none:"Hech kim topmadi. To'g'ri javob: {l}", g_timeout:"⏰ Vaqt tugadi! To'g'ri javob: {l}",
   g_win:"{t} g'olib!", g_draw:"Durang!", g_again:"Qayta o'ynash", g_other:"Boshqa test", g_exit:"Science Battle'dan chiqasizmi?", g_wait:"Javob kutilmoqda…",
@@ -384,7 +384,7 @@ ru: {
   st_done:"решено тестов", st_avg:"средний балл", st_best:"лучшее место", place:"{n}-е место",
   g_card:"Science Battle", g_card_d:"Битва 2 команд на доске, по коду учителя", g_title:"Science Battle",
   g_pin:"Введите код учителя", g_pin_btn:"Войти", g_pin_bad:"Неверный код", g_nopin:"Учитель должен сначала задать код в боте командой /pin.",
-  g_pick:"Выберите тест", g_teams:"Команды", g_teams_hint:"нажмите на название, чтобы изменить", g_t1:"Команда 1", g_t2:"Команда 2", g_secs:"Время на вопрос", g_sec:"{n} с",
+  g_pick:"Выберите тест", g_nomine:"Отдельных тестов для Battle пока нет. Отправьте файл боту и выберите «⚔️ Science Battle».", g_others:"Тесты из других разделов ({n})", g_teams:"Команды", g_teams_hint:"нажмите на название, чтобы изменить", g_t1:"Команда 1", g_t2:"Команда 2", g_secs:"Время на вопрос", g_sec:"{n} с",
   g_start:"Начать соревнование", g_q:"Вопрос {i} / {n}", g_next:"Следующий вопрос ›", g_finish:"Итоги ›", g_first:"✅ {t} ответила первой! +1",
   g_second:"✅ {t} ответила верно! +1", g_wrong:"❌ Неверно", g_correct:"✅ +1", g_none:"Никто не угадал. Верный ответ: {l}", g_timeout:"⏰ Время вышло! Верный ответ: {l}",
   g_win:"Победила {t}!", g_draw:"Ничья!", g_again:"Сыграть ещё", g_other:"Другой тест", g_exit:"Выйти из соревнования?", g_wait:"Ждём ответ…",
@@ -1101,11 +1101,16 @@ function gameSetup() {
   const tests = DATA.game.tests;
   G.sel = G.sel || (tests[0] && tests[0].code);
   G.teams = G.teams.length ? G.teams : store.get("teams", null) || [T("g_t1"), T("g_t2")];
-  const label = t => esc(secName(t.kind)) + (t.bob ? " · " + esc(chapTitle(t.kind, t.bob)) : "");
+  const label = t => t.battle ? "⚔️ Battle" : esc(secName(t.kind)) + (t.bob ? " · " + esc(chapTitle(t.kind, t.bob)) : "");
+  const mine = tests.filter(t => t.battle), other = tests.filter(t => !t.battle);
+  if (G.showOther === undefined) G.showOther = !mine.length;
+  const btn = t => `<button class="gtest ${t.code === G.sel ? "on" : ""}" data-c="${esc(t.code)}">
+        <div style="flex:1;min-width:0"><b>${esc(t.title)}</b><div class="meta">${label(t)} · ${T("q_n", {n: t.n})}</div></div></button>`;
   $app.innerHTML = `<div class="gpanel"><h1>🏁 ${T("g_title")}</h1>
     <div class="card"><h2 class="sec">${T("g_pick")}</h2>
-      ${tests.length ? `<div class="gtests">${tests.map(t => `<button class="gtest ${t.code === G.sel ? "on" : ""}" data-c="${esc(t.code)}">
-        <div style="flex:1;min-width:0"><b>${esc(t.title)}</b><div class="meta">${label(t)} · ${T("q_n", {n: t.n})}</div></div></button>`).join("")}</div>`
+      ${tests.length ? `<div class="gtests">${mine.length ? mine.map(btn).join("") : `<div class="meta" style="padding:4px 2px">${T("g_nomine")}</div>`}
+        ${other.length ? `<button id="gother" style="justify-self:start;border:0;background:none;color:var(--accent);font:inherit;font-weight:600;padding:6px 2px;cursor:pointer">${G.showOther ? "▾" : "▸"} ${T("g_others", {n: other.length})}</button>
+        ${G.showOther ? other.map(btn).join("") : ""}` : ""}</div>`
         : `<div class="empty">${T("g_empty")}</div>`}</div>
     <div class="card"><h2 class="sec">${T("g_teams")} <span class="meta">— ${T("g_teams_hint")}</span></h2>
       <div class="teams"><input id="t1" style="--tc:var(--t1)" maxlength="24" value="${esc(G.teams[0])}">
@@ -1114,6 +1119,8 @@ function gameSetup() {
       <div class="secs">${[15, 20, 30, 45, 60].map(n => `<button data-s="${n}" class="${n === G.secs ? "on" : ""}">${T("g_sec", {n})}</button>`).join("")}</div>
     </div>
     ${tests.length ? `<button class="btn" id="gstart">${T("g_start")} ›</button>` : ""}</div>`;
+  const go2 = document.getElementById("gother");
+  if (go2) go2.onclick = () => { G.showOther = !G.showOther; saveTeams(); gameSetup(); };
   $app.querySelectorAll(".gtest").forEach(b => b.onclick = () => { G.sel = b.dataset.c; haptic("sel"); saveTeams(); gameSetup(); });
   $app.querySelectorAll(".secs button").forEach(b => b.onclick = () => { G.secs = +b.dataset.s; haptic("sel"); saveTeams(); gameSetup(); });
   function saveTeams() { G.teams = [document.getElementById("t1").value.trim() || T("g_t1"), document.getElementById("t2").value.trim() || T("g_t2")];
