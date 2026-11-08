@@ -284,12 +284,19 @@
   .gtimer.warn{color:var(--bad)}
   .gbar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
   .gbar i{display:block;height:100%;background:var(--accent);transition:width 1s linear}
-  .gquestion{background:var(--bg);border-radius:20px;padding:clamp(14px,2vw,26px);box-shadow:var(--shadow)}
+  .gquestion{background:var(--bg);border-radius:20px;padding:clamp(14px,2vw,26px);box-shadow:var(--shadow);
+    flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow:auto}
+  .gquestion.pic{padding:8px;background:#fff}
   .gquestion .qtext{font-size:clamp(18px,2.1vw,30px);line-height:1.4}
-  .gquestion img.qimg{max-height:34vh;width:auto;max-width:100%;margin:12px auto 0;display:block;cursor:default}
+  .gquestion img.qimg{flex:1 1 0;min-height:22vh;width:100%;height:100%;object-fit:contain;margin:10px 0 0;display:block;cursor:zoom-in}
+  .gquestion img.qimg{background:transparent}
+  .gquestion.pic img.qimg{margin:0}
+  .gzoom{position:fixed;inset:0;z-index:12;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:2vh 2vw;cursor:zoom-out}
+  .gzoom img{width:100%;height:100%;object-fit:contain;background:#fff;border-radius:12px}
   .gquestion .tbl table{font-size:clamp(14px,1.4vw,20px)}
   .gopts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .gopt{display:flex;gap:12px;align-items:center;background:var(--bg);border-radius:16px;padding:12px 16px;font-size:clamp(16px,1.8vw,26px);
+  .gopts{flex:none}
+  .gopt{display:flex;gap:12px;align-items:center;background:var(--bg);border-radius:16px;padding:10px 16px;font-size:clamp(16px,1.8vw,26px);
     border:3px solid transparent;box-shadow:var(--shadow)}
   .gopt .L{width:1.8em;height:1.8em;border-radius:50%;background:var(--bg2);display:grid;place-items:center;font-weight:800;flex:none}
   .gopt img{max-height:14vh;max-width:100%}
@@ -310,6 +317,8 @@
     .side{grid-row:2}
     .side .abtn{min-height:52px;flex:none}
     .gopts{grid-template-columns:1fr}
+    .gquestion{flex:none;overflow:visible}
+    .gquestion img.qimg{flex:none;height:auto;max-height:60vh;min-height:0}
   }
   @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -1167,7 +1176,7 @@ function drawRound() {
           <button class="gnext" id="gn">${G.i < G.items.length - 1 ? T("g_next") : T("g_finish")}</button>`
           : `<span class="gtimer ${left <= 5 ? "warn" : ""}" id="gt">${left}</span>`}</div>
       <div class="gbar"><i id="gb" style="width:${R.over ? 0 : 100 * left / G.secs}%"></i></div>
-      <div class="gquestion">${body}</div>
+      <div class="gquestion ${q.body.length === 1 && q.body[0].img ? "pic" : ""}">${body}</div>
       <div class="gopts">${q.opts.map(o => `<div class="gopt ${R.over && o.l.toLowerCase() === key ? "ok" : ""}"><span class="L">${esc(o.l)}</span>
         <span>${safe(o.h)}${o.img ? `<img src="${esc(base + o.img)}" alt="">` : ""}</span></div>`).join("")}</div>
     </div>
@@ -1180,8 +1189,13 @@ function drawRound() {
   }));
   document.getElementById("gx").onclick = gameExit;
   document.getElementById("gs").onclick = () => { G.sound = !G.sound; drawRound(); };
+  // Rasmni bosganda butun ekranga kattalashadi (taymer davom etadi); yana bosilsa yopiladi
+  $app.querySelectorAll(".gquestion img.qimg").forEach(im => im.onclick = () => {
+    const z = document.createElement("div"); z.className = "gzoom"; z.innerHTML = `<img src="${im.src}" alt="">`;
+    z.onclick = () => z.remove(); document.body.appendChild(z);
+  });
   const gn = document.getElementById("gn");
-  if (gn) gn.onclick = nextRound;
+  if (gn) gn.onclick = () => { document.querySelectorAll(".gzoom").forEach(z => z.remove()); nextRound(); };
   clearInterval(G.timer);
   if (!R.over) G.timer = setInterval(() => {
     const l = (R.end - Date.now()) / 1000, el = document.getElementById("gt"), bar = document.getElementById("gb");
