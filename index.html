@@ -237,6 +237,80 @@
   .sw[data-bg="grid"] i{background-image:linear-gradient(rgba(14,110,97,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(14,110,97,.28) 1px,transparent 1px);background-size:11px 11px}
   .sw[data-bg="dots"] i{background-image:radial-gradient(rgba(14,110,97,.38) 1.6px,transparent 1.9px);background-size:10px 10px}
   .sw[data-bg="hex"] i{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='24' viewBox='0 0 56 48'%3E%3Cpath d='M14 0l14 8v16l-14 8L0 24V8zM42 24l14 8v16M28 24l14-8' fill='none' stroke='%230E6E61' stroke-opacity='.3' stroke-width='1.6'/%3E%3C/svg%3E");background-size:28px 24px}
+  /* boblar */
+  .chaps{display:grid;gap:8px;margin-top:8px}
+  .chap{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:0;background:var(--bg);border-radius:16px;
+    padding:12px 14px 12px 12px;cursor:pointer;box-shadow:var(--shadow)}
+  .chap .num{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;font:700 16px/1 var(--display);
+    background:color-mix(in srgb,var(--c) 15%,transparent);color:var(--c)}
+  .chap .ct{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+  .chap .ct b{font-weight:600;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .chap.empty-ch{opacity:.6;box-shadow:none;background:color-mix(in srgb,var(--bg) 70%,transparent)}
+  .pbar{display:block;height:5px;border-radius:3px;background:var(--bg2);overflow:hidden;margin-top:5px}
+  .pbar i{display:block;height:100%;background:var(--c);border-radius:3px}
+  .titlebar .meta{font-size:13px}
+  /* ===== Musobaqa (doska) ===== */
+  .game-card{--c:var(--amber)}
+  .gwrap{max-width:none;padding:0}
+  .gpanel{max-width:640px;margin:0 auto;padding:calc(16px + var(--safe-top)) 16px 40px}
+  .gpanel h1{font:700 24px/1.2 var(--display);margin:6px 0 14px;letter-spacing:-.4px}
+  .pinbox{display:flex;gap:10px}
+  .pinbox input{flex:1;font:700 28px/1 var(--display);letter-spacing:6px;text-align:center;padding:16px;border-radius:14px;
+    border:2px solid var(--line);background:var(--bg);color:var(--text)}
+  .gtests{display:grid;gap:8px;max-height:46vh;overflow:auto;margin-top:8px;padding:2px}
+  .gtest{display:flex;gap:12px;align-items:center;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:12px;cursor:pointer;width:100%}
+  .gtest.on{border-color:var(--accent);background:var(--soft)}
+  .teams{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+  .teams input{width:100%;border:2px solid var(--tc);border-radius:12px;padding:12px;font:600 17px/1.2 inherit;background:var(--bg);color:var(--text)}
+  .secs{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .secs button{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer}
+  .secs button.on{border-color:var(--accent);background:var(--accent);color:var(--accent-text)}
+  :root{--t1:#2D7FC1;--t2:#D9544C}
+  .arena{position:fixed;inset:0;display:grid;grid-template-columns:minmax(150px,21%) 1fr minmax(150px,21%);
+    background:var(--page);z-index:8;padding-top:var(--safe-top);user-select:none;-webkit-user-select:none;touch-action:manipulation}
+  .side{display:flex;flex-direction:column;gap:12px;padding:14px;background:color-mix(in srgb,var(--tc) 10%,var(--page))}
+  .side .tname{font:700 clamp(16px,2vw,26px)/1.15 var(--display);color:var(--tc);text-align:center;overflow-wrap:anywhere}
+  .side .tscore{font:700 clamp(46px,7vw,96px)/1 var(--display);color:var(--tc);text-align:center}
+  .side .abtn{flex:1;min-height:56px;border:0;border-radius:18px;background:var(--tc);color:#fff;font:700 clamp(26px,4vw,52px)/1 var(--display);
+    cursor:pointer;box-shadow:0 4px 0 color-mix(in srgb,var(--tc) 60%,#000);transition:transform .08s}
+  .side .abtn:active{transform:translateY(3px);box-shadow:0 1px 0 color-mix(in srgb,var(--tc) 60%,#000)}
+  .side.locked .abtn{opacity:.35;pointer-events:none}
+  .side .abtn.pick{opacity:1!important;outline:5px solid var(--text)}
+  .side .verdict{text-align:center;font:700 clamp(16px,1.8vw,24px)/1.2 var(--display);min-height:1.3em}
+  .center{display:flex;flex-direction:column;min-width:0;padding:14px 18px;gap:12px;overflow:auto}
+  .ghead{display:flex;align-items:center;gap:12px}
+  .ghead .gq{font:700 clamp(15px,1.6vw,22px)/1 var(--display);color:var(--hint)}
+  .gtimer{margin-left:auto;font:700 clamp(28px,3.4vw,48px)/1 var(--display);font-variant-numeric:tabular-nums;color:var(--accent);min-width:2.2em;text-align:right}
+  .gtimer.warn{color:var(--bad)}
+  .gbar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+  .gbar i{display:block;height:100%;background:var(--accent);transition:width 1s linear}
+  .gquestion{background:var(--bg);border-radius:20px;padding:clamp(14px,2vw,26px);box-shadow:var(--shadow)}
+  .gquestion .qtext{font-size:clamp(18px,2.1vw,30px);line-height:1.4}
+  .gquestion img.qimg{max-height:34vh;width:auto;max-width:100%;margin:12px auto 0;display:block;cursor:default}
+  .gquestion .tbl table{font-size:clamp(14px,1.4vw,20px)}
+  .gopts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .gopt{display:flex;gap:12px;align-items:center;background:var(--bg);border-radius:16px;padding:12px 16px;font-size:clamp(16px,1.8vw,26px);
+    border:3px solid transparent;box-shadow:var(--shadow)}
+  .gopt .L{width:1.8em;height:1.8em;border-radius:50%;background:var(--bg2);display:grid;place-items:center;font-weight:800;flex:none}
+  .gopt img{max-height:14vh;max-width:100%}
+  .gopt.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--bg))}
+  .gopt.ok .L{background:var(--good);color:#fff}
+  .banner{text-align:center;font:700 clamp(16px,1.9vw,28px)/1.2 var(--display);padding:2px 6px}
+  .gnext{flex:none;border:0;border-radius:14px;background:var(--accent);color:var(--accent-text);font:700 clamp(15px,1.5vw,22px)/1 var(--display);
+    padding:14px 22px;cursor:pointer}
+  .gtools{display:flex;gap:8px}
+  .gtools button{border:0;background:var(--bg);border-radius:12px;width:44px;height:44px;font-size:18px;cursor:pointer;box-shadow:var(--shadow)}
+  .podium{position:fixed;inset:0;z-index:9;background:var(--page);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center}
+  .podium .win{font:700 clamp(30px,5vw,72px)/1.1 var(--display);color:var(--wc)}
+  .podium .sc{display:flex;gap:clamp(20px,6vw,90px);font:700 clamp(22px,3vw,40px)/1.2 var(--display)}
+  .podium .sc div b{display:block;font-size:2.2em}
+  @media (max-width:760px){
+    .arena{grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;overflow:auto}
+    .center{grid-column:1/-1;grid-row:1}
+    .side{grid-row:2}
+    .side .abtn{min-height:52px;flex:none}
+    .gopts{grid-template-columns:1fr}
+  }
   @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -256,7 +330,16 @@ uz: {
   nav_tests:"Testlar", nav_rating:"Reyting", nav_profile:"Profil", loading:"Yuklanmoqda…",
   hello:"Assalomu alaykum!", hello_name:"Assalomu alaykum, {n}!", h1:"Bugun qaysi testni ishlaymiz?",
   st_done:"ishlangan test", st_avg:"o'rtacha natija", st_best:"eng yaxshi o'rin", place:"{n}-o'rin",
-  sections:"Bo'limlar", open_n:"{n} ta ochiq test", none_yet:"Hozircha test yo'q", fresh:", {n} tasi yangi", updated:"Yangilangan: {d}",
+  g_card:"Guruhlar musobaqasi", g_card_d:"Doskada 2 guruh bilan o'yin, ustoz kodi bilan", g_title:"Guruhlar musobaqasi",
+  g_pin:"Ustoz kodini kiriting", g_pin_btn:"Kirish", g_pin_bad:"Kod noto'g'ri", g_nopin:"Musobaqa uchun ustoz avval botda /pin buyrug'i bilan kod o'rnatishi kerak.",
+  g_pick:"Testni tanlang", g_teams:"Guruhlar", g_teams_hint:"nomini bosib o'zgartiring", g_t1:"1-guruh", g_t2:"2-guruh", g_secs:"Har savolga vaqt", g_sec:"{n} s",
+  g_start:"Musobaqani boshlash", g_q:"Savol {i} / {n}", g_next:"Keyingi savol ›", g_finish:"Natijalar ›", g_first:"✅ {t} birinchi topdi! +1",
+  g_second:"✅ {t} to'g'ri topdi! +1", g_wrong:"❌ Xato", g_correct:"✅ +1", g_none:"Hech kim topmadi. To'g'ri javob: {l}", g_timeout:"⏰ Vaqt tugadi! To'g'ri javob: {l}",
+  g_win:"{t} g'olib!", g_draw:"Durang!", g_again:"Qayta o'ynash", g_other:"Boshqa test", g_exit:"Musobaqadan chiqasizmi?", g_wait:"Javob kutilmoqda…",
+  g_loading:"Savollar yuklanmoqda…", g_empty:"Savollari ilovada bor test hali yo'q.",
+  sections:"Bo'limlar", chapters:"Boblar", bob_n:"{n}-bob", chap_tests:"{n} ta test", chap_done:"{d}/{n} ishlangan",
+  soon_tests:"Testlar tez orada", other_tests:"Boshqa testlar", chap_empty:"Bu bobda hozircha ochiq test yo'q. Yangi test qo'shilganda bot xabar beradi.",
+  chap_rating:"{s} reytingi", open_n:"{n} ta ochiq test", none_yet:"Hozircha test yo'q", fresh:", {n} tasi yangi", updated:"Yangilangan: {d}",
   k_mock:"Mock exam", k_sinf5:"5-sinf", k_sinf6:"6-sinf", k_mavzu:"Mavzulashtirilgan",
   d_mock:"Ibn Sino formatidagi to'liq sinovlar", d_sinf:"Mavzular bo'yicha testlar, natija darhol", d_mavzu:"Mavzulashtirilgan testlar",
   open_tests:"Ochiq testlar", no_open:"Hozircha ochiq test yo'q. Yangi test qo'shilganda shu yerda chiqadi va bot xabar beradi.",
@@ -299,7 +382,16 @@ ru: {
   nav_tests:"Тесты", nav_rating:"Рейтинг", nav_profile:"Профиль", loading:"Загрузка…",
   hello:"Здравствуйте!", hello_name:"Здравствуйте, {n}!", h1:"Какой тест решаем сегодня?",
   st_done:"решено тестов", st_avg:"средний балл", st_best:"лучшее место", place:"{n}-е место",
-  sections:"Разделы", open_n:"Открытых тестов: {n}", none_yet:"Пока тестов нет", fresh:", новых: {n}", updated:"Обновлено: {d}",
+  g_card:"Соревнование команд", g_card_d:"Игра на доске для 2 команд, по коду учителя", g_title:"Соревнование команд",
+  g_pin:"Введите код учителя", g_pin_btn:"Войти", g_pin_bad:"Неверный код", g_nopin:"Учитель должен сначала задать код в боте командой /pin.",
+  g_pick:"Выберите тест", g_teams:"Команды", g_teams_hint:"нажмите на название, чтобы изменить", g_t1:"Команда 1", g_t2:"Команда 2", g_secs:"Время на вопрос", g_sec:"{n} с",
+  g_start:"Начать соревнование", g_q:"Вопрос {i} / {n}", g_next:"Следующий вопрос ›", g_finish:"Итоги ›", g_first:"✅ {t} ответила первой! +1",
+  g_second:"✅ {t} ответила верно! +1", g_wrong:"❌ Неверно", g_correct:"✅ +1", g_none:"Никто не угадал. Верный ответ: {l}", g_timeout:"⏰ Время вышло! Верный ответ: {l}",
+  g_win:"Победила {t}!", g_draw:"Ничья!", g_again:"Сыграть ещё", g_other:"Другой тест", g_exit:"Выйти из соревнования?", g_wait:"Ждём ответ…",
+  g_loading:"Загрузка вопросов…", g_empty:"Пока нет тестов с вопросами в приложении.",
+  sections:"Разделы", chapters:"Главы", bob_n:"Глава {n}", chap_tests:"Тестов: {n}", chap_done:"решено {d}/{n}",
+  soon_tests:"Тесты скоро появятся", other_tests:"Другие тесты", chap_empty:"В этой главе пока нет открытых тестов. Когда тест появится, бот пришлёт уведомление.",
+  chap_rating:"Рейтинг: {s}", open_n:"Открытых тестов: {n}", none_yet:"Пока тестов нет", fresh:", новых: {n}", updated:"Обновлено: {d}",
   k_mock:"Mock exam", k_sinf5:"5 класс", k_sinf6:"6 класс", k_mavzu:"Тематические",
   d_mock:"Полные пробные экзамены в формате Ибн Сино", d_sinf:"Тесты по темам, результат сразу", d_mavzu:"Тематические тесты",
   open_tests:"Открытые тесты", no_open:"Открытых тестов пока нет. Новый тест появится здесь, и бот пришлёт уведомление.",
@@ -475,6 +567,8 @@ function go(v, extra = {}, push = true) {
 }
 function back() {
   if (route.v === "exam") { leaveExam(); return; }
+  if (route.v === "game" && G.phase === "play") { gameExit(); return; }
+  if (route.v === "game") clearInterval(G.timer);
   route = history_.pop() || {v: "home"};
   render();
 }
@@ -489,13 +583,13 @@ function render() {
   paintChrome();
   document.documentElement.lang = LANG === "ru" ? "ru" : "uz";
   $nav.querySelectorAll("[data-t]").forEach(el => el.textContent = T(el.dataset.t));
-  const inExam = route.v === "exam";
+  const inExam = route.v === "exam" || route.v === "game";
   $nav.style.display = inExam ? "none" : "";
   [...$nav.children].forEach(b => b.classList.toggle("on", b.dataset.go === route.v ||
-    (b.dataset.go === "home" && ["section", "intro"].includes(route.v))));
+    (b.dataset.go === "home" && ["section", "chapter", "intro"].includes(route.v))));
   if (tg && tg.BackButton) (["home", "rating", "me"].includes(route.v) ? tg.BackButton.hide() : tg.BackButton.show());
   if (tg) { try { inExam ? tg.enableClosingConfirmation() : tg.disableClosingConfirmation(); } catch (e) {} }
-  ({home: viewHome, section: viewSection, intro: viewIntro, exam: viewExam, rating: viewRating, me: viewMe})[route.v]();
+  ({game: viewGame, home: viewHome, section: viewSection, chapter: viewChapter, intro: viewIntro, exam: viewExam, rating: viewRating, me: viewMe})[route.v]();
 }
 
 // ---------------- Yordamchilar ----------------
@@ -562,8 +656,13 @@ function viewHome() {
           <span class="chip">${open.length ? T("open_n", {n: open.length}) : T("none_yet")}${fresh && fresh < open.length ? T("fresh", {n: fresh}) : ""}</span></div>
         <span class="chev">›</span></button>`;
     }).join("")}
+    ${DATA.game ? `<button class="cat" style="--c:var(--amber)" data-game>
+        <div class="badge">${ICO('<path d="M6 21h12M12 17v4M8 3h8v6a4 4 0 0 1-8 0Z"/><path d="M4 21V12M20 21V12M2 12h4M18 12h4"/>')}</div>
+        <div style="min-width:0"><div class="t">${T("g_card")}</div><div class="meta">${T("g_card_d")}</div></div>
+        <span class="chev">🔐</span></button>` : ""}
     <footer>${T("updated", {d: esc(DATA.updated)})}</footer>`;
-  $app.querySelectorAll(".cat").forEach(b => b.onclick = () => { haptic("sel"); go("section", {k: b.dataset.k}); });
+  $app.querySelectorAll(".cat[data-k]").forEach(b => b.onclick = () => { haptic("sel"); go("section", {k: b.dataset.k}); });
+  const gb = $app.querySelector("[data-game]"); if (gb) gb.onclick = () => { haptic("sel"); go("game"); };
   const fs = document.getElementById("fs");
   if (fs) fs.onclick = () => { haptic("sel"); tg.isFullscreen ? tg.exitFullscreen() : tg.requestFullscreen(); };
   document.getElementById("mebtn").onclick = () => { haptic("sel"); history_ = []; route = {v: "me"}; render(); };
@@ -571,36 +670,91 @@ function viewHome() {
 }
 
 // ---------------- Bo'lim ----------------
+function openCard(t) {
+  return `<div class="card tst" data-code="${esc(t.code)}">
+    <div style="display:flex;justify-content:space-between;gap:10px;align-items:start">
+      <h3>${esc(t.title)}</h3>${isDone(t.code) ? `<span class="done-tag">${T("done_tag")}</span>` : `<span class="chev">›</span>`}</div>
+    <div class="chips"><span>📋 ${T("q_n", {n: t.n})}</span>${t.minutes ? `<span>⏱ ${T("min_n", {n: t.minutes})}</span>` : ""}
+      ${winTxt(t) ? `<span>🗓 ${esc(winTxt(t))}</span>` : `<span>📅 ${esc(t.date)}</span>`}
+      ${t.live ? `<span>⚡️ ${T("instant")}</span>` : ""}
+      ${state(t) === "soon" ? `<span style="color:var(--mid);font-weight:700">⏳ ${T("opens_at", {t: hm(t.opens)})}</span>` : ""}</div>
+    ${t.topics.length > 1 ? `<div class="meta" style="margin-top:8px">${t.topics.map(x => esc(x[0])).join(" · ")}</div>` : ""}
+    ${t.live && t.results && t.results.length ? `<div class="fold" data-stop style="margin-top:10px">
+      <div class="meta" style="font-weight:700;color:var(--accent)">🏆 ${T("rating_n", {n: t.results.length})} ›</div>
+      <div class="results">${rankRows(t.results, 1, r => `<span class="score">${r[1]}/${t.n}</span>`, 50)}</div></div>` : ""}
+  </div>`;
+}
+function finishedCard(t) {
+  return `<div class="card fold">
+    <div style="display:flex;justify-content:space-between;gap:8px"><h3 style="margin:0;font-size:16px;font-family:var(--display)">${esc(t.title)}</h3><span class="chev">›</span></div>
+    <div class="meta">${esc(t.date)} · ${T("people_n", {n: t.results.length})} · ${T("q_n", {n: t.n})}</div>
+    ${bars([...t.topics].sort((a, b) => a[1] - b[1]))}
+    <div class="results">${rankRows(t.results, 1, r => `<span class="score">${r[1]}/${t.n}</span>`)}</div>
+  </div>`;
+}
+function bindCards() {
+  $app.querySelectorAll(".tst").forEach(el => el.onclick = e => { if (e.target.closest("[data-stop]")) return; haptic("sel"); go("intro", {code: el.dataset.code}); });
+  $app.querySelectorAll(".fold").forEach(el => el.onclick = e => { if (e.target.closest(".results")) return; el.classList.toggle("open"); haptic("sel"); });
+}
+// Bob (yoki bo'lim) bo'yicha reyting: har o'quvchining testlardagi o'rtacha foizi
+function aggRating(tests) {
+  const acc = {};
+  tests.forEach(t => (t.results || []).forEach(([name, sc]) => {
+    const a = acc[name] || (acc[name] = [0, 0]); a[0] += 100 * sc / t.n; a[1] += 1; }));
+  return Object.entries(acc).map(([n, [s, c]]) => [n, Math.round(s / c), c]).sort((a, b) => b[1] - a[1] || b[2] - a[2]);
+}
+const chapName = (k, b) => { const c = ((DATA.chapters || {})[k] || []).find(x => x[0] === b); return c && c[1] ? c[1] : ""; };
+const chapTitle = (k, b) => T("bob_n", {n: b}) + (chapName(k, b) ? ": " + chapName(k, b) : "");
+
 function viewSection() {
   const k = route.k, s = SEC[k] || SEC.mavzu, open = DATA.open.filter(t => t.kind === k);
   const fin = (DATA.kinds[k] || {tests: [], rating: []});
+  const chs = (DATA.chapters || {})[k];
+  let body;
+  if (chs && chs.length) {
+    // Boblar ro'yxati
+    const loose = open.filter(t => !t.bob).length + fin.tests.filter(t => !t.bob).length;
+    body = `<h2 class="sec" style="margin:18px 2px 0">${T("chapters")}</h2>
+      <div class="chaps">${chs.map(([b, name]) => {
+        const o = open.filter(t => t.bob === b), f = fin.tests.filter(t => t.bob === b);
+        const total = o.length + f.length, done = o.filter(t => isDone(t.code)).length;
+        return `<button class="chap ${total ? "" : "empty-ch"}" data-b="${b}" style="--c:${s.c}">
+          <span class="num">${b}</span>
+          <span class="ct"><b>${name ? esc(name) : T("bob_n", {n: b})}</b>
+            <span class="meta">${total ? T("chap_tests", {n: total}) + (o.length ? " · " + T("chap_done", {d: done, n: o.length}) : "") : T("soon_tests")}</span>
+            ${o.length ? `<span class="pbar"><i style="width:${100 * done / o.length}%"></i></span>` : ""}</span>
+          <span class="chev">›</span></button>`;
+      }).join("")}</div>
+      ${loose ? `<button class="chap" data-b="0" style="--c:${s.c}"><span class="num">•</span><span class="ct"><b>${T("other_tests")}</b>
+        <span class="meta">${T("chap_tests", {n: loose})}</span></span><span class="chev">›</span></button>` : ""}`;
+  } else {
+    body = `<h2 class="sec" style="margin:18px 2px 0">${T("open_tests")}</h2>
+      ${open.length ? open.map(openCard).join("") : `<div class="card"><div class="empty">${T("no_open")}</div></div>`}
+      ${fin.tests.length ? `<h2 class="sec" style="margin:22px 2px 0">${T("finished")}</h2>` + fin.tests.map(finishedCard).join("") : ""}`;
+  }
   $app.innerHTML = `
     <div class="titlebar" style="--c:${s.c}"><div class="badge">${s.icon}</div><h1>${esc(secName(k))}</h1></div>
-    <h2 class="sec" style="margin:18px 2px 0">${T("open_tests")}</h2>
-    ${open.length ? open.map(t => `
-      <div class="card tst" data-code="${esc(t.code)}">
-        <div style="display:flex;justify-content:space-between;gap:10px;align-items:start">
-          <h3>${esc(t.title)}</h3>${isDone(t.code) ? `<span class="done-tag">${T("done_tag")}</span>` : `<span class="chev">›</span>`}</div>
-        <div class="chips"><span>📋 ${T("q_n", {n: t.n})}</span>${t.minutes ? `<span>⏱ ${T("min_n", {n: t.minutes})}</span>` : ""}
-          ${winTxt(t) ? `<span>🗓 ${esc(winTxt(t))}</span>` : `<span>📅 ${esc(t.date)}</span>`}
-          ${t.live ? `<span>⚡️ ${T("instant")}</span>` : ""}
-          ${state(t) === "soon" ? `<span style="color:var(--mid);font-weight:700">⏳ ${T("opens_at", {t: hm(t.opens)})}</span>` : ""}</div>
-        ${t.topics.length > 1 ? `<div class="meta" style="margin-top:8px">${t.topics.map(x => esc(x[0])).join(" · ")}</div>` : ""}
-        ${t.live && t.results && t.results.length ? `<div class="fold" data-stop style="margin-top:10px">
-          <div class="meta" style="font-weight:700;color:var(--accent)">🏆 ${T("rating_n", {n: t.results.length})} ›</div>
-          <div class="results">${rankRows(t.results, 1, r => `<span class="score">${r[1]}/${t.n}</span>`, 50)}</div></div>` : ""}
-      </div>`).join("") : `<div class="card"><div class="empty">${T("no_open")}</div></div>`}
-    ${fin.tests.length ? `<h2 class="sec" style="margin:22px 2px 0">${T("finished")}</h2>` + fin.tests.map(t => `
-      <div class="card fold">
-        <div style="display:flex;justify-content:space-between;gap:8px"><h3 style="margin:0;font-size:16px;font-family:var(--display)">${esc(t.title)}</h3><span class="chev">›</span></div>
-        <div class="meta">${esc(t.date)} · ${T("people_n", {n: t.results.length})} · ${T("q_n", {n: t.n})}</div>
-        ${bars([...t.topics].sort((a, b) => a[1] - b[1]))}
-        <div class="results">${rankRows(t.results, 1, r => `<span class="score">${r[1]}/${t.n}</span>`)}</div>
-      </div>`).join("") : ""}
+    ${body}
     ${fin.rating.length ? `<div class="card"><h2 class="sec">${esc(T("sec_rating", {s: secName(k)}))}</h2>
       ${rankRows(fin.rating, 1, r => `<span class="meta">${T("tests_n", {n: r[2]})}</span><span class="score">${r[1]}%</span>`, 30)}</div>` : ""}`;
-  $app.querySelectorAll(".tst").forEach(el => el.onclick = e => { if (e.target.closest("[data-stop]")) return; haptic("sel"); go("intro", {code: el.dataset.code}); });
-  $app.querySelectorAll(".fold").forEach(el => el.onclick = () => { el.classList.toggle("open"); haptic("sel"); });
+  $app.querySelectorAll(".chap").forEach(el => el.onclick = () => { haptic("sel"); go("chapter", {k, b: +el.dataset.b}); });
+  bindCards();
+}
+
+function viewChapter() {
+  const {k, b} = route, s = SEC[k] || SEC.mavzu;
+  const match = t => t.kind === k && (b ? t.bob === b : !t.bob);
+  const open = DATA.open.filter(match), fin = (DATA.kinds[k] || {tests: []}).tests.filter(t => b ? t.bob === b : !t.bob);
+  const rating = aggRating([...open.filter(t => t.live), ...fin]);
+  $app.innerHTML = `
+    <div class="titlebar" style="--c:${s.c}"><div class="badge" style="font-size:18px">${b || "•"}</div>
+      <div><div class="meta">${esc(secName(k))}</div><h1>${b ? esc(chapName(k, b) || T("bob_n", {n: b})) : T("other_tests")}</h1></div></div>
+    <h2 class="sec" style="margin:18px 2px 0">${T("open_tests")}</h2>
+    ${open.length ? open.map(openCard).join("") : `<div class="card"><div class="empty">${T("chap_empty")}</div></div>`}
+    ${fin.length ? `<h2 class="sec" style="margin:22px 2px 0">${T("finished")}</h2>` + fin.map(finishedCard).join("") : ""}
+    ${rating.length ? `<div class="card"><h2 class="sec">${esc(T("chap_rating", {s: b ? T("bob_n", {n: b}) : T("other_tests")}))}</h2>
+      ${rankRows(rating, 1, r => `<span class="meta">${T("tests_n", {n: r[2]})}</span><span class="score">${r[1]}%</span>`, 50)}</div>` : ""}`;
+  bindCards();
 }
 
 // ---------------- Test oldi ----------------
@@ -874,6 +1028,202 @@ function viewMe() {
     tg.sendData(JSON.stringify({t: "profile", name, notify: DRAFT.notify, lang: LANG}));
   };
   function isDirty() { return DRAFT.name.trim() !== server.name || DRAFT.notify !== (server.notify !== false) || LANG !== (server.lang || "uz"); }
+}
+
+// ---------------- Guruhlar musobaqasi (doska) ----------------
+const G = {phase: "pin", dk: null, test: null, items: [], i: 0, key: "", teams: [], scores: [0, 0], secs: 30, q: null, sound: true};
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function deriveKey(pin, g) {
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pin), "PBKDF2", false, ["deriveBits"]);
+  return new Uint8Array(await crypto.subtle.deriveBits({name: "PBKDF2", salt: b64(g.salt), iterations: g.iter, hash: "SHA-256"}, base, 256));
+}
+const cat = (...arrs) => { const n = arrs.reduce((a, x) => a + x.length, 0), o = new Uint8Array(n); let p = 0; arrs.forEach(x => { o.set(x, p); p += x.length; }); return o; };
+const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+async function decryptKey(dk, code, e) {
+  const data = b64(e), enc = new TextEncoder().encode(code);
+  let ks = new Uint8Array(0);
+  for (let i = 0; ks.length < data.length; i++) {
+    const ctr = new Uint8Array([(i >>> 24) & 255, (i >>> 16) & 255, (i >>> 8) & 255, i & 255]);
+    ks = cat(ks, new Uint8Array(await crypto.subtle.digest("SHA-256", cat(dk, enc, ctr))));
+  }
+  return String.fromCharCode(...data.map((b, i) => b ^ ks[i]));
+}
+// Ovozlar (fayl kerak emas)
+let AC = null;
+function beep(freqs, dur = .12, type = "sine", vol = .25) {
+  if (!G.sound) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    let t = AC.currentTime;
+    freqs.forEach(f => { const o = AC.createOscillator(), g = AC.createGain(); o.type = type; o.frequency.value = f;
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.001, t + dur);
+      o.connect(g).connect(AC.destination); o.start(t); o.stop(t + dur); t += dur * .9; });
+  } catch (e) {}
+}
+const SND = {ok: () => beep([660, 880, 1175], .14, "triangle"), bad: () => beep([180, 140], .22, "sawtooth", .18),
+  tick: () => beep([1000], .05, "square", .08), end: () => beep([523, 659, 784, 1047, 784, 1047], .16, "triangle")};
+
+function viewGame() {
+  clearInterval(G.timer);
+  if (!DATA.game) { $app.innerHTML = `<div class="gpanel"><div class="card"><div class="empty">${T("g_nopin")}</div></div></div>`; return; }
+  if (!G.dk) G.phase = "pin";
+  if (G.phase === "pin") return gamePin();
+  if (G.phase === "setup") return gameSetup();
+  if (G.phase === "play") return drawRound();
+  if (G.phase === "end") return gameEnd();
+}
+
+function gamePin() {
+  $app.innerHTML = `<div class="gpanel"><h1>🏁 ${T("g_title")}</h1>
+    <div class="card"><div class="field"><label for="gpin">🔐 ${T("g_pin")}</label>
+      <div class="pinbox"><input id="gpin" type="password" inputmode="numeric" autocomplete="off" maxlength="32"></div></div>
+      <div class="note" id="gerr" style="color:var(--bad);min-height:1.2em"></div>
+      <button class="btn" id="gok">${T("g_pin_btn")}</button></div></div>`;
+  const inp = document.getElementById("gpin"), go_ = async () => {
+    const pin = inp.value.trim(); if (!pin) return;
+    document.getElementById("gok").disabled = true;
+    try {
+      const dk = await deriveKey(pin, DATA.game);
+      const chk = hex(await crypto.subtle.digest("SHA-256", cat(dk, new TextEncoder().encode("check")))).slice(0, 16);
+      if (chk !== DATA.game.check) throw 0;
+      G.dk = dk; G.phase = "setup"; haptic("success"); render();
+    } catch (e) {
+      document.getElementById("gerr").textContent = T("g_pin_bad"); haptic("error"); SND.bad();
+      document.getElementById("gok").disabled = false; inp.select();
+    }
+  };
+  document.getElementById("gok").onclick = go_;
+  inp.onkeydown = e => { if (e.key === "Enter") go_(); };
+  setTimeout(() => inp.focus(), 50);
+}
+
+function gameSetup() {
+  const tests = DATA.game.tests;
+  G.sel = G.sel || (tests[0] && tests[0].code);
+  G.teams = G.teams.length ? G.teams : store.get("teams", null) || [T("g_t1"), T("g_t2")];
+  const label = t => esc(secName(t.kind)) + (t.bob ? " · " + esc(chapTitle(t.kind, t.bob)) : "");
+  $app.innerHTML = `<div class="gpanel"><h1>🏁 ${T("g_title")}</h1>
+    <div class="card"><h2 class="sec">${T("g_pick")}</h2>
+      ${tests.length ? `<div class="gtests">${tests.map(t => `<button class="gtest ${t.code === G.sel ? "on" : ""}" data-c="${esc(t.code)}">
+        <div style="flex:1;min-width:0"><b>${esc(t.title)}</b><div class="meta">${label(t)} · ${T("q_n", {n: t.n})}</div></div></button>`).join("")}</div>`
+        : `<div class="empty">${T("g_empty")}</div>`}</div>
+    <div class="card"><h2 class="sec">${T("g_teams")} <span class="meta">— ${T("g_teams_hint")}</span></h2>
+      <div class="teams"><input id="t1" style="--tc:var(--t1)" maxlength="24" value="${esc(G.teams[0])}">
+        <input id="t2" style="--tc:var(--t2)" maxlength="24" value="${esc(G.teams[1])}"></div>
+      <h2 class="sec" style="margin-top:16px">${T("g_secs")}</h2>
+      <div class="secs">${[15, 20, 30, 45, 60].map(n => `<button data-s="${n}" class="${n === G.secs ? "on" : ""}">${T("g_sec", {n})}</button>`).join("")}</div>
+    </div>
+    ${tests.length ? `<button class="btn" id="gstart">${T("g_start")} ›</button>` : ""}</div>`;
+  $app.querySelectorAll(".gtest").forEach(b => b.onclick = () => { G.sel = b.dataset.c; haptic("sel"); saveTeams(); gameSetup(); });
+  $app.querySelectorAll(".secs button").forEach(b => b.onclick = () => { G.secs = +b.dataset.s; haptic("sel"); saveTeams(); gameSetup(); });
+  function saveTeams() { G.teams = [document.getElementById("t1").value.trim() || T("g_t1"), document.getElementById("t2").value.trim() || T("g_t2")];
+    store.set("teams", G.teams); }   // keyingi safar ham eslab qoladi
+  const st = document.getElementById("gstart");
+  if (st) st.onclick = async () => {
+    saveTeams(); st.disabled = true; st.textContent = T("g_loading");
+    const meta = tests.find(t => t.code === G.sel);
+    try {
+      const test = await (await fetch(`tests/${meta.code}/test.json?v=${encodeURIComponent(DATA.updated)}`, {cache: "no-cache"})).json();
+      G.key = await decryptKey(G.dk, meta.code, meta.e);
+      G.test = test; G.meta = meta; G.items = test.questions; G.i = 0; G.scores = [0, 0];
+      G.phase = "play"; startRound(); render();
+      if (canFS() && !tg.isFullscreen) { try { tg.requestFullscreen(); } catch (e) {} }
+    } catch (e) { st.disabled = false; st.textContent = T("load_fail"); }
+  };
+}
+
+function startRound() {
+  G.q = {ans: [null, null], order: [], winner: null, over: false, msg: "", end: Date.now() + G.secs * 1000};
+}
+
+function drawRound() {
+  const q = G.items[G.i], R = G.q, key = G.key[G.i];
+  const base = `tests/${G.meta.code}/`;
+  const body = q.body.map(b => b.t ? `<div class="qtext">${safe(b.t)}</div>`
+    : b.img ? `<img class="qimg" src="${esc(base + b.img)}" alt="">`
+    : b.table ? `<div class="tbl"><table>${b.table.map(r => `<tr>${r.map(c => `<td>${safe(c)}</td>`).join("")}</tr>`).join("")}</table></div>` : "").join("");
+  const side = ti => {
+    const a = R.ans[ti], locked = R.over || a !== null;
+    const verdict = a === null ? (R.over ? "" : "") : a === key ? T("g_correct") : T("g_wrong");
+    return `<div class="side ${locked ? "locked" : ""}" style="--tc:var(--t${ti + 1})" data-team="${ti}">
+      <div class="tname">${esc(G.teams[ti])}</div><div class="tscore">${G.scores[ti]}</div>
+      ${q.opts.map(o => `<button class="abtn ${a === o.l.toLowerCase() ? "pick" : ""}" data-l="${o.l.toLowerCase()}">${esc(o.l)}</button>`).join("")}
+      <div class="verdict" style="color:${a === null ? "var(--hint)" : a === key ? "var(--good)" : "var(--bad)"}">${verdict}</div></div>`;
+  };
+  const left = Math.max(0, Math.ceil((R.end - Date.now()) / 1000));
+  $app.innerHTML = `<div class="arena">
+    ${side(0)}
+    <div class="center">
+      <div class="ghead"><div class="gtools"><button id="gx" title="Exit">✕</button><button id="gs">${G.sound ? "🔊" : "🔇"}</button></div>
+        <span class="gq">${T("g_q", {i: G.i + 1, n: G.items.length})}</span>
+        ${R.over ? `<span class="banner" style="flex:1;color:${R.winner === null ? "var(--hint)" : `var(--t${R.winner + 1})`}">${R.msg}</span>
+          <button class="gnext" id="gn">${G.i < G.items.length - 1 ? T("g_next") : T("g_finish")}</button>`
+          : `<span class="gtimer ${left <= 5 ? "warn" : ""}" id="gt">${left}</span>`}</div>
+      <div class="gbar"><i id="gb" style="width:${R.over ? 0 : 100 * left / G.secs}%"></i></div>
+      <div class="gquestion">${body}</div>
+      <div class="gopts">${q.opts.map(o => `<div class="gopt ${R.over && o.l.toLowerCase() === key ? "ok" : ""}"><span class="L">${esc(o.l)}</span>
+        <span>${safe(o.h)}${o.img ? `<img src="${esc(base + o.img)}" alt="">` : ""}</span></div>`).join("")}</div>
+    </div>
+    ${side(1)}
+  </div>`;
+  // Ikki guruh bir vaqtda bosishi mumkin — pointerdown (sensorli doska)
+  $app.querySelectorAll(".side").forEach(sd => sd.addEventListener("pointerdown", e => {
+    const b = e.target.closest(".abtn"); if (!b) return;
+    e.preventDefault(); answer(+sd.dataset.team, b.dataset.l);
+  }));
+  document.getElementById("gx").onclick = gameExit;
+  document.getElementById("gs").onclick = () => { G.sound = !G.sound; drawRound(); };
+  const gn = document.getElementById("gn");
+  if (gn) gn.onclick = nextRound;
+  clearInterval(G.timer);
+  if (!R.over) G.timer = setInterval(() => {
+    const l = (R.end - Date.now()) / 1000, el = document.getElementById("gt"), bar = document.getElementById("gb");
+    if (el) { el.textContent = Math.max(0, Math.ceil(l)); el.classList.toggle("warn", l <= 5); }
+    if (bar) bar.style.width = Math.max(0, 100 * l / G.secs) + "%";
+    if (l <= 5.05 && l > 0 && Math.abs(l - Math.round(l)) < .13) SND.tick();
+    if (l <= 0) { clearInterval(G.timer); R.over = true; R.msg = T("g_timeout", {l: key.toUpperCase()}); SND.bad(); drawRound(); }
+  }, 250);
+}
+
+function answer(team, letter) {
+  const R = G.q, key = G.key[G.i];
+  if (R.over || R.ans[team] !== null) return;
+  R.ans[team] = letter; R.order.push(team);
+  if (letter === key) {
+    R.winner = team; G.scores[team] += 1; R.over = true;
+    R.msg = T(R.order.length === 1 ? "g_first" : "g_second", {t: esc(G.teams[team])});
+    SND.ok(); haptic("success");
+  } else {
+    SND.bad(); haptic("error");
+    if (R.ans[0] !== null && R.ans[1] !== null) { R.over = true; R.msg = T("g_none", {l: key.toUpperCase()}); }
+  }
+  drawRound();
+}
+
+function nextRound() {
+  if (G.i < G.items.length - 1) { G.i++; startRound(); drawRound(); }
+  else { G.phase = "end"; clearInterval(G.timer); SND.end(); gameEnd(); }
+}
+
+function gameEnd() {
+  const [a, b] = G.scores, w = a === b ? -1 : a > b ? 0 : 1;
+  $app.innerHTML = `<div class="podium" style="--wc:${w < 0 ? "var(--accent)" : `var(--t${w + 1})`}">
+    <div style="font-size:64px">${w < 0 ? "🤝" : "🏆"}</div>
+    <div class="win">${w < 0 ? T("g_draw") : esc(T("g_win", {t: G.teams[w]}))}</div>
+    <div class="meta" style="font-size:18px">${esc(G.meta.title)}</div>
+    <div class="sc"><div style="color:var(--t1)">${esc(G.teams[0])}<b>${a}</b></div><div style="color:var(--t2)">${esc(G.teams[1])}<b>${b}</b></div></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <button class="btn" id="gre" style="width:auto;padding:14px 26px">${T("g_again")}</button>
+      <button class="btn ghost" id="got" style="width:auto;padding:14px 26px;background:var(--bg);border:2px solid var(--line)">${T("g_other")}</button></div></div>`;
+  document.getElementById("gre").onclick = () => { G.i = 0; G.scores = [0, 0]; G.phase = "play"; startRound(); render(); };
+  document.getElementById("got").onclick = () => { G.phase = "setup"; render(); };
+}
+
+async function gameExit() {
+  if (G.phase === "play" && !(await confirmBox(T("g_exit")))) return;
+  clearInterval(G.timer); G.phase = G.dk ? "setup" : "pin";
+  if (route.v === "game" && G.phase === "setup") { render(); return; }
+  history_ = []; route = {v: "home"}; render();
 }
 
 // ---------------- Ma'lumotlarni yuklash ----------------
