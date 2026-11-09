@@ -328,6 +328,10 @@
     .gquestion img.qimg{flex:none;height:auto;max-height:60vh;min-height:0}
   }
   @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+  .spin{width:38px;height:38px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--accent);margin:0 auto 14px;animation:sp 0.8s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .result-card .botmsg{text-align:left;background:var(--bg2);border-radius:14px;padding:14px 16px;margin-top:12px;line-height:1.5;font-size:15px}
+  .btn.ghost{background:var(--bg);color:var(--text);box-shadow:var(--shadow)}
 </style>
 </head>
 <body>
@@ -390,6 +394,7 @@ uz: {
   p_lang:"Til", p_bg:"Fon", bg_grid:"Katak", bg_dots:"Hujayra", bg_hex:"Molekula", bg_plain:"Toza",
   p_save:"Saqlash", p_save_note:"Saqlaganda ilova yopiladi, bot tasdiqlab xabar yuboradi.",
   p_open_bot:"Saqlash uchun ilovani botdagi «📝 Testlar» tugmasi orqali oching.", p_new:"Yangi o'quvchi",
+  sending:"Javoblar yuborilmoqda…", sent_ok:"✅ Javoblaringiz qabul qilindi.", to_home:"🏠 Bosh sahifa", saved:"✅ Saqlandi",
   my_results:"Natijalarim", no_results:"Hali natijalaringiz yo'q. Test topshirgach, natijangiz shu yerda chiqadi.",
   st_tests:"test", st_avg2:"o'rtacha", st_best2:"eng yaxshi", weak:"📌 Ko'proq e'tibor bering: {t}",
   by_topic:"Mavzular bo'yicha", history:"Testlar tarixi", place_of:"{p}-o'rin ({n} nafardan)",
@@ -442,6 +447,7 @@ ru: {
   p_lang:"Язык", p_bg:"Фон", bg_grid:"Сетка", bg_dots:"Клетки", bg_hex:"Молекулы", bg_plain:"Чистый",
   p_save:"Сохранить", p_save_note:"После сохранения приложение закроется, бот пришлёт подтверждение.",
   p_open_bot:"Чтобы сохранить, откройте приложение кнопкой «📝 Testlar» в боте.", p_new:"Новый ученик",
+  sending:"Отправляем ответы…", sent_ok:"✅ Ответы приняты.", to_home:"🏠 На главную", saved:"✅ Сохранено",
   my_results:"Мои результаты", no_results:"Результатов пока нет. После первого теста они появятся здесь.",
   st_tests:"тестов", st_avg2:"среднее", st_best2:"лучший", weak:"📌 Обратите внимание: {t}",
   by_topic:"По темам", history:"История тестов", place_of:"{p}-е место из {n}",
@@ -510,6 +516,21 @@ const canSend = () => !!(tg && tg.sendData && tg.platform !== "unknown" && !(tg.
 
 const $app = document.getElementById("app"), $nav = document.getElementById("nav");
 const params = new URLSearchParams(location.search);
+const AUTH = params.get("k") || "";
+// Javobni bot API'siga to'g'ridan-to'g'ri yuborish (ilova yopilmaydi). Ishlamasa — null (Telegram orqali yuboriladi).
+async function apiPost(payload) {
+  if (!DATA || !DATA.api || !AUTH) return null;
+  try {
+    const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 12000);
+    const r = await fetch(DATA.api + "/app", {method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({k: AUTH, ...payload}), signal: ctl.signal});
+    clearTimeout(tm);
+    const j = await r.json();
+    return j && j.ok ? j : null;
+  } catch (e) { return null; }
+}
+const botHtml = t => safe(String(t || "").replace(/<code>/g, "<b>").replace(/<\/code>/g, "</b>")
+  .replace(/<a [^>]*>/g, "").replace(/<\/a>/g, "")).replace(/\n/g, "<br>");
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const safe = h => String(h ?? "").replace(/<(?!\/?(b|i|sub|sup|br)\s*\/?>)[^>]*>/gi, "");
 const color = p => p >= 75 ? "var(--good)" : p >= 50 ? "var(--mid)" : "var(--bad)";
@@ -930,8 +951,21 @@ async function finish(timeout) {
   store.set("done:" + t.code, true);
   clearInterval(window._tick);
   haptic("success");
+  try { tg.disableClosingConfirmation(); } catch (e) {}
+  $app.innerHTML = `<div class="card" style="text-align:center;padding:40px 18px"><div class="spin"></div><p>${T("sending")}</p></div>`;
+  const res = await apiPost({c: t.code, a, s: st.start});
+  if (res) {
+    const msgs = (res.msgs || []).filter(Boolean);
+    $app.innerHTML = `<div class="card result-card"><h2 class="sec">${timeout ? T("time_up") : T("finished_t")}</h2>
+      ${msgs.map(m => `<div class="botmsg">${botHtml(m)}</div>`).join("") || `<p>${T("sent_ok")}</p>`}</div>
+      <button class="btn" id="rh">${T("to_home")}</button>
+      <button class="btn ghost" id="rr" style="margin-top:10px">🏆 ${T("nav_rating")}</button>`;
+    document.getElementById("rh").onclick = () => { history_ = []; route = {v: "home"}; reloadSoon(); render(); };
+    document.getElementById("rr").onclick = () => { history_ = []; route = {v: "rating"}; reloadSoon(); render(); };
+    window.scrollTo({top: 0});
+    return;
+  }
   if (canSend()) {
-    try { tg.disableClosingConfirmation(); } catch (e) {}
     tg.sendData(JSON.stringify({c: t.code, a, s: st.start}));
   } else {
     $app.innerHTML = `<div class="card"><h2 class="sec">${timeout ? T("time_up") : T("finished_t")}</h2>
@@ -1047,9 +1081,18 @@ function viewMe() {
   if (sv) sv.onclick = () => {
     const name = DRAFT.name.trim().replace(/\s+/g, " ");
     if (name.length < 3) { toast(T("name_short")); return; }
-    if (!canSend()) { toast(T("p_open_bot"), 3500); return; }
-    haptic("success");
-    tg.sendData(JSON.stringify({t: "profile", name, notify: DRAFT.notify, lang: LANG}));
+    sv.disabled = true;
+    apiPost({t: "profile", name, notify: DRAFT.notify, lang: LANG}).then(res => {
+      sv.disabled = false;
+      if (res) {
+        haptic("success");
+        PROFILE = {...(PROFILE || {}), name, notify: DRAFT.notify, lang: LANG};
+        DRAFT = null; toast(T("saved")); viewMe(); return;
+      }
+      if (!canSend()) { toast(T("p_open_bot"), 3500); return; }
+      haptic("success");
+      tg.sendData(JSON.stringify({t: "profile", name, notify: DRAFT.notify, lang: LANG}));
+    });
   };
   function isDirty() { return DRAFT.name.trim() !== server.name || DRAFT.notify !== (server.notify !== false) || LANG !== (server.lang || "uz"); }
 }
@@ -1260,6 +1303,13 @@ async function gameExit() {
   clearInterval(G.timer); G.phase = G.dk ? "setup" : "pin";
   if (route.v === "game" && G.phase === "setup") { render(); return; }
   history_ = []; route = {v: "home"}; render();
+}
+
+// Natija topshirilgach reyting bir necha daqiqada yangilanadi — orqa fonda qayta yuklab turamiz
+function reloadSoon() {
+  [60, 200, 420].forEach(sec => setTimeout(async () => {
+    if (["home", "rating", "me", "section", "chapter"].includes(route.v) && await load()) render();
+  }, sec * 1000));
 }
 
 // ---------------- Ma'lumotlarni yuklash ----------------
