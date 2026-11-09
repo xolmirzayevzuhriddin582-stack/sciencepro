@@ -538,6 +538,9 @@ const secName = k => { const t = T("k_" + k); return t === "k_" + k ? ((DATA.sec
 
 let DATA = null, ME = null, PROFILE = null, myHash = params.get("u") || "";
 let route = {v: "home"}, history_ = [];
+// Botdagi "🏆 Reytingni ko'rish" tugmasi: ?go=chapter&k=sinf5&b=4 yoki ?go=rating
+if (params.get("go") === "chapter" && params.get("k")) { history_ = [{v: "home"}]; route = {v: "chapter", k: params.get("k"), b: +params.get("b") || 0}; }
+else if (params.get("go") === "rating") { history_ = [{v: "home"}]; route = {v: "rating"}; }
 let ratingKind = null;
 
 function toast(msg, ms = 2200) {
