@@ -338,6 +338,9 @@
   .rvb{font-size:13px;font-weight:700;padding:4px 10px;border-radius:99px}
   .rvb.ok{color:var(--good);background:color-mix(in srgb,var(--good) 14%,transparent)}
   .rvb.bad{color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,transparent)}
+  .seg.sm{margin-top:-4px;background:transparent;box-shadow:none;gap:8px}
+  .seg.sm button{font-size:13px;padding:8px;border:1.5px solid var(--line)}
+  .seg.sm button.on{border-color:transparent}
   .spin{width:38px;height:38px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--accent);margin:0 auto 14px;animation:sp 0.8s linear infinite}
   @keyframes sp{to{transform:rotate(360deg)}}
   .result-card .botmsg{text-align:left;background:var(--bg2);border-radius:14px;padding:14px 16px;margin-top:12px;line-height:1.5;font-size:15px}
@@ -397,7 +400,8 @@ uz: {
   time_up:"Vaqt tugadi", finished_t:"Test yakunlandi",
   open_via:"Ilovani botdagi pastki «📝 Testlar» tugmasi orqali oching. Hozircha javoblaringizni botga matn qilib yuboring:",
   saved_running:"Test saqlandi. Vaqt davom etmoqda ⏱", close:"✕ Yopish",
-  r_title:"Reyting", r_avg:"{n} ta test bo'yicha o'rtacha", r_none:"Bu bo'limda hali natijalar yo'q.",
+  r_title:"Reyting", r_avg:"{n} ta test bo'yicha o'rtacha", r_total:"Jami ball", r_avgbtn:"O'rtacha %",
+  r_total_h:"Jami to'plangan ball — ko'p va to'g'ri yechganlar yuqorida", pts:"ball", r_none:"Bu bo'limda hali natijalar yo'q.",
   p_photo:"📷 Rasm qo'yish", p_photo_change:"📷 Almashtirish", p_photo_del:"O'chirish",
   p_photo_note:"Rasm faqat shu qurilmada saqlanadi, boshqalarga ko'rinmaydi.",
   p_name:"Ism va familiya", p_settings:"Sozlamalar", p_notify:"Bildirishnomalar", p_notify_d:"Yangi test qo'shilganda va boshlanganda tovushli xabar",
@@ -455,7 +459,8 @@ ru: {
   time_up:"Время вышло", finished_t:"Тест завершён",
   open_via:"Откройте приложение кнопкой «📝 Testlar» внизу чата с ботом. А пока отправьте ответы боту текстом:",
   saved_running:"Тест сохранён. Время идёт ⏱", close:"✕ Закрыть",
-  r_title:"Рейтинг", r_avg:"Среднее по {n} тестам", r_none:"В этом разделе пока нет результатов.",
+  r_title:"Рейтинг", r_avg:"Среднее по {n} тестам", r_total:"Сумма баллов", r_avgbtn:"Средний %",
+  r_total_h:"Сумма баллов — кто решил больше и вернее, тот выше", pts:"б.", r_none:"В этом разделе пока нет результатов.",
   p_photo:"📷 Добавить фото", p_photo_change:"📷 Сменить", p_photo_del:"Удалить",
   p_photo_note:"Фото хранится только на этом устройстве и не видно другим.",
   p_name:"Имя и фамилия", p_settings:"Настройки", p_notify:"Уведомления", p_notify_d:"Сообщение со звуком, когда тест добавлен и когда начался",
@@ -1086,15 +1091,25 @@ function openViewer(src) {
 }
 
 // ---------------- Reyting ----------------
+let rMode = store.get("rmode", "total");   // total — jami ball (ko'p yechgan yuqorida), avg — o'rtacha foiz
 function viewRating() {
   ratingKind = ratingKind || DATA.sections[0][0];
   const k = DATA.kinds[ratingKind] || {rating: [], tests: []};
+  const nTests = k.tests.length || DATA.open.filter(t => t.kind === ratingKind).length || "…";
+  const hasTotal = k.rating.length && k.rating[0].length > 3;
+  const mode = hasTotal ? rMode : "avg";
+  const list = mode === "total" ? [...k.rating].sort((a, b) => b[3] - a[3] || b[1] - a[1]) : k.rating;
   $app.innerHTML = `<div class="titlebar"><h1>🏆 ${T("r_title")}</h1></div>
-    <div class="seg">${DATA.sections.map(([kk]) => `<button data-k="${kk}" class="${kk === ratingKind ? "on" : ""}">${esc(secName(kk))}</button>`).join("")}</div>
-    <div class="card">${k.rating.length ? `<h2 class="sec">${T("r_avg", {n: k.tests.length || DATA.open.filter(t => t.kind === ratingKind).length || "…"})}</h2>
-      ${rankRows(k.rating, 1, r => `<span class="meta">${T("tests_n", {n: r[2]})}</span><span class="score">${r[1]}%</span>`)}`
+    <div class="seg" id="rk">${DATA.sections.map(([kk]) => `<button data-k="${kk}" class="${kk === ratingKind ? "on" : ""}">${esc(secName(kk))}</button>`).join("")}</div>
+    ${hasTotal ? `<div class="seg sm" id="rm"><button data-m="total" class="${mode === "total" ? "on" : ""}">🏅 ${T("r_total")}</button>
+      <button data-m="avg" class="${mode === "avg" ? "on" : ""}">📊 ${T("r_avgbtn")}</button></div>` : ""}
+    <div class="card">${k.rating.length ? `<h2 class="sec">${mode === "total" ? T("r_total_h", {n: nTests}) : T("r_avg", {n: nTests})}</h2>
+      ${mode === "total"
+        ? rankRows(list, 3, r => `<span class="meta">${T("tests_n", {n: r[2]})}</span><span class="score">${r[3]} ${T("pts")}</span>`)
+        : rankRows(list, 1, r => `<span class="meta">${T("tests_n", {n: r[2]})}</span><span class="score">${r[1]}%</span>`)}`
       : `<div class="empty">${T("r_none")}</div>`}</div>`;
-  $app.querySelectorAll(".seg button").forEach(b => b.onclick = () => { ratingKind = b.dataset.k; haptic("sel"); viewRating(); });
+  $app.querySelectorAll("#rk button").forEach(b => b.onclick = () => { ratingKind = b.dataset.k; haptic("sel"); viewRating(); });
+  $app.querySelectorAll("#rm button").forEach(b => b.onclick = () => { rMode = b.dataset.m; store.set("rmode", rMode); haptic("sel"); viewRating(); });
 }
 
 // ---------------- Profil ----------------
