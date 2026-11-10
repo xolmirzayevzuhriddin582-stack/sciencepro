@@ -328,6 +328,16 @@
     .gquestion img.qimg{flex:none;height:auto;max-height:60vh;min-height:0}
   }
   @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+  .opt.rv{cursor:default;position:relative;flex-wrap:wrap}
+  .opt.rv.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--bg))}
+  .opt.rv.ok .L{background:var(--good);border-color:var(--good);color:#fff}
+  .opt.rv.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--bg))}
+  .opt.rv.bad .L{background:var(--bad);border-color:var(--bad);color:#fff}
+  .opt.rv .you{margin-left:auto;font-size:12px;font-weight:700;opacity:.8;align-self:center}
+  .rvq.is-bad{box-shadow:inset 4px 0 0 var(--bad),var(--shadow)}
+  .rvb{font-size:13px;font-weight:700;padding:4px 10px;border-radius:99px}
+  .rvb.ok{color:var(--good);background:color-mix(in srgb,var(--good) 14%,transparent)}
+  .rvb.bad{color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,transparent)}
   .spin{width:38px;height:38px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--accent);margin:0 auto 14px;animation:sp 0.8s linear infinite}
   @keyframes sp{to{transform:rotate(360deg)}}
   .result-card .botmsg{text-align:left;background:var(--bg2);border-radius:14px;padding:14px 16px;margin-top:12px;line-height:1.5;font-size:15px}
@@ -394,6 +404,11 @@ uz: {
   p_lang:"Til", p_bg:"Fon", bg_grid:"Katak", bg_dots:"Hujayra", bg_hex:"Molekula", bg_plain:"Toza",
   p_save:"Saqlash", p_save_note:"Saqlaganda ilova yopiladi, bot tasdiqlab xabar yuboradi.",
   p_open_bot:"Saqlash uchun ilovani botdagi «📝 Testlar» tugmasi orqali oching.", p_new:"Yangi o'quvchi",
+  rv_btn:"Javoblarimni tahlil qilish", rv_title:"Tahlil", rv_you:"Sizning javobingiz", rv_right:"To'g'ri javob",
+  rv_ok:"To'g'ri", rv_bad:"Xato", rv_empty:"Belgilanmagan", rv_pct:"Natija", rv_all:"Hammasi ({n})", rv_wrong:"Xatolar ({n})",
+  rv_perfect:"🎉 Xato yo'q — barakalla!", rv_none:"Bu test bo'yicha javoblaringiz topilmadi.",
+  rv_offline:"Server bilan aloqa yo'q — faqat belgilagan javoblaringiz ko'rsatilmoqda. Birozdan keyin qayta oching.",
+  rv_nokey:"Xato savollaringiz belgilandi. To'g'ri javobni o'zingiz topishga harakat qiling — mavzuni qayta o'qing 📖",
   sending:"Javoblar yuborilmoqda…", sent_ok:"✅ Javoblaringiz qabul qilindi.", to_home:"🏠 Bosh sahifa", saved:"✅ Saqlandi",
   my_results:"Natijalarim", no_results:"Hali natijalaringiz yo'q. Test topshirgach, natijangiz shu yerda chiqadi.",
   st_tests:"test", st_avg2:"o'rtacha", st_best2:"eng yaxshi", weak:"📌 Ko'proq e'tibor bering: {t}",
@@ -447,6 +462,11 @@ ru: {
   p_lang:"Язык", p_bg:"Фон", bg_grid:"Сетка", bg_dots:"Клетки", bg_hex:"Молекулы", bg_plain:"Чистый",
   p_save:"Сохранить", p_save_note:"После сохранения приложение закроется, бот пришлёт подтверждение.",
   p_open_bot:"Чтобы сохранить, откройте приложение кнопкой «📝 Testlar» в боте.", p_new:"Новый ученик",
+  rv_btn:"Разобрать мои ответы", rv_title:"Разбор", rv_you:"Ваш ответ", rv_right:"Правильный ответ",
+  rv_ok:"Верно", rv_bad:"Ошибка", rv_empty:"Без ответа", rv_pct:"Результат", rv_all:"Все ({n})", rv_wrong:"Ошибки ({n})",
+  rv_perfect:"🎉 Ошибок нет — молодец!", rv_none:"Ваши ответы по этому тесту не найдены.",
+  rv_offline:"Нет связи с сервером — показаны только ваши ответы. Откройте чуть позже.",
+  rv_nokey:"Ошибочные вопросы отмечены. Попробуйте найти правильный ответ сами — повторите тему 📖",
   sending:"Отправляем ответы…", sent_ok:"✅ Ответы приняты.", to_home:"🏠 На главную", saved:"✅ Сохранено",
   my_results:"Мои результаты", no_results:"Результатов пока нет. После первого теста они появятся здесь.",
   st_tests:"тестов", st_avg2:"среднее", st_best2:"лучший", weak:"📌 Обратите внимание: {t}",
@@ -631,7 +651,7 @@ function render() {
     (b.dataset.go === "home" && ["section", "chapter", "intro"].includes(route.v))));
   if (tg && tg.BackButton) (["home", "rating", "me"].includes(route.v) ? tg.BackButton.hide() : tg.BackButton.show());
   if (tg) { try { inExam ? tg.enableClosingConfirmation() : tg.disableClosingConfirmation(); } catch (e) {} }
-  ({game: viewGame, home: viewHome, section: viewSection, chapter: viewChapter, intro: viewIntro, exam: viewExam, rating: viewRating, me: viewMe})[route.v]();
+  ({game: viewGame, home: viewHome, section: viewSection, chapter: viewChapter, intro: viewIntro, exam: viewExam, review: viewReview, rating: viewRating, me: viewMe})[route.v]();
 }
 
 // ---------------- Yordamchilar ----------------
@@ -808,7 +828,8 @@ function viewIntro() {
   if (!t) { $app.innerHTML = `<div class="card"><div class="empty">${T("not_found")}</div></div>`; return; }
   const st = store.get("ex:" + t.code, null), done = isDone(t.code), ws = state(t);
   let action;
-  if (done) action = `<div class="tip" style="background:color-mix(in srgb,var(--good) 14%,transparent)">${T(t.live ? "done_live" : "done_wait")}</div>`;
+  if (done) action = `<div class="tip" style="background:color-mix(in srgb,var(--good) 14%,transparent)">${T(t.live ? "done_live" : "done_wait")}</div>
+      <button class="btn" id="rv">🔍 ${T("rv_btn")}</button>`;
   else if (ws === "soon") action = `<div class="tip" style="background:color-mix(in srgb,var(--mid) 16%,transparent);text-align:center">
       ${T("soon", {t: `<b>${hm(t.opens)}</b>`, d: dayTxt(t.opens)})}<br><b id="cd" style="font-size:22px"></b></div>
       <button class="btn" disabled style="opacity:.5">${T("start")}</button>`;
@@ -839,12 +860,63 @@ function viewIntro() {
       const el = document.getElementById("cd"); if (el) el.textContent = fmtTime(left); };
     cd(); window._tick = setInterval(cd, 1000);
   }
+  const rvb = document.getElementById("rv");
+  if (rvb) rvb.onclick = () => { RV.code = null; haptic("sel"); go("review", {code: t.code}); };
   const b = document.getElementById("go");
   if (b) b.onclick = async () => {
     const mins = Math.floor((deadline(t, Date.now()) - Date.now()) / 60000);
     if (!st && !(await confirmBox(isFinite(mins) ? T("confirm_start", {n: mins}) : T("confirm_start2")))) return;
     haptic("success"); go("exam", {code: t.code});
   };
+}
+
+
+// ---------------- Xatolar tahlili (topshirilgan test) ----------------
+const RV = {code: null, test: null, data: null, only: false};
+async function viewReview() {
+  const t = DATA.open.find(x => x.code === route.code);
+  if (!t) { $app.innerHTML = `<div class="card"><div class="empty">${T("not_found")}</div></div>`; return; }
+  if (RV.code !== t.code) {
+    $app.innerHTML = `<div class="card" style="text-align:center;padding:40px 18px"><div class="spin"></div><p>${T("loading_q")}</p></div>`;
+    let test;
+    try { test = await (await fetch(t.src + "?v=" + encodeURIComponent(DATA.updated), {cache: "no-cache"})).json(); }
+    catch (e) { $app.innerHTML = `<div class="card"><div class="empty">${T("load_fail")}</div></div>`; return; }
+    const r = await apiPost({t: "review", c: t.code});
+    const local = store.get("ans:" + t.code, null);
+    RV.code = t.code; RV.test = test; RV.only = false;
+    RV.data = r ? r : (local ? {ans: local, offline: true} : null);
+  }
+  const {test, data} = RV, base = t.src.replace(/test\.json$/, ""), n = test.questions.length;
+  if (!data) { $app.innerHTML = `<div class="card"><div class="empty">${T("rv_none")}</div></div>`; return; }
+  const ans = data.ans || "", marks = data.marks, key = data.key;
+  const wrong = marks ? marks.reduce((c, m) => c + (m ? 0 : 1), 0) : 0;
+  const okN = marks ? n - wrong : null;
+  const cards = test.questions.map((q, i) => {
+    if (RV.only && marks && marks[i]) return "";
+    const my = (ans[i] || "-").toLowerCase(), good = marks ? !!marks[i] : null, right = key ? key[i] : null;
+    const body = q.body.map(b => b.t ? `<div class="qtext">${safe(b.t)}</div>`
+      : b.img ? `<img class="qimg" src="${esc(base + b.img)}" alt="" loading="lazy" data-zoom>`
+      : b.table ? `<div class="tbl"><table>${b.table.map(r => `<tr>${r.map(c => `<td>${safe(c)}</td>`).join("")}</tr>`).join("")}</table></div>` : "").join("");
+    const opts = q.opts.map(o => { const l = o.l.toLowerCase();
+      const cls = l === my ? (good === null ? "sel" : good ? "ok" : "bad") : (right === l ? "ok ghost-ok" : "");
+      return `<div class="opt rv ${cls}"><span class="L">${esc(o.l)}</span><span>${safe(o.h)}${o.img ? `<img src="${esc(base + o.img)}" alt="" data-zoom>` : ""}</span>
+        ${l === my ? `<span class="you">${T("rv_you")}</span>` : right === l ? `<span class="you">${T("rv_right")}</span>` : ""}</div>`; }).join("");
+    const badge = good === null ? "" : good ? `<span class="rvb ok">✓ ${T("rv_ok")}</span>` : my === "-" ? `<span class="rvb bad">— ${T("rv_empty")}</span>` : `<span class="rvb bad">✗ ${T("rv_bad")}</span>`;
+    return `<div class="card rvq ${good === false ? "is-bad" : ""}"><div class="qnum" style="margin:0 0 6px"><b>${T("q_of", {i: i + 1, n})}</b>${badge}</div>
+      ${q.topic ? `<div class="topic" style="margin:0 0 8px">${esc(q.topic)}</div>` : ""}
+      <div class="qcard" style="box-shadow:none;padding:0;background:none">${body}</div><div class="opts" style="margin-top:12px">${opts}</div></div>`;
+  }).join("");
+  $app.innerHTML = `<div class="titlebar"><h1>🔍 ${T("rv_title")}</h1></div>
+    <div class="card"><b>${esc(t.title)}</b>
+      ${marks ? `<div class="facts"><div><b style="color:var(--good)">${okN}</b><span>${T("rv_ok")}</span></div>
+        <div><b style="color:var(--bad)">${wrong}</b><span>${T("rv_bad")}</span></div>
+        <div><b>${Math.round(100 * okN / n)}%</b><span>${T("rv_pct")}</span></div></div>` : ""}
+      ${data.offline ? `<div class="tip">${T("rv_offline")}</div>` : !key ? `<div class="tip">${T("rv_nokey")}</div>` : ""}
+      ${marks ? `<div class="seg" style="margin-top:12px;background:var(--bg2)"><button data-f="0" class="${RV.only ? "" : "on"}">${T("rv_all", {n})}</button>
+        <button data-f="1" class="${RV.only ? "on" : ""}">${T("rv_wrong", {n: wrong})}</button></div>` : ""}</div>
+    ${cards || `<div class="card"><div class="empty">${T("rv_perfect")}</div></div>`}`;
+  $app.querySelectorAll("[data-f]").forEach(b => b.onclick = () => { RV.only = b.dataset.f === "1"; haptic("sel"); viewReview(); });
+  $app.querySelectorAll("[data-zoom]").forEach(img => img.onclick = e => { e.stopPropagation(); openViewer(img.src); });
 }
 
 // ---------------- Imtihon ----------------
@@ -949,6 +1021,7 @@ async function finish(timeout) {
   if (!timeout && !(await confirmBox(empty ? T("confirm_empty", {n: empty}) : T("confirm_all")))) return;
   const a = Array.from({length: n}, (_, i) => st.ans[i] || "-").join("");
   store.set("done:" + t.code, true);
+  store.set("ans:" + t.code, a);
   clearInterval(window._tick);
   haptic("success");
   try { tg.disableClosingConfirmation(); } catch (e) {}
@@ -958,8 +1031,10 @@ async function finish(timeout) {
     const msgs = (res.msgs || []).filter(Boolean);
     $app.innerHTML = `<div class="card result-card"><h2 class="sec">${timeout ? T("time_up") : T("finished_t")}</h2>
       ${msgs.map(m => `<div class="botmsg">${botHtml(m)}</div>`).join("") || `<p>${T("sent_ok")}</p>`}</div>
-      <button class="btn" id="rh">${T("to_home")}</button>
+      <button class="btn" id="rvw">🔍 ${T("rv_btn")}</button>
+      <button class="btn ghost" id="rh" style="margin-top:10px">${T("to_home")}</button>
       <button class="btn ghost" id="rr" style="margin-top:10px">🏆 ${T("nav_rating")}</button>`;
+    document.getElementById("rvw").onclick = () => { history_ = [{v: "home"}]; route = {v: "review", code: t.code}; reloadSoon(); render(); };
     document.getElementById("rh").onclick = () => { history_ = []; route = {v: "home"}; reloadSoon(); render(); };
     document.getElementById("rr").onclick = () => { history_ = []; route = {v: "rating"}; reloadSoon(); render(); };
     window.scrollTo({top: 0});
@@ -1016,7 +1091,7 @@ function viewRating() {
   const k = DATA.kinds[ratingKind] || {rating: [], tests: []};
   $app.innerHTML = `<div class="titlebar"><h1>🏆 ${T("r_title")}</h1></div>
     <div class="seg">${DATA.sections.map(([kk]) => `<button data-k="${kk}" class="${kk === ratingKind ? "on" : ""}">${esc(secName(kk))}</button>`).join("")}</div>
-    <div class="card">${k.rating.length ? `<h2 class="sec">${T("r_avg", {n: k.tests.length || "…"})}</h2>
+    <div class="card">${k.rating.length ? `<h2 class="sec">${T("r_avg", {n: k.tests.length || DATA.open.filter(t => t.kind === ratingKind).length || "…"})}</h2>
       ${rankRows(k.rating, 1, r => `<span class="meta">${T("tests_n", {n: r[2]})}</span><span class="score">${r[1]}%</span>`)}`
       : `<div class="empty">${T("r_none")}</div>`}</div>`;
   $app.querySelectorAll(".seg button").forEach(b => b.onclick = () => { ratingKind = b.dataset.k; haptic("sel"); viewRating(); });
