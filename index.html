@@ -16,7 +16,7 @@
     --grid:rgba(14,110,97,.075);
     --line:rgba(16,42,43,.10); --soft:rgba(14,110,97,.10);
     --good:#1F9D6B; --mid:#D9901F; --bad:#D9544C;
-    --c-mock:#E08A1E; --c-sinf5:#1F9D6B; --c-sinf6:#2D7FC1; --c-mavzu:#8A6AD0;
+    --c-mock:#E08A1E; --c-sinf5:#1F9D6B; --c-sinf6:#2D7FC1; --c-mavzu:#8A6AD0; --c-ingliz:#D2466E;
     --display:"Unbounded",system-ui,sans-serif;
     --shadow:0 1px 0 rgba(16,42,43,.06),0 6px 18px -10px rgba(16,42,43,.25);
   }
@@ -335,6 +335,17 @@
   .opt.rv.bad .L{background:var(--bad);border-color:var(--bad);color:#fff}
   .opt.rv .you{margin-left:auto;font-size:12px;font-weight:700;opacity:.8;align-self:center}
   .rvq.is-bad{box-shadow:inset 4px 0 0 var(--bad),var(--shadow)}
+  .rvpct{font-family:var(--fd,inherit);font-size:44px;font-weight:800;line-height:1;margin:12px 0 4px}
+  .rvcells{grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px}
+  .rvcells button{border-radius:10px;font-size:14px}
+  .rvcells .g{background:color-mix(in srgb,var(--good) 18%,var(--bg));border-color:var(--good);color:var(--good)}
+  .rvcells .r{background:var(--bad);border-color:var(--bad);color:#fff}
+  .rvcells .cur{outline:3px solid var(--text);outline-offset:1px}
+  .rvnav{display:flex;gap:10px;margin-top:14px}
+  .rvnav .btn{margin:0;flex:1}
+  .rvnav .btn:disabled{opacity:.4}
+  details.rvmsg{margin-top:12px}
+  details.rvmsg summary{cursor:pointer;font-weight:600;color:var(--accent)}
   .rvb{font-size:13px;font-weight:700;padding:4px 10px;border-radius:99px}
   .rvb.ok{color:var(--good);background:color-mix(in srgb,var(--good) 14%,transparent)}
   .rvb.bad{color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,transparent)}
@@ -375,7 +386,8 @@ uz: {
   sections:"Bo'limlar", chapters:"Boblar", bob_n:"{n}-bob", chap_tests:"{n} ta test", chap_done:"{d}/{n} ishlangan",
   soon_tests:"Testlar tez orada", other_tests:"Boshqa testlar", chap_empty:"Bu bobda hozircha ochiq test yo'q. Yangi test qo'shilganda bot xabar beradi.",
   chap_rating:"{s} reytingi", open_n:"{n} ta ochiq test", none_yet:"Hozircha test yo'q", fresh:", {n} tasi yangi", updated:"Yangilangan: {d}",
-  k_mock:"Mock exam", k_sinf5:"5-sinf", k_sinf6:"6-sinf", k_mavzu:"Mavzulashtirilgan",
+  k_mock:"Mock exam", k_sinf5:"5-sinf", k_sinf6:"6-sinf", k_ingliz:"Ingliz tili imtihoni", d_ingliz:"SUPER 100 — 100 ta savol, natija va tahlil darhol",
+  subsecs:"Bo'limlar", k_mavzu:"Mavzulashtirilgan",
   d_mock:"Ibn Sino formatidagi to'liq sinovlar", d_sinf:"Mavzular bo'yicha testlar, natija darhol", d_mavzu:"Mavzulashtirilgan testlar",
   open_tests:"Ochiq testlar", no_open:"Hozircha ochiq test yo'q. Yangi test qo'shilganda shu yerda chiqadi va bot xabar beradi.",
   finished:"Yakunlangan testlar", sec_rating:"{s} reytingi",
@@ -409,6 +421,7 @@ uz: {
   p_save:"Saqlash", p_save_note:"Saqlaganda ilova yopiladi, bot tasdiqlab xabar yuboradi.",
   p_open_bot:"Saqlash uchun ilovani botdagi «📝 Testlar» tugmasi orqali oching.", p_new:"Yangi o'quvchi",
   rv_btn:"Javoblarimni tahlil qilish", rv_title:"Tahlil", rv_you:"Sizning javobingiz", rv_right:"To'g'ri javob",
+  rv_total:"Jami savol", rv_more:"📋 Batafsil natija (o'rin, mavzular)", rv_next_wrong:"Keyingi xato savol",
   rv_ok:"To'g'ri", rv_bad:"Xato", rv_empty:"Belgilanmagan", rv_pct:"Natija", rv_all:"Hammasi ({n})", rv_wrong:"Xatolar ({n})",
   rv_perfect:"🎉 Xato yo'q — barakalla!", rv_none:"Bu test bo'yicha javoblaringiz topilmadi.",
   rv_offline:"Server bilan aloqa yo'q — faqat belgilagan javoblaringiz ko'rsatilmoqda. Birozdan keyin qayta oching.",
@@ -436,7 +449,8 @@ ru: {
   sections:"Разделы", chapters:"Главы", bob_n:"Глава {n}", chap_tests:"Тестов: {n}", chap_done:"решено {d}/{n}",
   soon_tests:"Тесты скоро появятся", other_tests:"Другие тесты", chap_empty:"В этой главе пока нет открытых тестов. Когда тест появится, бот пришлёт уведомление.",
   chap_rating:"Рейтинг: {s}", open_n:"Открытых тестов: {n}", none_yet:"Пока тестов нет", fresh:", новых: {n}", updated:"Обновлено: {d}",
-  k_mock:"Mock exam", k_sinf5:"5 класс", k_sinf6:"6 класс", k_mavzu:"Тематические",
+  k_mock:"Mock exam", k_sinf5:"5 класс", k_sinf6:"6 класс", k_ingliz:"Экзамен по английскому", d_ingliz:"SUPER 100 — 100 вопросов, результат и разбор сразу",
+  subsecs:"Разделы", k_mavzu:"Тематические",
   d_mock:"Полные пробные экзамены в формате Ибн Сино", d_sinf:"Тесты по темам, результат сразу", d_mavzu:"Тематические тесты",
   open_tests:"Открытые тесты", no_open:"Открытых тестов пока нет. Новый тест появится здесь, и бот пришлёт уведомление.",
   finished:"Завершённые тесты", sec_rating:"Рейтинг: {s}",
@@ -470,6 +484,7 @@ ru: {
   p_save:"Сохранить", p_save_note:"После сохранения приложение закроется, бот пришлёт подтверждение.",
   p_open_bot:"Чтобы сохранить, откройте приложение кнопкой «📝 Testlar» в боте.", p_new:"Новый ученик",
   rv_btn:"Разобрать мои ответы", rv_title:"Разбор", rv_you:"Ваш ответ", rv_right:"Правильный ответ",
+  rv_total:"Всего вопросов", rv_more:"📋 Подробный результат (место, темы)", rv_next_wrong:"Следующая ошибка",
   rv_ok:"Верно", rv_bad:"Ошибка", rv_empty:"Без ответа", rv_pct:"Результат", rv_all:"Все ({n})", rv_wrong:"Ошибки ({n})",
   rv_perfect:"🎉 Ошибок нет — молодец!", rv_none:"Ваши ответы по этому тесту не найдены.",
   rv_offline:"Нет связи с сервером — показаны только ваши ответы. Откройте чуть позже.",
@@ -570,6 +585,7 @@ const SEC = {
   mock:  {c: "var(--c-mock)",  d: "d_mock", icon: ICO('<path d="M9 3h6M10 3v6.2L4.6 18.4A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.6L14 9.2V3"/><path d="M7.3 15h9.4"/>')},
   sinf5: {c: "var(--c-sinf5)", d: "d_sinf", icon: ICO('<path d="M5 20C5 11 11 5 20 5c0 9-6 15-15 15Z"/><path d="M5 20l8-8"/>')},
   sinf6: {c: "var(--c-sinf6)", d: "d_sinf", icon: ICO('<circle cx="12" cy="12" r="1.4" fill="currentColor"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(120 12 12)"/>')},
+  ingliz:{c: "var(--c-ingliz)", d: "d_ingliz", icon: ICO('<path d="M4 5h11a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H9l-4 3v-3a3 3 0 0 1-1-2.2V5Z"/><path d="M7.5 13l2-6 2 6M8.2 11h2.6"/><path d="M18 9h1.5A1.5 1.5 0 0 1 21 10.5V19l-2.5-2H14"/>')},
   mavzu: {c: "var(--c-mavzu)", d: "d_mavzu", icon: ICO('<path d="M4 5h16M4 12h16M4 19h10"/>')},
 };
 const HERO_ART = `<svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMaxYMin slice" fill="none"
@@ -788,7 +804,7 @@ function viewSection() {
   if (chs && chs.length) {
     // Boblar ro'yxati
     const loose = open.filter(t => !t.bob).length + fin.tests.filter(t => !t.bob).length;
-    body = `<h2 class="sec" style="margin:18px 2px 0">${T("chapters")}</h2>
+    body = `<h2 class="sec" style="margin:18px 2px 0">${T(k === "ingliz" ? "subsecs" : "chapters")}</h2>
       <div class="chaps">${chs.map(([b, name]) => {
         const o = open.filter(t => t.bob === b), f = fin.tests.filter(t => t.bob === b);
         const total = o.length + f.length, done = o.filter(t => isDone(t.code)).length;
@@ -870,7 +886,7 @@ function viewIntro() {
     cd(); window._tick = setInterval(cd, 1000);
   }
   const rvb = document.getElementById("rv");
-  if (rvb) rvb.onclick = () => { RV.code = null; haptic("sel"); go("review", {code: t.code}); };
+  if (rvb) rvb.onclick = () => { RV.code = null; RV.msgs = null; haptic("sel"); go("review", {code: t.code}); };
   const b = document.getElementById("go");
   if (b) b.onclick = async () => {
     const mins = Math.floor((deadline(t, Date.now()) - Date.now()) / 60000);
@@ -881,7 +897,7 @@ function viewIntro() {
 
 
 // ---------------- Xatolar tahlili (topshirilgan test) ----------------
-const RV = {code: null, test: null, data: null, only: false};
+const RV = {code: null, test: null, data: null, sel: 0, msgs: null};
 async function viewReview() {
   const t = DATA.open.find(x => x.code === route.code);
   if (!t) { $app.innerHTML = `<div class="card"><div class="empty">${T("not_found")}</div></div>`; return; }
@@ -892,39 +908,50 @@ async function viewReview() {
     catch (e) { $app.innerHTML = `<div class="card"><div class="empty">${T("load_fail")}</div></div>`; return; }
     const r = await apiPost({t: "review", c: t.code});
     const local = store.get("ans:" + t.code, null);
-    RV.code = t.code; RV.test = test; RV.only = false;
+    RV.code = t.code; RV.test = test;
     RV.data = r ? r : (local ? {ans: local, offline: true} : null);
+    const m = RV.data && RV.data.marks; RV.sel = m && m.indexOf(0) >= 0 ? m.indexOf(0) : 0;
   }
   const {test, data} = RV, base = t.src.replace(/test\.json$/, ""), n = test.questions.length;
   if (!data) { $app.innerHTML = `<div class="card"><div class="empty">${T("rv_none")}</div></div>`; return; }
   const ans = data.ans || "", marks = data.marks, key = data.key;
-  const wrong = marks ? marks.reduce((c, m) => c + (m ? 0 : 1), 0) : 0;
-  const okN = marks ? n - wrong : null;
-  const cards = test.questions.map((q, i) => {
-    if (RV.only && marks && marks[i]) return "";
-    const my = (ans[i] || "-").toLowerCase(), good = marks ? !!marks[i] : null, right = key ? key[i] : null;
-    const body = q.body.map(b => b.t ? `<div class="qtext">${safe(b.t)}</div>`
-      : b.img ? `<img class="qimg" src="${esc(base + b.img)}" alt="" loading="lazy" data-zoom>`
-      : b.table ? `<div class="tbl"><table>${b.table.map(r => `<tr>${r.map(c => `<td>${safe(c)}</td>`).join("")}</tr>`).join("")}</table></div>` : "").join("");
-    const opts = q.opts.map(o => { const l = o.l.toLowerCase();
-      const cls = l === my ? (good === null ? "sel" : good ? "ok" : "bad") : (right === l ? "ok ghost-ok" : "");
-      return `<div class="opt rv ${cls}"><span class="L">${esc(o.l)}</span><span>${safe(o.h)}${o.img ? `<img src="${esc(base + o.img)}" alt="" data-zoom>` : ""}</span>
-        ${l === my ? `<span class="you">${T("rv_you")}</span>` : right === l ? `<span class="you">${T("rv_right")}</span>` : ""}</div>`; }).join("");
-    const badge = good === null ? "" : good ? `<span class="rvb ok">✓ ${T("rv_ok")}</span>` : my === "-" ? `<span class="rvb bad">— ${T("rv_empty")}</span>` : `<span class="rvb bad">✗ ${T("rv_bad")}</span>`;
-    return `<div class="card rvq ${good === false ? "is-bad" : ""}"><div class="qnum" style="margin:0 0 6px"><b>${T("q_of", {i: i + 1, n})}</b>${badge}</div>
-      ${q.topic ? `<div class="topic" style="margin:0 0 8px">${esc(q.topic)}</div>` : ""}
-      <div class="qcard" style="box-shadow:none;padding:0;background:none">${body}</div><div class="opts" style="margin-top:12px">${opts}</div></div>`;
-  }).join("");
+  const wrong = marks ? marks.reduce((c, m) => c + (m ? 0 : 1), 0) : 0, okN = marks ? n - wrong : null;
+  const i = Math.max(0, Math.min(n - 1, RV.sel)), q = test.questions[i];
+  const my = (ans[i] || "-").toLowerCase(), good = marks ? !!marks[i] : null, right = key ? key[i] : null;
+  const body = q.body.map(b => b.t ? `<div class="qtext">${safe(b.t)}</div>`
+    : b.img ? `<img class="qimg" src="${esc(base + b.img)}" alt="" data-zoom>`
+    : b.table ? `<div class="tbl"><table>${b.table.map(r => `<tr>${r.map(c => `<td>${safe(c)}</td>`).join("")}</tr>`).join("")}</table></div>` : "").join("");
+  const opts = q.opts.map(o => { const l = o.l.toLowerCase();
+    const cls = l === my ? (good === null ? "sel" : good ? "ok" : "bad") : (right === l ? "ok" : "");
+    return `<div class="opt rv ${cls}"><span class="L">${esc(o.l)}</span><span>${safe(o.h)}${o.img ? `<img src="${esc(base + o.img)}" alt="" data-zoom>` : ""}</span>
+      ${l === my ? `<span class="you">${T("rv_you")}</span>` : right === l ? `<span class="you">${T("rv_right")}</span>` : ""}</div>`; }).join("");
+  const badge = good === null ? "" : good ? `<span class="rvb ok">✓ ${T("rv_ok")}</span>` : my === "-" ? `<span class="rvb bad">— ${T("rv_empty")}</span>` : `<span class="rvb bad">✗ ${T("rv_bad")}</span>`;
+  const pct = marks ? Math.round(100 * okN / n) : null;
   $app.innerHTML = `<div class="titlebar"><h1>🔍 ${T("rv_title")}</h1></div>
     <div class="card"><b>${esc(t.title)}</b>
-      ${marks ? `<div class="facts"><div><b style="color:var(--good)">${okN}</b><span>${T("rv_ok")}</span></div>
+      ${marks ? `<div class="rvpct" style="color:${color(pct)}">${pct}%</div>
+        <div class="facts"><div><b style="color:var(--good)">${okN}</b><span>${T("rv_ok")}</span></div>
         <div><b style="color:var(--bad)">${wrong}</b><span>${T("rv_bad")}</span></div>
-        <div><b>${Math.round(100 * okN / n)}%</b><span>${T("rv_pct")}</span></div></div>` : ""}
+        <div><b>${n}</b><span>${T("rv_total")}</span></div></div>` : ""}
+      ${RV.msgs && RV.msgs.length ? `<details class="rvmsg"><summary>${T("rv_more")}</summary>${RV.msgs.map(m => `<div class="botmsg">${botHtml(m)}</div>`).join("")}</details>` : ""}
       ${data.offline ? `<div class="tip">${T("rv_offline")}</div>` : !key ? `<div class="tip">${T("rv_nokey")}</div>` : ""}
-      ${marks ? `<div class="seg" style="margin-top:12px;background:var(--bg2)"><button data-f="0" class="${RV.only ? "" : "on"}">${T("rv_all", {n})}</button>
-        <button data-f="1" class="${RV.only ? "on" : ""}">${T("rv_wrong", {n: wrong})}</button></div>` : ""}</div>
-    ${cards || `<div class="card"><div class="empty">${T("rv_perfect")}</div></div>`}`;
-  $app.querySelectorAll("[data-f]").forEach(b => b.onclick = () => { RV.only = b.dataset.f === "1"; haptic("sel"); viewReview(); });
+      ${marks ? `<div class="legend" style="margin-top:12px"><span><i style="background:var(--good)"></i>${T("rv_ok")}</span>
+        <span><i style="background:var(--bad)"></i>${T("rv_bad")}</span></div>
+        <div class="cells rvcells">${Array.from({length: n}, (_, k) =>
+          `<button data-i="${k}" class="${marks[k] ? "g" : "r"} ${k === i ? "cur" : ""}">${k + 1}</button>`).join("")}</div>` : ""}
+    </div>
+    <div class="card rvq ${good === false ? "is-bad" : ""}" id="rvq"><div class="qnum" style="margin:0 0 6px"><b>${T("q_of", {i: i + 1, n})}</b>${badge}</div>
+      ${q.topic ? `<div class="topic" style="margin:0 0 8px">${esc(q.topic)}</div>` : ""}
+      <div class="qcard" style="box-shadow:none;padding:0;background:none">${body}</div><div class="opts" style="margin-top:12px">${opts}</div>
+      <div class="rvnav"><button class="btn ghost" id="rp" ${i ? "" : "disabled"}>${T("prev")}</button>
+        <button class="btn ghost" id="rn" ${i < n - 1 ? "" : "disabled"}>${T("next")}</button></div></div>
+    ${marks && wrong ? `<button class="btn" id="rw">❌ ${T("rv_next_wrong")}</button>` : ""}`;
+  const goQ = k => { RV.sel = k; haptic("sel"); viewReview(); setTimeout(() => { const el = document.getElementById("rvq"); if (el) el.scrollIntoView({behavior: "smooth", block: "start"}); }, 30); };
+  $app.querySelectorAll(".rvcells [data-i]").forEach(b => b.onclick = () => goQ(+b.dataset.i));
+  const rp = document.getElementById("rp"), rn = document.getElementById("rn"), rw = document.getElementById("rw");
+  if (rp) rp.onclick = () => goQ(i - 1);
+  if (rn) rn.onclick = () => goQ(i + 1);
+  if (rw) rw.onclick = () => { for (let k = 1; k <= n; k++) { const x = (i + k) % n; if (!marks[x]) return goQ(x); } };
   $app.querySelectorAll("[data-zoom]").forEach(img => img.onclick = e => { e.stopPropagation(); openViewer(img.src); });
 }
 
@@ -1038,6 +1065,10 @@ async function finish(timeout) {
   const res = await apiPost({c: t.code, a, s: st.start});
   if (res) {
     const msgs = (res.msgs || []).filter(Boolean);
+    if (msgs.length && !/❗️|⛔️/.test(msgs.join(""))) {
+      RV.code = null; RV.msgs = msgs; history_ = [{v: "home"}]; route = {v: "review", code: t.code}; reloadSoon(); render(); window.scrollTo({top: 0});
+      return;
+    }
     $app.innerHTML = `<div class="card result-card"><h2 class="sec">${timeout ? T("time_up") : T("finished_t")}</h2>
       ${msgs.map(m => `<div class="botmsg">${botHtml(m)}</div>`).join("") || `<p>${T("sent_ok")}</p>`}</div>
       <button class="btn" id="rvw">🔍 ${T("rv_btn")}</button>
