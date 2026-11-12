@@ -413,6 +413,8 @@ uz: {
   rv_perfect:"🎉 Xato yo'q — barakalla!", rv_none:"Bu test bo'yicha javoblaringiz topilmadi.",
   rv_offline:"Server bilan aloqa yo'q — faqat belgilagan javoblaringiz ko'rsatilmoqda. Birozdan keyin qayta oching.",
   rv_nokey:"Xato savollaringiz belgilandi. To'g'ri javobni o'zingiz topishga harakat qiling — mavzuni qayta o'qing 📖",
+  pend_saved:"📥 Bot hozir javob bermayapti. Javoblaringiz telefonda saqlandi va ilovani keyingi ochganingizda o'zi yuboriladi.",
+  pend_sent:"✅ Avval saqlangan javoblaringiz yuborildi!",
   sending:"Javoblar yuborilmoqda…", sent_ok:"✅ Javoblaringiz qabul qilindi.", to_home:"🏠 Bosh sahifa", saved:"✅ Saqlandi",
   my_results:"Natijalarim", no_results:"Hali natijalaringiz yo'q. Test topshirgach, natijangiz shu yerda chiqadi.",
   st_tests:"test", st_avg2:"o'rtacha", st_best2:"eng yaxshi", weak:"📌 Ko'proq e'tibor bering: {t}",
@@ -472,6 +474,8 @@ ru: {
   rv_perfect:"🎉 Ошибок нет — молодец!", rv_none:"Ваши ответы по этому тесту не найдены.",
   rv_offline:"Нет связи с сервером — показаны только ваши ответы. Откройте чуть позже.",
   rv_nokey:"Ошибочные вопросы отмечены. Попробуйте найти правильный ответ сами — повторите тему 📖",
+  pend_saved:"📥 Бот сейчас не отвечает. Ответы сохранены на телефоне и отправятся при следующем открытии.",
+  pend_sent:"✅ Сохранённые ответы отправлены!",
   sending:"Отправляем ответы…", sent_ok:"✅ Ответы приняты.", to_home:"🏠 На главную", saved:"✅ Сохранено",
   my_results:"Мои результаты", no_results:"Результатов пока нет. После первого теста они появятся здесь.",
   st_tests:"тестов", st_avg2:"среднее", st_best2:"лучший", weak:"📌 Обратите внимание: {t}",
@@ -1048,7 +1052,10 @@ async function finish(timeout) {
   if (canSend()) {
     tg.sendData(JSON.stringify({c: t.code, a, s: st.start}));
   } else {
+    // Bot hozir javob bermayapti — javoblar qurilmada saqlanadi va ilova keyingi ochilganda o'zi yuboriladi
+    if (AUTH && DATA.api) store.set("pend:" + t.code, {c: t.code, a, s: st.start, at: Date.now()});
     $app.innerHTML = `<div class="card"><h2 class="sec">${timeout ? T("time_up") : T("finished_t")}</h2>
+      ${AUTH && DATA.api ? `<div class="tip">${T("pend_saved")}</div>` : ""}
       <p>${T("open_via")}</p>
       <div class="qcard" style="background:var(--bg2);word-break:break-all;font-family:monospace">${esc(t.code)}*${esc(a)}</div></div>`;
   }
@@ -1395,6 +1402,31 @@ async function gameExit() {
   history_ = []; route = {v: "home"}; render();
 }
 
+// Bot o'chiq paytda saqlanib qolgan javoblarni qayta yuborish
+async function flushPending() {
+  let keys = [];
+  try { keys = Object.keys(localStorage).filter(k => k.startsWith("sp:pend:")).map(k => k.slice(3)); } catch (e) { return; }
+  for (const k of keys) {
+    const p = store.get(k, null); if (!p) continue;
+    const res = await apiPost({c: p.c, a: p.a, s: p.s});
+    if (res) { try { localStorage.removeItem("sp:" + k); } catch (e) {} toast(T("pend_sent"), 3500); reloadSoon(); }
+  }
+  // Ilovada topshirilgan, lekin botga yetib bormagan testlar (bot o'chiq bo'lgan): javoblar telefonda saqlangan — qayta yuboramiz
+  const mine = ((myHash && DATA.students[myHash]) || {}).tests || [];
+  const have = new Set(mine.map(r => r[7]).filter(Boolean));
+  if (!mine.length || mine.some(r => r[7])) {
+    for (const t of DATA.open) {
+      const a = store.get("ans:" + t.code, null);
+      if (!a || !isDone(t.code) || have.has(t.code) || store.get("pend:" + t.code, null)) continue;
+      const last = store.get("recon:" + t.code, 0);
+      if (Date.now() - last < 15 * 60000) continue;
+      store.set("recon:" + t.code, Date.now());
+      const res = await apiPost({c: t.code, a, s: 0, quiet: 1});
+      if (res && !res.dup) { toast(T("pend_sent"), 3500); reloadSoon(); }
+    }
+  }
+}
+
 // Natija topshirilgach reyting bir necha daqiqada yangilanadi — orqa fonda qayta yuklab turamiz
 function reloadSoon() {
   [60, 200, 420].forEach(sec => setTimeout(async () => {
@@ -1428,6 +1460,8 @@ async function load() {
   const running = DATA.open.find(t => store.get("ex:" + t.code, null) && !isDone(t.code));
   if (running) { route = {v: "intro", code: running.code}; history_ = [{v: "home"}]; }
   render();
+  flushPending();
+  setInterval(async () => { if (route.v !== "exam" && route.v !== "game") { if (await load()) flushPending(); } }, 120000);
 })();
 </script>
 </body>
