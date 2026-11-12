@@ -421,6 +421,7 @@ uz: {
   p_save:"Saqlash", p_save_note:"Saqlaganda ilova yopiladi, bot tasdiqlab xabar yuboradi.",
   p_open_bot:"Saqlash uchun ilovani botdagi «📝 Testlar» tugmasi orqali oching.", p_new:"Yangi o'quvchi",
   rv_btn:"Javoblarimni tahlil qilish", rv_title:"Tahlil", rv_you:"Sizning javobingiz", rv_right:"To'g'ri javob",
+  live_res:"natijalar", live_cnt:"Topshirganlar: {n} nafar", live_now:"🟢 jonli", live_ok:"ta to'g'ri", live_none:"Hali hech kim topshirmadi — birinchi bo'ling! 🚀",
   rv_total:"Jami savol", rv_more:"📋 Batafsil natija (o'rin, mavzular)", rv_next_wrong:"Keyingi xato savol",
   rv_ok:"To'g'ri", rv_bad:"Xato", rv_empty:"Belgilanmagan", rv_pct:"Natija", rv_all:"Hammasi ({n})", rv_wrong:"Xatolar ({n})",
   rv_perfect:"🎉 Xato yo'q — barakalla!", rv_none:"Bu test bo'yicha javoblaringiz topilmadi.",
@@ -484,6 +485,7 @@ ru: {
   p_save:"Сохранить", p_save_note:"После сохранения приложение закроется, бот пришлёт подтверждение.",
   p_open_bot:"Чтобы сохранить, откройте приложение кнопкой «📝 Testlar» в боте.", p_new:"Новый ученик",
   rv_btn:"Разобрать мои ответы", rv_title:"Разбор", rv_you:"Ваш ответ", rv_right:"Правильный ответ",
+  live_res:"результаты", live_cnt:"Сдали: {n}", live_now:"🟢 онлайн", live_ok:"верно", live_none:"Пока никто не сдал — будьте первым! 🚀",
   rv_total:"Всего вопросов", rv_more:"📋 Подробный результат (место, темы)", rv_next_wrong:"Следующая ошибка",
   rv_ok:"Верно", rv_bad:"Ошибка", rv_empty:"Без ответа", rv_pct:"Результат", rv_all:"Все ({n})", rv_wrong:"Ошибки ({n})",
   rv_perfect:"🎉 Ошибок нет — молодец!", rv_none:"Ваши ответы по этому тесту не найдены.",
@@ -563,7 +565,7 @@ const params = new URLSearchParams(location.search);
 const AUTH = params.get("k") || "";
 // Javobni bot API'siga to'g'ridan-to'g'ri yuborish (ilova yopilmaydi). Ishlamasa — null (Telegram orqali yuboriladi).
 async function apiPost(payload) {
-  if (!DATA || !DATA.api || !AUTH) return null;
+  if (!DATA || !DATA.api || (!AUTH && payload.t !== "live")) return null;
   try {
     const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 12000);
     const r = await fetch(DATA.api + "/app", {method: "POST", headers: {"Content-Type": "application/json"},
@@ -842,9 +844,34 @@ function viewChapter() {
     <h2 class="sec" style="margin:18px 2px 0">${T("open_tests")}</h2>
     ${open.length ? open.map(openCard).join("") : `<div class="card"><div class="empty">${T("chap_empty")}</div></div>`}
     ${fin.length ? `<h2 class="sec" style="margin:22px 2px 0">${T("finished")}</h2>` + fin.map(finishedCard).join("") : ""}
-    ${rating.length ? `<div class="card"><h2 class="sec">${esc(T("chap_rating", {s: b ? T("bob_n", {n: b}) : T("other_tests")}))}</h2>
+    ${k === "ingliz" ? open.filter(t => t.live).map(t => `<div class="card livebox" data-live="${esc(t.code)}">${liveHtml(t, LIVE[t.code])}</div>`).join("")
+      : rating.length ? `<div class="card"><h2 class="sec">${esc(T("chap_rating", {s: b ? T("bob_n", {n: b}) : T("other_tests")}))}</h2>
       ${rankRows(rating, 1, r => `<span class="meta">${T("tests_n", {n: r[2]})}</span><span class="score">${r[1]}%</span>`, 50)}</div>` : ""}`;
   bindCards();
+  if (k === "ingliz") refreshLive(open.filter(t => t.live));
+}
+
+// Ingliz tili: har bir test uchun alohida jonli natijalar ro'yxati (bot API'sidan — darhol; bo'lmasa data.json'dan)
+const LIVE = {};
+let liveTimer = null;
+function liveHtml(t, d) {
+  const rows = d ? d.rows : (t.results || []).slice().sort((a, b) => b[1] - a[1]);
+  const total = (d && d.n) || t.n;
+  return `<h2 class="sec">🏆 ${esc(t.title)} — ${T("live_res")}</h2>
+    <div class="meta" style="margin:-4px 0 8px">${T("live_cnt", {n: rows.length})}${d ? " · " + T("live_now") : ""}</div>
+    ${rows.length ? rows.map((r, i) => { const p = total ? Math.round(100 * r[1] / total) : 0, mine = ME && r[0] === ME.name;
+        return `<div class="row${mine ? " me" : ""}"><span class="rank${i < 3 ? " m" : ""}">${i < 3 ? medal(i) : i + 1}</span>
+          ${avatar(r[0], "", mine)}<span class="name">${esc(r[0])}</span>
+          <span class="meta">${r[1]} ${T("live_ok")}</span><span class="score" style="color:${color(p)}">${p}%</span></div>`; }).join("")
+      : `<div class="empty">${T("live_none")}</div>`}`;
+}
+async function refreshLive(tests) {
+  clearTimeout(liveTimer);
+  for (const t of tests) {
+    const d = await apiPost({t: "live", c: t.code});
+    if (d && d.ok) { LIVE[t.code] = d; const el = document.querySelector(`[data-live="${t.code}"]`); if (el) el.innerHTML = liveHtml(t, d); }
+  }
+  liveTimer = setTimeout(() => { if (route.v === "chapter" && route.k === "ingliz") refreshLive(tests); }, 20000);
 }
 
 // ---------------- Test oldi ----------------
