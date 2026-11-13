@@ -567,7 +567,7 @@ const AUTH = params.get("k") || "";
 async function apiPost(payload) {
   if (!DATA || !DATA.api || (!AUTH && payload.t !== "live")) return null;
   try {
-    const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 12000);
+    const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), payload.t === "live" ? 12000 : 25000);
     const r = await fetch(DATA.api + "/app", {method: "POST", headers: {"Content-Type": "application/json"},
       body: JSON.stringify({k: AUTH, ...payload}), signal: ctl.signal});
     clearTimeout(tm);
