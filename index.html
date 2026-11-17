@@ -428,6 +428,7 @@ uz: {
   pr_btn:"Qayta ishlash (mashq)", pr_resume:"Mashqni davom ettirish", pr_note:"Mashq natijasi reytingga qo'shilmaydi — faqat o'zingiz uchun",
   pr_title:"Mashq", pr_offline:"Bot hozir javob bermayapti — javoblaringiz saqlandi. Birozdan keyin testni ochib, yana «Yakunlash» ni bosing.",
   pr_banner:"Bu mashq natijasi — reytingga qo'shilmadi. Birinchi (rasmiy) natijangiz: {f}/{n}",
+  rc_hint:"Jami to'plangan ball bo'yicha · ~6 daqiqada yangilanadi", rc_empty:"Hali hech kim ishlamagan — birinchi bo'ling! 🚀",
   rv_total:"Jami savol", rv_more:"📋 Batafsil natija (o'rin, mavzular)", rv_next_wrong:"Keyingi xato savol",
   rv_ok:"To'g'ri", rv_bad:"Xato", rv_empty:"Belgilanmagan", rv_pct:"Natija", rv_all:"Hammasi ({n})", rv_wrong:"Xatolar ({n})",
   rv_perfect:"🎉 Xato yo'q — barakalla!", rv_none:"Bu test bo'yicha javoblaringiz topilmadi.",
@@ -495,6 +496,7 @@ ru: {
   pr_btn:"Пройти ещё раз (практика)", pr_resume:"Продолжить практику", pr_note:"Результат практики не идёт в рейтинг — только для вас",
   pr_title:"Практика", pr_offline:"Бот сейчас не отвечает — ответы сохранены. Откройте тест позже и снова нажмите «Завершить».",
   pr_banner:"Это результат практики — в рейтинг не вошёл. Ваш первый (официальный) результат: {f}/{n}",
+  rc_hint:"По сумме баллов · обновляется ~раз в 6 минут", rc_empty:"Пока никто не решал — будьте первым! 🚀",
   rv_total:"Всего вопросов", rv_more:"📋 Подробный результат (место, темы)", rv_next_wrong:"Следующая ошибка",
   rv_ok:"Верно", rv_bad:"Ошибка", rv_empty:"Без ответа", rv_pct:"Результат", rv_all:"Все ({n})", rv_wrong:"Ошибки ({n})",
   rv_perfect:"🎉 Ошибок нет — молодец!", rv_none:"Ваши ответы по этому тесту не найдены.",
@@ -803,8 +805,19 @@ function bindCards() {
 function aggRating(tests) {
   const acc = {};
   tests.forEach(t => (t.results || []).forEach(([name, sc]) => {
-    const a = acc[name] || (acc[name] = [0, 0]); a[0] += 100 * sc / t.n; a[1] += 1; }));
-  return Object.entries(acc).map(([n, [s, c]]) => [n, Math.round(s / c), c]).sort((a, b) => b[1] - a[1] || b[2] - a[2]);
+    const a = acc[name] || (acc[name] = [0, 0, 0]); a[0] += 100 * sc / t.n; a[1] += 1; a[2] += sc; }));
+  return Object.entries(acc).map(([n, [s, c, b]]) => [n, Math.round(s / c), c, b]);
+}
+// Reyting kartasi (bo'lim va bob uchun bir xil): jami ball bo'yicha — ko'p va to'g'ri yechganlar yuqorida
+function ratingCard(title, rows, limit = 50) {
+  const list = [...rows].sort((a, b) => (b[3] || 0) - (a[3] || 0) || b[1] - a[1]);
+  return `<div class="card"><h2 class="sec">🏆 ${esc(title)}</h2>
+    ${list.length ? `<div class="meta" style="margin:-4px 0 8px">${T("rc_hint")}</div>` +
+      list.slice(0, limit).map((r, i) => { const mine = ME && r[0] === ME.name;
+        return `<div class="row${mine ? " me" : ""}"><span class="rank${i < 3 ? " m" : ""}">${i < 3 ? medal(i) : i + 1}</span>
+          ${avatar(r[0], "", mine)}<span class="name">${esc(r[0])}</span>
+          <span class="meta">${T("tests_n", {n: r[2]})} · ${r[1]}%</span><span class="score">${r[3] ?? "–"} ${T("pts")}</span></div>`; }).join("")
+      : `<div class="empty">${T("rc_empty")}</div>`}</div>`;
 }
 const chapName = (k, b) => { const c = ((DATA.chapters || {})[k] || []).find(x => x[0] === b); return c && c[1] ? c[1] : ""; };
 const chapTitle = (k, b) => T("bob_n", {n: b}) + (chapName(k, b) ? ": " + chapName(k, b) : "");
@@ -838,8 +851,7 @@ function viewSection() {
   $app.innerHTML = `
     <div class="titlebar" style="--c:${s.c}"><div class="badge">${s.icon}</div><h1>${esc(secName(k))}</h1></div>
     ${body}
-    ${fin.rating.length ? `<div class="card"><h2 class="sec">${esc(T("sec_rating", {s: secName(k)}))}</h2>
-      ${rankRows(fin.rating, 1, r => `<span class="meta">${T("tests_n", {n: r[2]})}</span><span class="score">${r[1]}%</span>`, 30)}</div>` : ""}`;
+    ${ratingCard(T("sec_rating", {s: secName(k)}), fin.rating, 50)}`;
   $app.querySelectorAll(".chap").forEach(el => el.onclick = () => { haptic("sel"); go("chapter", {k, b: +el.dataset.b}); });
   bindCards();
 }
@@ -856,8 +868,7 @@ function viewChapter() {
     ${open.length ? open.map(openCard).join("") : `<div class="card"><div class="empty">${T("chap_empty")}</div></div>`}
     ${fin.length ? `<h2 class="sec" style="margin:22px 2px 0">${T("finished")}</h2>` + fin.map(finishedCard).join("") : ""}
     ${k === "ingliz" ? open.filter(t => t.live).map(t => `<div class="card livebox" data-live="${esc(t.code)}">${liveHtml(t, LIVE[t.code])}</div>`).join("")
-      : rating.length ? `<div class="card"><h2 class="sec">${esc(T("chap_rating", {s: b ? T("bob_n", {n: b}) : T("other_tests")}))}</h2>
-      ${rankRows(rating, 1, r => `<span class="meta">${T("tests_n", {n: r[2]})}</span><span class="score">${r[1]}%</span>`, 50)}</div>` : ""}`;
+      : ratingCard(T("chap_rating", {s: b ? (chapName(k, b) || T("bob_n", {n: b})) : T("other_tests")}), rating, 100)}`;
   bindCards();
   if (k === "ingliz") refreshLive(open.filter(t => t.live));
 }
