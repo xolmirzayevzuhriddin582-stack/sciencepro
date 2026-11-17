@@ -196,8 +196,11 @@
 
   /* rasm ko'ruvchi */
   .viewer{position:fixed;inset:0;background:#000;z-index:20;display:flex;flex-direction:column}
-  .viewer .vbar{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;color:#fff;font-size:14px}
-  .viewer .vbar button{background:rgba(255,255,255,.15);border:0;color:#fff;border-radius:999px;padding:7px 14px;font-weight:700;cursor:pointer}
+  .viewer .vbar{order:2;display:flex;justify-content:space-between;align-items:center;gap:10px;
+    padding:10px 14px calc(12px + env(safe-area-inset-bottom));color:#fff;font-size:15px;background:rgba(0,0,0,.6)}
+  .viewer .vbar button{background:rgba(255,255,255,.18);border:0;color:#fff;border-radius:999px;padding:11px 18px;font-weight:700;font-size:16px;cursor:pointer;min-width:48px}
+  .viewer .vbar button[data-x]{background:#fff;color:#111;padding:11px 22px}
+  .viewer .stage{padding-top:var(--safe-top)}
   .viewer .stage{flex:1;overflow:auto;touch-action:pan-x pan-y;display:flex}
   .viewer img{margin:auto;max-width:none;display:block;user-select:none;-webkit-user-drag:none}
   .toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;
@@ -422,6 +425,9 @@ uz: {
   p_open_bot:"Saqlash uchun ilovani botdagi «📝 Testlar» tugmasi orqali oching.", p_new:"Yangi o'quvchi",
   rv_btn:"Javoblarimni tahlil qilish", rv_title:"Tahlil", rv_you:"Sizning javobingiz", rv_right:"To'g'ri javob",
   live_res:"natijalar", live_cnt:"Topshirganlar: {n} nafar", live_now:"🟢 jonli", live_ok:"ta to'g'ri", live_none:"Hali hech kim topshirmadi — birinchi bo'ling! 🚀",
+  pr_btn:"Qayta ishlash (mashq)", pr_resume:"Mashqni davom ettirish", pr_note:"Mashq natijasi reytingga qo'shilmaydi — faqat o'zingiz uchun",
+  pr_title:"Mashq", pr_offline:"Bot hozir javob bermayapti — javoblaringiz saqlandi. Birozdan keyin testni ochib, yana «Yakunlash» ni bosing.",
+  pr_banner:"Bu mashq natijasi — reytingga qo'shilmadi. Birinchi (rasmiy) natijangiz: {f}/{n}",
   rv_total:"Jami savol", rv_more:"📋 Batafsil natija (o'rin, mavzular)", rv_next_wrong:"Keyingi xato savol",
   rv_ok:"To'g'ri", rv_bad:"Xato", rv_empty:"Belgilanmagan", rv_pct:"Natija", rv_all:"Hammasi ({n})", rv_wrong:"Xatolar ({n})",
   rv_perfect:"🎉 Xato yo'q — barakalla!", rv_none:"Bu test bo'yicha javoblaringiz topilmadi.",
@@ -486,6 +492,9 @@ ru: {
   p_open_bot:"Чтобы сохранить, откройте приложение кнопкой «📝 Testlar» в боте.", p_new:"Новый ученик",
   rv_btn:"Разобрать мои ответы", rv_title:"Разбор", rv_you:"Ваш ответ", rv_right:"Правильный ответ",
   live_res:"результаты", live_cnt:"Сдали: {n}", live_now:"🟢 онлайн", live_ok:"верно", live_none:"Пока никто не сдал — будьте первым! 🚀",
+  pr_btn:"Пройти ещё раз (практика)", pr_resume:"Продолжить практику", pr_note:"Результат практики не идёт в рейтинг — только для вас",
+  pr_title:"Практика", pr_offline:"Бот сейчас не отвечает — ответы сохранены. Откройте тест позже и снова нажмите «Завершить».",
+  pr_banner:"Это результат практики — в рейтинг не вошёл. Ваш первый (официальный) результат: {f}/{n}",
   rv_total:"Всего вопросов", rv_more:"📋 Подробный результат (место, темы)", rv_next_wrong:"Следующая ошибка",
   rv_ok:"Верно", rv_bad:"Ошибка", rv_empty:"Без ответа", rv_pct:"Результат", rv_all:"Все ({n})", rv_wrong:"Ошибки ({n})",
   rv_perfect:"🎉 Ошибок нет — молодец!", rv_none:"Ваши ответы по этому тесту не найдены.",
@@ -654,7 +663,9 @@ function go(v, extra = {}, push = true) {
   render();
   window.scrollTo({top: 0});
 }
+let VIEWER = null;
 function back() {
+  if (VIEWER) { VIEWER.close(); return; }     // kattalashtirilgan rasm ochiq bo'lsa — avval uni yopamiz
   if (route.v === "exam") { leaveExam(); return; }
   if (route.v === "game" && G.phase === "play") { gameExit(); return; }
   if (route.v === "game") clearInterval(G.timer);
@@ -881,7 +892,9 @@ function viewIntro() {
   const st = store.get("ex:" + t.code, null), done = isDone(t.code), ws = state(t);
   let action;
   if (done) action = `<div class="tip" style="background:color-mix(in srgb,var(--good) 14%,transparent)">${T(t.live ? "done_live" : "done_wait")}</div>
-      <button class="btn" id="rv">🔍 ${T("rv_btn")}</button>`;
+      <button class="btn" id="rv">🔍 ${T("rv_btn")}</button>
+      ${DATA.api && AUTH ? `<button class="btn ghost" id="pr" style="margin-top:10px">🔁 ${T(store.get("px:" + t.code, null) ? "pr_resume" : "pr_btn")}</button>
+      <div class="meta" style="text-align:center;margin-top:6px">${T("pr_note")}</div>` : ""}`;
   else if (ws === "soon") action = `<div class="tip" style="background:color-mix(in srgb,var(--mid) 16%,transparent);text-align:center">
       ${T("soon", {t: `<b>${hm(t.opens)}</b>`, d: dayTxt(t.opens)})}<br><b id="cd" style="font-size:22px"></b></div>
       <button class="btn" disabled style="opacity:.5">${T("start")}</button>`;
@@ -914,6 +927,8 @@ function viewIntro() {
   }
   const rvb = document.getElementById("rv");
   if (rvb) rvb.onclick = () => { RV.code = null; RV.msgs = null; haptic("sel"); go("review", {code: t.code}); };
+  const prb = document.getElementById("pr");
+  if (prb) prb.onclick = () => { haptic("sel"); go("exam", {code: t.code, practice: true}); };
   const b = document.getElementById("go");
   if (b) b.onclick = async () => {
     const mins = Math.floor((deadline(t, Date.now()) - Date.now()) / 60000);
@@ -956,6 +971,7 @@ async function viewReview() {
   const pct = marks ? Math.round(100 * okN / n) : null;
   $app.innerHTML = `<div class="titlebar"><h1>🔍 ${T("rv_title")}</h1></div>
     <div class="card"><b>${esc(t.title)}</b>
+      ${data.practice ? `<div class="tip" style="margin-top:10px">🔁 ${T("pr_banner", {f: data.first, n})}</div>` : ""}
       ${marks ? `<div class="rvpct" style="color:${color(pct)}">${pct}%</div>
         <div class="facts"><div><b style="color:var(--good)">${okN}</b><span>${T("rv_ok")}</span></div>
         <div><b style="color:var(--bad)">${wrong}</b><span>${T("rv_bad")}</span></div>
@@ -986,17 +1002,19 @@ async function viewReview() {
 let EX = null;
 
 async function viewExam() {
-  const t = DATA.open.find(x => x.code === route.code);
-  if (!t || isDone(t.code) || state(t) === "soon" || (state(t) === "over" && !store.get("ex:" + t.code, null))) {
+  const t0 = DATA.open.find(x => x.code === route.code), pr = !!route.practice;
+  if (!t0 || (!pr && (isDone(t0.code) || state(t0) === "soon" || (state(t0) === "over" && !store.get("ex:" + t0.code, null))))) {
     route = {v: "intro", code: route.code}; render(); return; }
-  if (!EX || EX.t.code !== t.code) {
+  const t = pr ? {...t0, closes: null} : t0;          // mashqda faqat o'z vaqti
+  if (!EX || EX.t.code !== t.code || !!EX.practice !== pr) {
     $app.innerHTML = `<div class="empty">${T("loading_q")}</div>`;
     let test;
     try { test = await (await fetch(t.src + "?v=" + encodeURIComponent(DATA.updated), {cache: "no-cache"})).json(); }
     catch (e) { $app.innerHTML = `<div class="card"><div class="empty">${T("load_fail")}</div></div>`; return; }
-    const st = store.get("ex:" + t.code, null) || {start: Date.now(), ans: {}, flag: {}, i: 0};
-    store.set("ex:" + t.code, st);
-    EX = {t, test, st, base: t.src.replace(/test\.json$/, ""), warned: false};
+    const key = (pr ? "px:" : "ex:") + t.code;
+    const st = store.get(key, null) || {start: Date.now(), ans: {}, flag: {}, i: 0};
+    store.set(key, st);
+    EX = {t, test, st, key, practice: pr, base: t.src.replace(/test\.json$/, ""), warned: false};
   }
   drawQ();
   if (EX.t.minutes || EX.t.closes) {
@@ -1011,7 +1029,7 @@ async function viewExam() {
   }
 }
 
-function save() { store.set("ex:" + EX.t.code, EX.st); }
+function save() { store.set(EX.key || "ex:" + EX.t.code, EX.st); }
 
 function drawQ() {
   const {t, test, st} = EX, n = test.questions.length, i = Math.min(st.i, n - 1), q = test.questions[i];
@@ -1022,7 +1040,7 @@ function drawQ() {
   const hasImg = q.body.some(b => b.img);
   $app.innerHTML = `<div class="exam">
     <div class="ehead"><div class="l1">
-      <div class="ttl">${esc(t.title)}</div>
+      <div class="ttl">${EX.practice ? `<span class="chip" style="margin-right:6px">🔁 ${T("pr_title")}</span>` : ""}${esc(t.title)}</div>
       ${t.minutes || t.closes ? `<div class="timer" id="timer">⏱</div>` : ""}
     </div><div class="prog"><i style="width:${100 * answered / n}%"></i></div></div>
     <div class="qnum"><b>${T("q_of", {i: i + 1, n})}</b>
@@ -1078,11 +1096,33 @@ function openGrid() {
   document.body.appendChild(s); haptic("sel");
 }
 
+// Qayta ishlash (mashq): bot tekshiradi, lekin reytingga yozmaydi
+async function finishPractice(a, timeout) {
+  const {t, test} = EX;
+  clearInterval(window._tick);
+  try { tg.disableClosingConfirmation(); } catch (e) {}
+  $app.innerHTML = `<div class="card" style="text-align:center;padding:40px 18px"><div class="spin"></div><p>${T("sending")}</p></div>`;
+  const res = await apiPost({t: "practice", c: t.code, a});
+  if (!res) {
+    $app.innerHTML = `<div class="card"><h2 class="sec">${T("pr_title")}</h2><div class="tip">${T("pr_offline")}</div></div>
+      <button class="btn" id="rh">${T("to_home")}</button>`;
+    document.getElementById("rh").onclick = () => { history_ = []; route = {v: "home"}; render(); };
+    return;     // javoblar saqlanib turadi — keyinroq qayta "Yakunlash" bosish mumkin
+  }
+  try { localStorage.removeItem("sp:px:" + t.code); } catch (e) {}
+  haptic("success");
+  EX = null;
+  RV.code = t.code; RV.test = test; RV.data = res; RV.msgs = null;
+  const m = res.marks || []; RV.sel = m.indexOf(0) >= 0 ? m.indexOf(0) : 0;
+  history_ = [{v: "home"}, {v: "intro", code: t.code}]; route = {v: "review", code: t.code}; render(); window.scrollTo({top: 0});
+}
+
 async function finish(timeout) {
   const {t, st, test} = EX, n = test.questions.length;
   const empty = n - Object.keys(st.ans).length;
   if (!timeout && !(await confirmBox(empty ? T("confirm_empty", {n: empty}) : T("confirm_all")))) return;
   const a = Array.from({length: n}, (_, i) => st.ans[i] || "-").join("");
+  if (EX.practice) return finishPractice(a, timeout);
   store.set("done:" + t.code, true);
   store.set("ans:" + t.code, a);
   clearInterval(window._tick);
@@ -1131,6 +1171,10 @@ function openViewer(src) {
   v.innerHTML = `<div class="vbar"><span style="display:flex;gap:6px"><button data-z="-">−</button><button data-z="+">+</button></span>
     <button data-x>${T("close")}</button></div><div class="stage"><img src="${esc(src)}" alt=""></div>`;
   document.body.appendChild(v);
+  VIEWER = v;
+  const close = () => { v.remove(); VIEWER = null; if (tg && tg.BackButton && ["home", "rating", "me"].includes(route.v)) tg.BackButton.hide(); };
+  v.close = close;
+  if (tg && tg.BackButton) tg.BackButton.show();
   const stage = v.querySelector(".stage"), img = v.querySelector("img");
   let scale = 1, baseW = 0;
   const fit = () => { baseW = Math.min(stage.clientWidth, img.naturalWidth * 2 || stage.clientWidth); apply(); };
@@ -1142,7 +1186,8 @@ function openViewer(src) {
   };
   img.complete ? fit() : (img.onload = fit);
   const zoom = (f, cx = stage.clientWidth / 2, cy = stage.clientHeight / 2) => { scale = Math.min(6, Math.max(1, scale * f)); apply(cx, cy); };
-  v.onclick = e => { if (e.target.dataset.z) zoom(e.target.dataset.z === "+" ? 1.5 : 1 / 1.5); if (e.target.hasAttribute("data-x")) v.remove(); };
+  v.onclick = e => { if (e.target.dataset.z) zoom(e.target.dataset.z === "+" ? 1.5 : 1 / 1.5);
+    if (e.target.hasAttribute("data-x") || (e.target === stage && scale <= 1.01)) close(); };
   let last = 0;
   img.addEventListener("click", e => { const now = Date.now(); if (now - last < 300) { scale > 1.5 ? (scale = 1, apply()) : zoom(2.5, e.offsetX - stage.scrollLeft, e.offsetY - stage.scrollTop); } last = now; });
   let pd = 0;
@@ -1496,6 +1541,8 @@ function reloadSoon() {
 async function load() {
   try {
     DATA = await (await fetch("data.json?t=" + Date.now(), {cache: "no-store"})).json();
+    // Vaqt berilmagan testlarga ham HEMIS kabi teskari sanoq: har savolga 1,5 daqiqa
+    (DATA.open || []).forEach(t => { if (!t.minutes && t.n) t.minutes = Math.max(10, Math.round(t.n * 1.5)); });
   } catch (e) {
     if (!DATA) $app.innerHTML = `<div class="card"><div class="empty">${T("load_err")}</div></div>`;
     return false;
