@@ -16,7 +16,7 @@
     --grid:rgba(14,110,97,.075);
     --line:rgba(16,42,43,.10); --soft:rgba(14,110,97,.10);
     --good:#1F9D6B; --mid:#D9901F; --bad:#D9544C;
-    --c-mock:#E08A1E; --c-sinf5:#1F9D6B; --c-sinf6:#2D7FC1; --c-mavzu:#8A6AD0; --c-ingliz:#D2466E;
+    --c-mock:#E08A1E; --c-sinf5:#1F9D6B; --c-sinf6:#2D7FC1; --c-mavzu:#8A6AD0; --c-ingliz:#D2466E; --c-dnk:#8B5CF6;
     --display:"Unbounded",system-ui,sans-serif;
     --shadow:0 1px 0 rgba(16,42,43,.06),0 6px 18px -10px rgba(16,42,43,.25);
   }
@@ -330,6 +330,63 @@
     .gquestion{flex:none;overflow:visible}
     .gquestion img.qimg{flex:none;height:auto;max-height:60vh;min-height:0}
   }
+  .darena{position:fixed;inset:0;z-index:8;background:var(--page);display:grid;grid-template-rows:auto minmax(0,1fr);padding-top:var(--safe-top);user-select:none;-webkit-user-select:none}
+  .dtop{display:grid;gap:8px;padding:10px 14px;background:var(--bg);box-shadow:var(--shadow);max-height:46vh;overflow:auto}
+  .dq{font-size:clamp(17px,1.9vw,28px);line-height:1.4}
+  .dopts{grid-template-columns:repeat(4,1fr)}
+  .dopts .gopt{padding:8px 12px;font-size:clamp(15px,1.6vw,24px)}
+  .dsol{background:var(--soft);border-radius:14px;padding:10px 14px;font-size:clamp(15px,1.5vw,22px);line-height:1.45}
+  .dboards{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;min-height:0}
+  .dboard{display:flex;flex-direction:column;min-height:0;border:3px solid var(--tc);border-radius:18px;overflow:hidden;background:color-mix(in srgb,var(--tc) 10%,var(--page))}
+  .dbh{display:flex;align-items:center;gap:10px;padding:6px 10px;flex-wrap:wrap}
+  .dbh .dname{font:700 clamp(16px,1.8vw,24px)/1.1 var(--display);color:var(--tc)}
+  .dbh .dsc{font:800 clamp(22px,2.6vw,36px)/1 var(--display);color:#fff;background:var(--tc);border-radius:12px;padding:2px 12px}
+  .dbh .dver{font-weight:700;font-size:clamp(14px,1.5vw,20px)}
+  .dpens{margin-left:auto;display:flex;gap:4px}
+  .dpens button{border:2px solid transparent;background:var(--bg);border-radius:10px;width:38px;height:38px;font-size:17px;cursor:pointer}
+  .dpens button.on{border-color:var(--tc)}
+  .dcv{flex:1;min-height:0;position:relative;margin:0 8px;border-radius:12px;overflow:hidden;
+    background-color:#fff;background-image:linear-gradient(#d5dfec 1px,transparent 1px),linear-gradient(90deg,#d5dfec 1px,transparent 1px);background-size:32px 32px;background-position:-1px -1px}
+  .dcv canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+  .dans{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px}
+  .dans button{min-height:52px;border:0;border-radius:14px;background:var(--tc);color:#fff;font:700 clamp(22px,2.6vw,36px)/1 var(--display);cursor:pointer;
+    box-shadow:0 4px 0 color-mix(in srgb,var(--tc) 60%,#000);touch-action:manipulation}
+  .dboard.locked .dans button{opacity:.35;pointer-events:none}
+  .dans button.pick{opacity:1!important;outline:4px solid var(--text)}
+  .dcount{position:fixed;inset:0;z-index:15;background:var(--page);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:14px;backdrop-filter:blur(6px)}
+  .dcount b{font:800 clamp(90px,18vw,220px)/1 var(--display);color:var(--accent);animation:pop .5s ease}
+  .dcount span{font:700 clamp(18px,2.4vw,32px)/1.2 var(--display);color:var(--hint);text-align:center;padding:0 16px}
+  @keyframes pop{from{transform:scale(1.6);opacity:0}to{transform:scale(1);opacity:1}}
+  .dleg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--hint);margin:10px 0 2px}
+  .dleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .dgt{font-weight:700;font-size:13px;color:var(--hint);margin:14px 2px 6px}
+  .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:8px}
+  .dgrid button{height:46px;border:2px solid var(--line);background:var(--bg);border-radius:12px;font:700 16px/1 var(--display);color:var(--text);cursor:pointer}
+  .dgrid button:active{transform:scale(.95)}
+  .dgrid button.w1{background:var(--t1);border-color:var(--t1);color:#fff}
+  .dgrid button.w2{background:var(--t2);border-color:var(--t2);color:#fff}
+  .dgrid button.w0{background:var(--bg2);border-color:var(--hint);color:var(--hint)}
+  .dmodal{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px}
+  .dmodal .card{width:min(520px,100%);margin:0}
+  .wlose{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:0}
+  .wwin{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+  .wwin .win{font:700 clamp(28px,4vw,60px)/1.1 var(--display)}
+  .wheelbox{position:relative;width:min(92%,52vh);aspect-ratio:1;margin:6px auto}
+  .wheelbox canvas{width:100%;height:100%;border-radius:50%;box-shadow:0 8px 28px rgba(0,0,0,.25)}
+  .wptr{position:absolute;left:50%;top:-6px;transform:translateX(-50%);width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;
+    border-top:34px solid var(--text);z-index:2;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+  #wspin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:26%;aspect-ratio:1;border-radius:50%;border:5px solid #fff;
+    background:var(--text);color:var(--bg);font:800 clamp(12px,1.6vw,20px)/1 var(--display);cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+  .wres{font:700 clamp(18px,2.4vw,34px)/1.2 var(--display);text-align:center;padding:6px 12px 14px;color:var(--tc)}
+  @media (max-width:760px){
+    .darena{overflow:auto;grid-template-rows:auto auto}
+    .dtop{max-height:none}
+    .dopts{grid-template-columns:1fr 1fr}
+    .dboards{grid-template-columns:1fr}
+    .dcv{height:42vh;flex:none}
+    .wheelbox{width:min(86vw,60vh)}
+  }
   @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
   .opt.rv{cursor:default;position:relative;flex-wrap:wrap}
   .opt.rv.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--bg))}
@@ -409,7 +466,7 @@ uz: {
   sections:"Bo'limlar", chapters:"Boblar", bob_n:"{n}-bob", chap_tests:"{n} ta test", chap_done:"{d}/{n} ishlangan",
   soon_tests:"Testlar tez orada", other_tests:"Boshqa testlar", chap_empty:"Bu bobda hozircha ochiq test yo'q. Yangi test qo'shilganda bot xabar beradi.",
   chap_rating:"{s} reytingi", open_n:"{n} ta ochiq test", none_yet:"Hozircha test yo'q", fresh:", {n} tasi yangi", updated:"Yangilangan: {d}",
-  k_mock:"Mock exam", k_sinf5:"5-sinf", k_sinf6:"6-sinf", k_ingliz:"Ingliz tili imtihoni", d_ingliz:"SUPER 100 — 100 ta savol, natija va tahlil darhol",
+  k_mock:"Mock exam", k_sinf5:"5-sinf", k_sinf6:"6-sinf", k_ingliz:"Ingliz tili imtihoni", k_dnk:"DNK masalalari", d_dnk:"180 ta masala (HEMIS) va DNK Duel 🎡", d_ingliz:"SUPER 100 — 100 ta savol, natija va tahlil darhol",
   subsecs:"Bo'limlar", k_mavzu:"Mavzulashtirilgan",
   d_mock:"Ibn Sino formatidagi to'liq sinovlar", d_sinf:"Mavzular bo'yicha testlar, natija darhol", d_mavzu:"Mavzulashtirilgan testlar",
   open_tests:"Ochiq testlar", no_open:"Hozircha ochiq test yo'q. Yangi test qo'shilganda shu yerda chiqadi va bot xabar beradi.",
@@ -478,7 +535,7 @@ ru: {
   sections:"Разделы", chapters:"Главы", bob_n:"Глава {n}", chap_tests:"Тестов: {n}", chap_done:"решено {d}/{n}",
   soon_tests:"Тесты скоро появятся", other_tests:"Другие тесты", chap_empty:"В этой главе пока нет открытых тестов. Когда тест появится, бот пришлёт уведомление.",
   chap_rating:"Рейтинг: {s}", open_n:"Открытых тестов: {n}", none_yet:"Пока тестов нет", fresh:", новых: {n}", updated:"Обновлено: {d}",
-  k_mock:"Mock exam", k_sinf5:"5 класс", k_sinf6:"6 класс", k_ingliz:"Экзамен по английскому", d_ingliz:"SUPER 100 — 100 вопросов, результат и разбор сразу",
+  k_mock:"Mock exam", k_sinf5:"5 класс", k_sinf6:"6 класс", k_ingliz:"Экзамен по английскому", k_dnk:"Задачи по ДНК", d_dnk:"180 задач (HEMIS) и DNK Duel 🎡", d_ingliz:"SUPER 100 — 100 вопросов, результат и разбор сразу",
   subsecs:"Разделы", k_mavzu:"Тематические",
   d_mock:"Полные пробные экзамены в формате Ибн Сино", d_sinf:"Тесты по темам, результат сразу", d_mavzu:"Тематические тесты",
   open_tests:"Открытые тесты", no_open:"Открытых тестов пока нет. Новый тест появится здесь, и бот пришлёт уведомление.",
@@ -621,6 +678,7 @@ const SEC = {
   sinf5: {c: "var(--c-sinf5)", d: "d_sinf", icon: ICO('<path d="M5 20C5 11 11 5 20 5c0 9-6 15-15 15Z"/><path d="M5 20l8-8"/>')},
   sinf6: {c: "var(--c-sinf6)", d: "d_sinf", icon: ICO('<circle cx="12" cy="12" r="1.4" fill="currentColor"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(120 12 12)"/>')},
   ingliz:{c: "var(--c-ingliz)", d: "d_ingliz", icon: ICO('<path d="M4 5h11a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H9l-4 3v-3a3 3 0 0 1-1-2.2V5Z"/><path d="M7.5 13l2-6 2 6M8.2 11h2.6"/><path d="M18 9h1.5A1.5 1.5 0 0 1 21 10.5V19l-2.5-2H14"/>')},
+  dnk:   {c: "var(--c-dnk)", d: "d_dnk", icon: ICO('<path d="M7 3c0 6 10 6 10 12s-10 6-10 6M17 3c0 6-10 6-10 12s10 6 10 6M8 7h8M8 17h8"/>')},
   mavzu: {c: "var(--c-mavzu)", d: "d_mavzu", icon: ICO('<path d="M4 5h16M4 12h16M4 19h10"/>')},
 };
 const HERO_ART = `<svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMaxYMin slice" fill="none"
@@ -693,6 +751,7 @@ function back() {
   if (route.v === "exam") { leaveExam(); return; }
   if (route.v === "game" && G.phase === "play") { gameExit(); return; }
   if (route.v === "game") clearInterval(G.timer);
+  if (route.v === "dnk" && D.phase !== "setup") { dnkExit(); return; }
   route = history_.pop() || {v: "home"};
   render();
 }
@@ -707,7 +766,7 @@ function render() {
   paintChrome();
   document.documentElement.lang = LANG === "ru" ? "ru" : "uz";
   $nav.querySelectorAll("[data-t]").forEach(el => el.textContent = T(el.dataset.t));
-  const inExam = route.v === "exam" || route.v === "game";
+  const inExam = route.v === "exam" || route.v === "game" || route.v === "dnk";
   $nav.style.display = inExam ? "none" : "";
   [...$nav.children].forEach(b => b.classList.toggle("on", b.dataset.go === route.v ||
     (b.dataset.go === "home" && ["section", "chapter", "intro"].includes(route.v))));
@@ -716,7 +775,7 @@ function render() {
   // Testning mavzuli foni (masalan, Quyosh sistemasi) — faqat shu test ochiq paytda
   const ct = ["intro", "exam", "review"].includes(route.v) && DATA && DATA.open ? DATA.open.find(x => x.code === route.code) : null;
   document.documentElement.classList.toggle("th-space", !!(ct && ct.theme === "space"));
-  ({game: viewGame, home: viewHome, section: viewSection, chapter: viewChapter, intro: viewIntro, exam: viewExam, review: viewReview, rating: viewRating, me: viewMe})[route.v]();
+  ({dnk: viewDnk, game: viewGame, home: viewHome, section: viewSection, chapter: viewChapter, intro: viewIntro, exam: viewExam, review: viewReview, rating: viewRating, me: viewMe})[route.v]();
 }
 
 // ---------------- Yordamchilar ----------------
@@ -875,9 +934,14 @@ function viewSection() {
   }
   $app.innerHTML = `
     <div class="titlebar" style="--c:${s.c}"><div class="badge">${s.icon}</div><h1>${esc(secName(k))}</h1></div>
+    ${k === "dnk" ? `<button class="cat" style="--c:#E08A1E;margin-top:14px" data-dnk>
+        <div class="badge">⚔️</div>
+        <div style="min-width:0"><div class="t">DNK Duel</div><div class="meta">2 kishi · doska · jazo g'ildiragi 🎡</div></div>
+        <span class="chev">›</span></button>` : ""}
     ${body}
     ${ratingCard(T("sec_rating", {s: secName(k)}), fin.rating, 50)}`;
   $app.querySelectorAll(".chap").forEach(el => el.onclick = () => { haptic("sel"); go("chapter", {k, b: +el.dataset.b}); });
+  const dd = $app.querySelector("[data-dnk]"); if (dd) dd.onclick = () => { haptic("sel"); go("dnk"); };
   bindCards();
 }
 
@@ -1542,6 +1606,454 @@ async function gameExit() {
   history_ = []; route = {v: "home"}; render();
 }
 
+// ---------------- 🧬 DNK Duel: 2 kishi, har biriga doska, yutqazganga jazo g'ildiragi ----------------
+const DNK_PEN = ["10 ta o'tirib-turish", "15 ta o'tirib-turish", "20 ta o'tirib-turish",
+  "10 ta masala tuzish", "15 ta masala tuzish", "20 ta masala tuzish"];
+const DNK_GROUPS = [["len", "📏 Uzunlik va nukleotidlar"], ["oqsil", "🔗 Oqsil va peptid bog'"], ["foiz", "％ Foizlar"],
+  ["vod", "🧲 Vodorod bog'lar"], ["mur", "🔥 Murakkab (H−F, k marta)"]];
+const D = Object.assign({phase: "setup", names: ["1-o'quvchi", "2-o'quvchi"], n: 5, secs: 120, groups: DNK_GROUPS.map(g => g[0]),
+  pens: DNK_PEN.slice(), items: [], i: 0, scores: [0, 0], R: null}, (() => { try { return JSON.parse(localStorage.getItem("sp:dnk:cfg")) || {}; } catch (e) { return {}; } })());
+D.phase = "setup";
+const dnkSave = () => { try { localStorage.setItem("sp:dnk:cfg", JSON.stringify({names: D.names, n: D.n, secs: D.secs, groups: D.groups, pens: D.pens})); } catch (e) {} };
+
+// --- Masala generatori (kitobdagi turlar asosida, sonlar har safar yangi) ---
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pk = a => a[Math.floor(Math.random() * a.length)];
+const shuf = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const r2 = x => Math.round(x * 100) / 100;
+const fz = x => String(r2(x)).replace(".", ",");
+const PCTS = [10, 12, 14, 15, 16, 18, 20, 22, 24, 25, 26, 28, 30, 32, 34, 35, 36, 38, 40];
+const NB = {A: "Adenin", T: "Timin", G: "Guanin", C: "Sitozin"};
+const LTR = {A: "A", T: "T", G: "G", C: "S"};
+// k = H / X ni 2 xonagacha aniq chiqadigan qilib A, G tanlash
+function pickAGk(lo = 2, hi = 30) {
+  for (let t = 0; t < 400; t++) {
+    const A = ri(lo, hi) * 10, G = ri(lo, hi) * 10, x = pk(["A", "T", "G", "C"]), X = x === "A" || x === "T" ? A : G, H = 2 * A + 3 * G;
+    if ((H * 100) % X === 0) return {A, G, x, X, H, k: H / X};
+  }
+  return {A: 80, G: 120, x: "T", X: 80, H: 520, k: 6.5};
+}
+const DNK_T = [
+  // Uzunlik va nukleotidlar
+  ["len", () => { const N = ri(8, 60) * 20, L = N / 2 * .34;
+    return {q: `${N} ta nukleotiddan iborat DNK fragmentining uzunligini toping (nm).`, a: L, u: " nm", w: [N * .34, L / 2],
+      s: `L = (N ÷ 2) × 0,34 = (${N} ÷ 2) × 0,34 = <b>${fz(L)} nm</b>`}; }],
+  ["len", () => { const N = ri(8, 60) * 20, L = N * .34;
+    return {q: `${N} ta nukleotiddan iborat i-RNK uzunligini toping (nm).`, a: L, u: " nm", w: [N / 2 * .34],
+      s: `RNK bir zanjirli: L = N × 0,34 = ${N} × 0,34 = <b>${fz(L)} nm</b>`}; }],
+  ["len", () => { const N = ri(8, 60) * 20, L = N / 2 * .34;
+    return {q: `DNK fragmentining uzunligi ${fz(L)} nm. Unda nechta nukleotid bor?`, a: N, u: " ta", w: [N / 2, N - 2],
+      s: `N = (L ÷ 0,34) × 2 = (${fz(L)} ÷ 0,34) × 2 = <b>${N} ta</b>`}; }],
+  ["len", () => { const N = ri(8, 60) * 20, L = N / 2 * .34;
+    return {q: `DNK uzunligi ${fz(L)} nm. Undagi fosfodiefir bog'lar sonini toping.`, a: N - 2, u: " ta", w: [N, N - 1, N / 2 - 1],
+      s: `N = (${fz(L)} ÷ 0,34) × 2 = ${N}; F = N − 2 = <b>${N - 2} ta</b>`}; }],
+  ["len", () => { const N = ri(8, 60) * 20, L = N / 2 * .34;
+    return {q: `DNK tarkibida ${N - 2} ta fosfodiefir bog' bor. DNK uzunligini toping (nm).`, a: L, u: " nm", w: [(N - 2) / 2 * .34, N * .34],
+      s: `N = F + 2 = ${N}; L = (${N} ÷ 2) × 0,34 = <b>${fz(L)} nm</b>`}; }],
+  ["len", () => { const N = ri(4, 30) * 20, L = N / 2 * .34;
+    return {q: `DNK fragmentining uzunligi ${fz(L)} nm. Fragment massasini toping (1 nukleotid massasi 345).`, a: N * 345, u: "", w: [N / 2 * 345, (N - 2) * 345],
+      s: `N = (${fz(L)} ÷ 0,34) × 2 = ${N}; M = ${N} × 345 = <b>${N * 345}</b>`}; }],
+  // Oqsil va peptid bog'
+  ["oqsil", () => { const aa = ri(5, 80) * 10, N = aa * 6;
+    return {q: `DNKda ${N} ta nukleotid bor. Shu DNK asosida sintezlangan oqsildagi peptid bog'lar sonini toping.`, a: aa - 1, u: " ta", w: [aa, N / 3 - 1, aa + 1],
+      s: `aminokislota = N ÷ 6 = ${aa}; peptid bog' = ${aa} − 1 = <b>${aa - 1} ta</b>`}; }],
+  ["oqsil", () => { const aa = ri(5, 60) * 10, N = aa * 6;
+    return {q: `DNKda ${N} ta nukleotid bor. Shu DNK asosida sintezlangan oqsil massasini toping (1 aminokislota 120 D).`, a: aa * 120, u: " D", w: [N / 3 * 120, (aa - 1) * 120],
+      s: `aminokislota = ${N} ÷ 6 = ${aa}; M = ${aa} × 120 = <b>${aa * 120} D</b>`}; }],
+  ["oqsil", () => { const N = ri(2, 20) * 60, L = N / 2 * .34, aa = N / 6;
+    return {q: `DNK fragmentining uzunligi ${fz(L)} nm. Shu fragment asosida nechta aminokislotali oqsil sintezlanadi?`, a: aa, u: " ta", w: [N / 3, N / 2, aa - 1],
+      s: `N = (${fz(L)} ÷ 0,34) × 2 = ${N}; aminokislota = N ÷ 6 = <b>${aa} ta</b>`}; }],
+  ["oqsil", () => { const aa = ri(5, 60) * 10, N = aa * 6, L = N / 2 * .34;
+    return {q: `Oqsil ${aa} ta aminokislotadan iborat. Uni kodlovchi DNK fragmenti uzunligini toping (nm).`, a: L, u: " nm", w: [N * .34, aa * 3 * .34 / 2 * 3],
+      s: `N = ${aa} × 6 = ${N}; L = (${N} ÷ 2) × 0,34 = <b>${fz(L)} nm</b>`}; }],
+  // Foizlar
+  ["foiz", () => { const N = ri(5, 40) * 100, a = pk(PCTS), v = ri(0, 3);
+    const G = N * (50 - a) / 100, A = N * a / 100;
+    const ask = [[`Guanin nukleotidlari sonini`, G, [A, N * (100 - a) / 100, G / 2]],
+      [`Guanin va Sitozin nukleotidlari yig'indisini`, 2 * G, [G, 2 * A, N - G]],
+      [`Timin nukleotidlari sonini`, A, [G, 2 * A, N - A]],
+      [`Adenin va Timin nukleotidlari yig'indisini`, 2 * A, [A, 2 * G, N - A]]][v];
+    return {q: `DNKda ${N} ta nukleotid bor, ularning ${a}% ini Adenin tashkil qiladi. ${ask[0]} toping.`, a: ask[1], u: " ta", w: ask[2],
+      s: `A = T = ${a}%, G = S = (100 − ${2 * a}) ÷ 2 = ${50 - a}%.<br>A = ${A}, G = ${G} ⇒ <b>${ask[1]} ta</b>`}; }],
+  ["foiz", () => { const a = pk(PCTS), N = ri(2, 13) * 300, A = N * a / 100, G = N / 2 - A, L = N / 2 * .34, v = ri(0, 3);
+    const ask = [["DNK uzunligini (nm)", L, " nm", [N * .34, L + 3.4]], ["fosfodiefir bog'lar sonini", N - 2, " ta", [N, N - 1]],
+      ["Guanin nukleotidlari sonini", G, " ta", [A, N - A]], ["shu DNK asosida sintezlangan oqsildagi aminokislotalar sonini", N / 6, " ta", [N / 3, N / 6 - 1]]][v];
+    return {q: `DNKdagi Adenin soni ${A} ta bo'lib, u umumiy nukleotidlarning ${a}% ini tashkil qiladi. ${ask[0]} toping.`, a: ask[1], u: ask[2], w: ask[3],
+      s: `${a}% — ${A} ta ⇒ 100% — N = ${A} × 100 ÷ ${a} = ${N}.<br>⇒ <b>${fz(ask[1])}${ask[2]}</b>`}; }],
+  ["foiz", () => { const a = pk(PCTS), gp = 50 - a, N = ri(2, 12) * 300, G = N * gp / 100, A = N / 2 - G, v = ri(0, 4);
+    const ask = [["jami nukleotidlar sonini", N, " ta", [N / 2, 2 * G]], ["jami vodorod bog'lar sonini", N + G, " ta", [N + A, N]],
+      ["jami fosfodiefir bog'lar sonini", N - 2, " ta", [N, N - 1]], ["jami purin asoslari sonini", N / 2, " ta", [G, 2 * A]],
+      ["DNK uzunligini (nm)", N / 2 * .34, " nm", [N * .34]]][v];
+    return {q: `DNKda Adenin umumiy nukleotidlarning ${a}% ini tashkil etadi, Guanin esa ${G} ta. ${ask[0]} toping.`, a: ask[1], u: ask[2], w: ask[3],
+      s: `A = ${a}% ⇒ G = ${gp}%. ${gp}% — ${G} ta ⇒ N = ${G} × 100 ÷ ${gp} = ${N}.<br>⇒ <b>${fz(ask[1])}${ask[2]}</b>`}; }],
+  ["foiz", () => { for (;;) { const N = ri(2, 14) * 300, g = pk(PCTS), T = N * (50 - g) / 100, aa = N / 6, d = Math.abs(T - aa);
+      if (!d) continue;
+      return {q: `DNKda ${N} ta nukleotid bor, Guanin ${g}% ni tashkil qiladi. DNKdagi Timinlar soni shu DNK asosida sintezlangan oqsildagi aminokislotalar sonidan nechtaga farq qiladi?`,
+        a: d, u: " ta", w: [T, aa, Math.abs(N * g / 100 - aa)],
+        s: `T = ${50 - g}% = ${T}; aminokislota = ${N} ÷ 6 = ${aa}; farq = <b>${d} ta</b>`}; } }],
+  ["foiz", () => { const a = pk([10, 15, 20, 25, 30, 35, 40]), N = ri(4, 30) * 100, A = N * a / 100, L = N / 2 * .34, x = pk(["G", "C", "T"]);
+    const ans = x === "T" ? a : 50 - a;
+    return {q: `DNK uzunligi ${fz(L)} nm, undagi Adenin ${A} ta. ${NB[x]} nukleotidlari foizini toping.`, a: ans, u: "%", w: [x === "T" ? 50 - a : a, 100 - 2 * a],
+      s: `N = (${fz(L)} ÷ 0,34) × 2 = ${N}; A = ${A} ÷ ${N} × 100 = ${a}% ⇒ ${LTR[x]} = <b>${ans}%</b>`}; }],
+  // Vodorod bog'lar
+  ["vod", () => { const A = ri(5, 60) * 10, G = ri(5, 60) * 10, N = 2 * A + 2 * G, H = N + G, x = pk(["A", "T", "G", "C"]), X = x === "A" || x === "T" ? A : G;
+    return {q: `DNKda ${N} ta nukleotid bor, ulardan ${NB[x]} ${X} ta. DNKdagi vodorod bog'lar sonini toping.`, a: H, u: " ta", w: [N + A, N, 2 * G + 3 * A],
+      s: `${x === "A" || x === "T" ? `A = T = ${A}, G = (${N} − ${2 * A}) ÷ 2 = ${G}` : `G = S = ${G}, A = (${N} − ${2 * G}) ÷ 2 = ${A}`}.<br>H = N + G = ${N} + ${G} = <b>${H} ta</b>`}; }],
+  ["vod", () => { for (;;) { const aa = ri(5, 60) * 10, N = aa * 6, G = ri(Math.ceil(N / 100), Math.floor(N * .04)) * 10, A = (N - 2 * G) / 2;
+      if (A <= 0) continue;
+      const H = N + G, v = ri(0, 5);
+      const ask = [["Adenin nukleotidlari sonini", A, [G, N / 2]], ["Guanin nukleotidlari sonini", G, [A, H - N / 2]], ["Sitozin nukleotidlari sonini", G, [A, 2 * G]],
+        ["Adenin va Timin nukleotidlari yig'indisini", 2 * A, [A, 2 * G]], ["Adenin va Guanin nukleotidlari yig'indisini", N / 2, [A, G + 2 * A]],
+        ["fosfodiefir bog'lar sonini", N - 2, [N, H - 2]]][v];
+      return {q: `DNKdagi vodorod bog'lar soni ${H} ta. Shu DNK asosida sintezlangan oqsilda ${aa} ta aminokislota bor. DNKdagi ${ask[0]} toping.`, a: ask[1], u: " ta", w: ask[2],
+        s: `N = ${aa} × 6 = ${N}; G = H − N = ${H} − ${N} = ${G}; A = (${N} − ${2 * G}) ÷ 2 = ${A}.<br>⇒ <b>${ask[1]} ta</b>`}; } }],
+  ["vod", () => { const [p, q] = pk([[1, 1], [1, 2], [2, 1], [1, 3], [3, 1], [2, 3], [3, 2]]), aa = (p + q) * 10 * ri(1, 6), x = 3 * aa / (p + q);
+    const A = p * x, G = q * x, N = 6 * aa, H = N + G, v = ri(0, 2);
+    const ask = [["vodorod bog'lar va oqsildagi peptid bog'lar farqini", H - (aa - 1), [H - aa, H + aa - 1]],
+      ["vodorod bog'lar va oqsildagi peptid bog'lar yig'indisini", H + aa - 1, [H + aa, H - aa + 1]],
+      ["vodorod bog'lar va i-RNKdagi fosfodiefir bog'lar farqini", H - (3 * aa - 1), [H - 3 * aa, H - (aa - 1)]]][v];
+    return {q: `DNKdagi A va G nukleotidlari ${p}:${q} nisbatda. Shu DNK asosida sintezlangan oqsilda ${aa} ta aminokislota bor. DNKdagi ${ask[0]} toping.`, a: ask[1], u: " ta", w: ask[2],
+      s: `N = ${aa} × 6 = ${N}; A = ${p}x, G = ${q}x ⇒ ${2 * (p + q)}x = ${N}, x = ${x}: A = ${A}, G = ${G}.<br>H = N + G = ${H}; ${v === 2 ? `i-RNK: ${3 * aa} nukleotid, F = ${3 * aa - 1}` : `peptid = ${aa - 1}`} ⇒ <b>${ask[1]} ta</b>`}; }],
+  ["vod", () => { for (;;) { const A = ri(5, 50) * 10, G = ri(5, 50) * 10; if ((A + G) % 3) continue;
+      const N = 2 * A + 2 * G, H = 2 * A + 3 * G, d = A - G, aa = N / 6;
+      const rel = d > 0 ? `Adenin nukleotidlari Guanindan ${d} ta ko'p` : d < 0 ? `Adenin nukleotidlari Guanindan ${-d} ta kam` : `Adenin va Guanin nukleotidlari soni teng`;
+      return {q: `DNKdagi vodorod bog'lar soni ${H} ta. ${rel}. Shu DNK asosida sintezlangan oqsildagi aminokislotalar sonini toping.`, a: aa, u: " ta", w: [N / 3, aa - 10, aa + 10],
+        s: `2A + 3G = ${H}, A = G ${d >= 0 ? "+ " + d : "− " + -d} ⇒ G = ${G}, A = ${A}.<br>N = H − G = ${N}; aminokislota = ${N} ÷ 6 = <b>${aa} ta</b>`}; } }],
+  // Murakkab
+  ["mur", () => { const {A, G, x, X, H, k} = pickAGk(), N = 2 * A + 2 * G, F = N - 2, d = H - F, v = ri(0, 2);
+    const ask = [["Adenin nukleotidlari sonini", A, [G, A + 10]], ["Sitozin nukleotidlari sonini", G, [A, G - 10]], ["Adenin va Sitozin nukleotidlari yig'indisini", A + G, [2 * A, 2 * G]]][v];
+    return {q: `DNKda vodorod bog'lari fosfodiefir bog'laridan ${d} ta ko'p. Vodorod bog'lari ${NB[x]} nukleotidlaridan ${fz(k)} marta ko'p. ${ask[0]} toping.`, a: ask[1], u: " ta", w: ask[2],
+      s: `H − F = ${d}, F = N − 2 ⇒ H − N = ${d - 2} = G ⇒ G = S = ${G}.<br>H = ${fz(k)} × ${LTR[x]}: ${x === "A" || x === "T" ? `${fz(k)}A = 2A + ${3 * G} ⇒ A = ${A}` : `H = ${fz(k)} × ${G} = ${H} ⇒ A = (${H} − ${3 * G}) ÷ 2 = ${A}`}.<br>⇒ <b>${ask[1]} ta</b>`}; }],
+  ["mur", () => { for (;;) { const {A, G, x, H, k} = pickAGk(), N = 2 * A + 2 * G, F = N - 2, ans = 2 * A - G; if (!ans) continue;
+      return {q: `DNKda vodorod va fosfodiefir bog'lari farqi ${H - F} ta, yig'indisi ${H + F} ta. Vodorod bog'lari ${NB[x]} nukleotidlaridan ${fz(k)} marta ko'p. DNKdagi A+T nukleotidlari va G farqini toping.`,
+        a: Math.abs(ans), u: " ta", w: [Math.abs(A - G), 2 * G - A > 0 ? 2 * G - A : A + G],
+        s: `H = (${H + F} + ${H - F}) ÷ 2 = ${H}, F = ${F} ⇒ N = ${N}, G = H − N = ${G}.<br>A = (${N} − ${2 * G}) ÷ 2 = ${A} ⇒ A+T = ${2 * A}; |${2 * A} − ${G}| = <b>${Math.abs(ans)} ta</b>`}; } }],
+];
+
+function dnkOptions(p) {
+  const ans = r2(p.a), seen = new Set([ans]), out = [];
+  const step = p.u === "%" ? 5 : !Number.isInteger(ans) || p.u === " nm" ? 3.4 : ans >= 2000 ? 100 : ans >= 400 ? 20 : ans >= 100 ? 10 : ans >= 30 ? 5 : 2;
+  const cand = [...shuf(p.w || []), ...shuf([1, -1, 2, -2, 3, -3, 4]).map(k => ans + k * step)];
+  for (const c of cand.map(r2)) { if (out.length >= 3) break; if (c > 0 && (p.u !== "%" || c < 100) && !seen.has(c)) { seen.add(c); out.push(c); } }
+  const all = shuf([ans, ...out]);
+  return {opts: all.map(v => fz(v) + p.u), key: "abcd"[all.indexOf(ans)]};
+}
+function dnkMake() {
+  const pool = DNK_T.filter(t => D.groups.includes(t[0])), list = pool.length ? pool : DNK_T, out = [];
+  let last = -1;
+  for (let i = 0; i < D.n; i++) {
+    let j; do { j = Math.floor(Math.random() * list.length); } while (list.length > 1 && j === last);
+    last = j; const p = list[j][1](); p.q = p.q.replace(/\. ([a-z])/g, (m, c) => ". " + c.toUpperCase()); out.push({...p, ...dnkOptions(p)});
+  }
+  return out;
+}
+
+// --- Doska (barmoq/qalam bilan yozish) ---
+function makeBoard(wrap) {
+  const cv = wrap.querySelector("canvas"), ctx = cv.getContext("2d"), dpr = Math.min(2, window.devicePixelRatio || 1);
+  const st = {color: "#1d2433", erase: false, last: {}};
+  const fit = () => {
+    const w = Math.max(1, Math.round(cv.clientWidth * dpr)), h = Math.max(1, Math.round(cv.clientHeight * dpr));
+    if (cv.width === w && cv.height === h) return;
+    const tmp = document.createElement("canvas"); tmp.width = cv.width; tmp.height = cv.height; tmp.getContext("2d").drawImage(cv, 0, 0);
+    cv.width = w; cv.height = h; ctx.drawImage(tmp, 0, 0);
+  };
+  fit(); new ResizeObserver(fit).observe(cv);
+  const pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * dpr, (e.clientY - r.top) * dpr]; };
+  cv.addEventListener("pointerdown", e => { e.preventDefault(); cv.setPointerCapture(e.pointerId); st.last[e.pointerId] = pos(e); line(pos(e), pos(e), e); });
+  cv.addEventListener("pointermove", e => { const l = st.last[e.pointerId]; if (!l) return; const p = pos(e); line(l, p, e); st.last[e.pointerId] = p; });
+  const up = e => { delete st.last[e.pointerId]; };
+  cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+  function line(a, b, e) {
+    ctx.globalCompositeOperation = st.erase ? "destination-out" : "source-over";
+    ctx.strokeStyle = st.color; ctx.lineCap = ctx.lineJoin = "round";
+    ctx.lineWidth = (st.erase ? 28 : 3.2 * (e.pressure && e.pointerType === "pen" ? .6 + e.pressure : 1)) * dpr;
+    ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0] + .01, b[1]); ctx.stroke();
+  }
+  wrap.querySelectorAll("[data-pen]").forEach(b => b.onclick = () => {
+    const v = b.dataset.pen;
+    if (v === "clear") { ctx.clearRect(0, 0, cv.width, cv.height); return; }
+    st.erase = v === "erase"; if (!st.erase) st.color = v;
+    wrap.querySelectorAll("[data-pen]").forEach(x => x.classList.toggle("on", x === b));
+  });
+}
+
+// --- Ko'rinishlar ---
+function viewDnk() {
+  clearInterval(D.timer);
+  if (D.phase === "play") return dnkRound();
+  if (D.phase === "end") return dnkEnd();
+  dnkSetup();
+}
+
+function dnkSetup() {
+  D.tab = D.tab || "book";
+  const tabs = `<div class="secs" id="dtab" style="margin:0 0 12px">${[["book", "📚 Kitobdan (1–180)"], ["rand", "🎲 Tasodifiy masalalar"]]
+    .map(([k, t]) => `<button data-v="${k}" class="${D.tab === k ? "on" : ""}">${t}</button>`).join("")}</div>`;
+  $app.innerHTML = `<div class="gpanel"><h1>🧬 DNK Duel</h1>${tabs}<div id="dbody"></div></div>`;
+  document.querySelectorAll("#dtab button").forEach(b => b.onclick = () => { haptic("sel"); D.tab = b.dataset.v; dnkSetup(); });
+  D.tab === "book" ? dnkBook() : dnkRand();
+}
+
+// --- Kitobdagi 180 masala: raqam bosilsa, shu masala bo'yicha duel ---
+const dnkPlayed = () => { try { return JSON.parse(localStorage.getItem("sp:dnk:played")) || {}; } catch (e) { return {}; } };
+async function dnkBook() {
+  const box = document.getElementById("dbody");
+  const bt = DATA.game && DATA.game.tests.find(t => t.kind === "dnk");
+  if (!bt) { box.innerHTML = `<div class="card"><div class="empty">${DATA.game ? "Kitob masalalari hali yuklanmagan." :
+    "Kitob masalalari bilan duel uchun ustoz botda <b>/pin</b> buyrug'i bilan kod o'rnatishi kerak (Science Battle kodi)."}</div></div>`; return; }
+  if (!G.dk) {
+    box.innerHTML = `<div class="card"><div class="field"><label for="dpin">🔐 Ustoz kodi (Science Battle kodi)</label>
+      <div class="pinbox"><input id="dpin" type="password" inputmode="numeric" autocomplete="off" maxlength="32"></div></div>
+      <div class="note" id="derr" style="color:var(--bad);min-height:1.2em"></div><button class="btn" id="dpok">Kirish</button></div>`;
+    const inp = document.getElementById("dpin"), ok = async () => {
+      const pin = inp.value.trim(); if (!pin) return;
+      try {
+        const dk = await deriveKey(pin, DATA.game);
+        if (hex(await crypto.subtle.digest("SHA-256", cat(dk, new TextEncoder().encode("check")))).slice(0, 16) !== DATA.game.check) throw 0;
+        G.dk = dk; haptic("success"); dnkBook();
+      } catch (e) { document.getElementById("derr").textContent = "Kod noto'g'ri"; haptic("error"); inp.select(); }
+    };
+    document.getElementById("dpok").onclick = ok; inp.onkeydown = e => { if (e.key === "Enter") ok(); };
+    setTimeout(() => inp.focus(), 50); return;
+  }
+  if (!D.bank || D.bank.code !== bt.code) {
+    box.innerHTML = `<div class="card" style="text-align:center;padding:40px 18px"><div class="spin"></div><p>Masalalar yuklanmoqda…</p></div>`;
+    try {
+      const test = await (await fetch(`tests/${bt.code}/test.json?v=${encodeURIComponent(DATA.updated)}`, {cache: "no-cache"})).json();
+      D.bank = {code: bt.code, qs: test.questions, key: await decryptKey(G.dk, bt.code, bt.e)};
+    } catch (e) { box.innerHTML = `<div class="card"><div class="empty">${T("load_fail")}</div></div>`; return; }
+    if (route.v !== "dnk" || D.phase !== "setup" || D.tab !== "book") return;
+  }
+  const played = dnkPlayed(), qs = D.bank.qs, groups = [];
+  qs.forEach((q, i) => { const t = q.topic || ""; if (!groups.length || groups[groups.length - 1].t !== t) groups.push({t, n: []}); groups[groups.length - 1].n.push(i + 1); });
+  box.innerHTML = `<div class="card"><div class="meta">Raqamni bosing — o'sha masala ochiladi, ikki o'quvchi o'z doskasida ishlaydi.</div>
+    <div class="dleg"><span><i style="background:var(--t1)"></i>1-o'quvchi yutgan</span><span><i style="background:var(--t2)"></i>2-o'quvchi yutgan</span>
+      <span><i style="background:var(--hint)"></i>hech kim topmagan</span></div>
+    ${groups.map(g => `<div class="dgt">${esc(g.t.replace(/^\d+\.\d+\s*/, ""))}</div>
+      <div class="dgrid">${g.n.map(n => { const r = played[n];
+        return `<button data-n="${n}" class="${r === 0 ? "w1" : r === 1 ? "w2" : r === -1 ? "w0" : ""}">${n}</button>`; }).join("")}</div>`).join("")}</div>
+    <div class="card"><h2 class="sec">🎡 Jazolar <span class="meta">— «🎲 Tasodifiy» bo'limida o'zgartiriladi</span></h2>
+      <div class="meta" style="margin-top:6px">${D.pens.map(esc).join(" · ")}</div></div>`;
+  box.querySelectorAll(".dgrid button").forEach(b => b.onclick = () => { haptic("sel"); dnkAsk(+b.dataset.n); });
+}
+function dnkBookItem(n) {
+  const q = D.bank.qs[n - 1], strip = h => String(h || "").replace(/<[^>]+>/g, "");
+  return {num: n, topic: (q.topic || "").replace(/^\d+\.\d+\s*/, ""), q: q.body.map(b => b.t ? safe(b.t) : "").join("<br>"),
+    opts: q.opts.map(o => strip(o.h)), key: D.bank.key[n - 1]};
+}
+function dnkAsk(n) {
+  D.bsecs = D.bsecs || 300;
+  const m = document.createElement("div"); m.className = "dmodal";
+  m.innerHTML = `<div class="card"><h2 style="margin:0 0 4px;font:700 22px/1.2 var(--display)">📚 ${n}-masala</h2>
+    <div class="meta">${esc(dnkBookItem(n).topic)}</div>
+    <h2 class="sec" style="margin-top:14px">O'quvchilar</h2>
+    <div class="teams"><input id="m1" style="--tc:var(--t1)" maxlength="24" placeholder="1-o'quvchi ismi" value="${esc(D.names[0])}">
+      <input id="m2" style="--tc:var(--t2)" maxlength="24" placeholder="2-o'quvchi ismi" value="${esc(D.names[1])}"></div>
+    <h2 class="sec" style="margin-top:14px">Vaqt</h2>
+    <div class="secs" id="mt">${[120, 300, 600].map(v => `<button data-v="${v}" class="${v === D.bsecs ? "on" : ""}">${v / 60} daqiqa</button>`).join("")}</div>
+    <div style="display:flex;gap:10px;margin-top:18px"><button class="btn" id="mgo" style="flex:1">▶ Boshlash</button>
+      <button class="btn" id="mno" style="flex:none;width:auto;padding:0 20px;background:var(--bg2);color:var(--text)">Bekor</button></div></div>`;
+  document.body.appendChild(m);
+  m.onclick = e => { if (e.target === m) m.remove(); };
+  m.querySelectorAll("#mt button").forEach(b => b.onclick = () => { D.bsecs = +b.dataset.v; m.querySelectorAll("#mt button").forEach(x => x.classList.toggle("on", x === b)); haptic("sel"); });
+  document.getElementById("mno").onclick = () => m.remove();
+  document.getElementById("mgo").onclick = () => {
+    D.names = [document.getElementById("m1").value.trim() || "1-o'quvchi", document.getElementById("m2").value.trim() || "2-o'quvchi"]; dnkSave();
+    m.remove(); D.mode = "book"; D.secs = D.bsecs; D.items = [dnkBookItem(n)]; D.i = 0; D.scores = [0, 0]; D.phase = "play"; haptic("success");
+    if (canFS() && !tg.isFullscreen) { try { tg.requestFullscreen(); } catch (e) {} }
+    render();
+  };
+}
+
+function dnkRand() {
+  document.getElementById("dbody").innerHTML = `
+    <div class="card"><div class="meta" style="margin-bottom:6px">Ikki o'quvchi bir xil masalani ishlaydi. Har biriga alohida doska — yechimni yozib, keyin javobni bosadi.
+      Birinchi to'g'ri topgan +1 oladi. Oxirida yutqazgan jazo g'ildiragini aylantiradi 🎡</div>
+      <h2 class="sec">O'quvchilar <span class="meta">— ismini yozing</span></h2>
+      <div class="teams"><input id="p1" style="--tc:var(--t1)" maxlength="24" value="${esc(D.names[0])}">
+        <input id="p2" style="--tc:var(--t2)" maxlength="24" value="${esc(D.names[1])}"></div>
+      <h2 class="sec" style="margin-top:16px">Masalalar soni</h2>
+      <div class="secs" id="dn">${[3, 5, 7, 10].map(n => `<button data-v="${n}" class="${n === D.n ? "on" : ""}">${n} ta</button>`).join("")}</div>
+      <h2 class="sec" style="margin-top:16px">Har masalaga vaqt</h2>
+      <div class="secs" id="ds">${[60, 90, 120, 180, 300].map(n => `<button data-v="${n}" class="${n === D.secs ? "on" : ""}">${n < 120 ? n + " s" : n / 60 + " daq"}</button>`).join("")}</div>
+      <h2 class="sec" style="margin-top:16px">Mavzular</h2>
+      <div class="secs" id="dg">${DNK_GROUPS.map(([k, t]) => `<button data-v="${k}" class="${D.groups.includes(k) ? "on" : ""}">${t}</button>`).join("")}</div>
+    </div>
+    <div class="card"><h2 class="sec">🎡 Jazolar <span class="meta">— har qatorga bittadan</span></h2>
+      <textarea id="dpen" rows="6" style="width:100%;margin-top:8px;border:2px solid var(--line);border-radius:12px;padding:10px;font-family:inherit;font-size:16px;line-height:1.4;background:var(--bg);color:var(--text);resize:vertical">${esc(D.pens.join("\n"))}</textarea>
+      <button id="dpr" style="border:0;background:none;color:var(--accent);font:inherit;font-weight:600;padding:6px 2px;cursor:pointer">↺ Asl ro'yxatni qaytarish</button></div>
+    <button class="btn" id="dgo">Duelni boshlash ›</button>`;
+  const save = () => {
+    D.names = [document.getElementById("p1").value.trim() || "1-o'quvchi", document.getElementById("p2").value.trim() || "2-o'quvchi"];
+    const pens = document.getElementById("dpen").value.split("\n").map(s => s.trim()).filter(Boolean);
+    D.pens = pens.length >= 2 ? pens.slice(0, 16) : DNK_PEN.slice(); dnkSave();
+  };
+  const pickOne = (id, f) => document.querySelectorAll(`#${id} button`).forEach(b => b.onclick = () => { haptic("sel"); save(); f(b.dataset.v); dnkSetup(); });
+  pickOne("dn", v => D.n = +v); pickOne("ds", v => D.secs = +v);
+  pickOne("dg", v => { D.groups = D.groups.includes(v) ? D.groups.filter(x => x !== v) : [...D.groups, v]; if (!D.groups.length) D.groups = [v]; });
+  document.getElementById("dpr").onclick = () => { document.getElementById("dpen").value = DNK_PEN.join("\n"); };
+  document.getElementById("dpen").onchange = save;
+  document.getElementById("dgo").onclick = () => {
+    save(); D.mode = "rand"; D.items = dnkMake(); D.i = 0; D.scores = [0, 0]; D.phase = "play"; haptic("success");
+    if (canFS() && !tg.isFullscreen) { try { tg.requestFullscreen(); } catch (e) {} }
+    render();
+  };
+}
+
+const PENS = [["#1d2433", "⚫"], ["#2D7FC1", "🔵"], ["#D9544C", "🔴"], ["erase", "🧽"], ["clear", "🗑"]];
+function dnkBoardHtml(ti) {
+  return `<div class="dboard" style="--tc:var(--t${ti + 1})" data-p="${ti}">
+    <div class="dbh"><b class="dname">${esc(D.names[ti])}</b><span class="dsc" id="dsc${ti}">${D.scores[ti]}</span>
+      <span class="dver" id="dv${ti}"></span>
+      <span class="dpens">${PENS.map(([v, i], k) => `<button data-pen="${v}" class="${k === 0 ? "on" : ""}">${i}</button>`).join("")}</span></div>
+    <div class="dcv"><canvas></canvas></div>
+    <div class="dans">${"ABCD".split("").map(l => `<button data-l="${l.toLowerCase()}">${l}</button>`).join("")}</div></div>`;
+}
+
+function dnkRound() {
+  const p = D.items[D.i];
+  const start = Date.now() + 3200;     // 3-2-1 — ikkalasi bir vaqtda boshlaydi
+  D.R = {ans: [null, null], over: false, start, end: start + D.secs * 1000};
+  $app.innerHTML = `<div class="darena">
+    <div class="dtop">
+      <div class="ghead"><div class="gtools"><button id="dx" title="Chiqish">✕</button><button id="dsnd">${G.sound ? "🔊" : "🔇"}</button></div>
+        <span class="gq">${p.num ? `📚 ${p.num}-masala · ${esc(p.topic)}` : `🧬 Masala ${D.i + 1} / ${D.items.length}`}</span>
+        <span class="banner" id="dban" style="flex:1"></span>
+        <span class="gtimer" id="dt">${fmtTime(D.secs)}</span></div>
+      <div class="gbar"><i id="db" style="width:100%"></i></div>
+      <div class="dq">${p.q}</div>
+      <div class="gopts dopts">${p.opts.map((o, k) => `<div class="gopt" data-o="${"abcd"[k]}"><span class="L">${"ABCD"[k]}</span><span>${esc(o)}</span></div>`).join("")}</div>
+      <div class="dsol" id="dsol" hidden></div>
+    </div>
+    <div class="dboards">${dnkBoardHtml(0)}${dnkBoardHtml(1)}</div>
+    <div class="dcount" id="dcd"><b>3</b><span>${esc(D.names[0])} ⚔️ ${esc(D.names[1])}</span></div></div>`;
+  $app.querySelectorAll(".dboard").forEach(makeBoard);
+  const cd = document.getElementById("dcd"); SND.tick();
+  [[1070, "2"], [2140, "1"], [3200, "Boshla!"]].forEach(([ms, t]) => setTimeout(() => {
+    const b = cd.querySelector("b"); if (!b) return; b.textContent = t; t === "Boshla!" ? SND.ok() : SND.tick(); }, ms));
+  setTimeout(() => cd.remove(), 3700);
+  $app.querySelectorAll(".dboard").forEach(bd => bd.querySelector(".dans").addEventListener("pointerdown", e => {
+    const b = e.target.closest("button[data-l]"); if (!b) return; e.preventDefault(); dnkAnswer(+bd.dataset.p, b.dataset.l, b);
+  }));
+  document.getElementById("dx").onclick = dnkExit;
+  document.getElementById("dsnd").onclick = e => { G.sound = !G.sound; e.target.textContent = G.sound ? "🔊" : "🔇"; };
+  clearInterval(D.timer);
+  D.timer = setInterval(() => {
+    const l = (D.R.end - Date.now()) / 1000, el = document.getElementById("dt"), bar = document.getElementById("db");
+    if (!el) { clearInterval(D.timer); return; }
+    el.textContent = fmtTime(Math.ceil(Math.max(0, l))); el.classList.toggle("warn", l <= 10);
+    bar.style.width = Math.min(100, Math.max(0, 100 * l / D.secs)) + "%";
+    if (Date.now() < D.R.start) { el.textContent = fmtTime(D.secs); return; }
+    if (l <= 5.05 && l > 0 && Math.abs(l - Math.round(l)) < .13) SND.tick();
+    if (l <= 0) dnkOver(null, "⏰ Vaqt tugadi!");
+  }, 250);
+}
+
+function dnkAnswer(ti, l, btn) {
+  const R = D.R, key = D.items[D.i].key;
+  if (R.over || R.ans[ti] !== null || Date.now() < R.start) return;
+  R.ans[ti] = l; btn.classList.add("pick");
+  const bd = $app.querySelector(`.dboard[data-p="${ti}"]`); bd.classList.add("locked");
+  const v = document.getElementById("dv" + ti);
+  if (l === key) {
+    D.scores[ti]++; document.getElementById("dsc" + ti).textContent = D.scores[ti];
+    v.textContent = "✅ +1"; v.style.color = "var(--good)"; SND.ok(); haptic("success");
+    dnkOver(ti, `✅ ${esc(D.names[ti])} to'g'ri topdi! +1`);
+  } else {
+    v.textContent = "❌ Xato"; v.style.color = "var(--bad)"; SND.bad(); haptic("error");
+    if (R.ans[0] !== null && R.ans[1] !== null) dnkOver(null, "Ikkalasi ham topolmadi");
+  }
+}
+
+function dnkOver(winner, msg) {
+  const R = D.R, p = D.items[D.i]; if (R.over) return;
+  R.over = true; clearInterval(D.timer); if (winner === null) SND.bad();
+  $app.querySelectorAll(".dboard").forEach(b => b.classList.add("locked"));
+  $app.querySelector(`.gopt[data-o="${p.key}"]`).classList.add("ok");
+  const ban = document.getElementById("dban");
+  ban.innerHTML = `${msg} To'g'ri javob: <b>${p.key.toUpperCase()}</b>`;
+  ban.style.color = winner === null ? "var(--hint)" : `var(--t${winner + 1})`;
+  const t = document.getElementById("dt");
+  if (p.num) { const pl = dnkPlayed(); pl[p.num] = winner === null ? -1 : winner; try { localStorage.setItem("sp:dnk:played", JSON.stringify(pl)); } catch (e) {} }
+  t.outerHTML = `${p.s ? `<button class="gnext" id="dsolb">📝 Yechim</button>` : ""}<button class="gnext" id="dn">${D.i < D.items.length - 1 ? "Keyingi ›" : "Natija ›"}</button>`;
+  const sol = document.getElementById("dsol"), sb = document.getElementById("dsolb");
+  if (sb) { sol.innerHTML = p.s; sb.onclick = () => { sol.hidden = !sol.hidden; }; }
+  document.getElementById("dn").onclick = () => {
+    if (D.i < D.items.length - 1) { D.i++; dnkRound(); }
+    else { D.phase = "end"; SND.end(); dnkEnd(); }
+  };
+}
+
+function dnkEnd() {
+  clearInterval(D.timer);
+  const [a, b] = D.scores, loser = a === b ? -1 : a < b ? 0 : 1, win = loser < 0 ? -1 : 1 - loser;
+  const half = ti => ti === loser
+    ? `<div class="dboard dend" style="--tc:var(--t${ti + 1})"><div class="dbh"><b class="dname">${esc(D.names[ti])}</b><span class="dsc">${D.scores[ti]}</span></div>
+        <div class="wlose"><div class="wheelbox"><div class="wptr"></div><canvas id="wheel" width="600" height="600"></canvas><button id="wspin">AYLANTIR</button></div>
+        <div class="wres" id="wres">Jazo g'ildiragini aylantiring 🎡</div></div></div>`
+    : `<div class="dboard dend" style="--tc:var(--t${ti + 1})"><div class="dbh"><b class="dname">${esc(D.names[ti])}</b><span class="dsc">${D.scores[ti]}</span></div>
+        <div class="wwin"><div style="font-size:clamp(60px,12vw,140px)">${ti === win ? "🏆" : "🤝"}</div>
+        <div class="win" style="color:var(--tc)">${ti === win ? "G'olib!" : "Durang"}</div></div></div>`;
+  $app.innerHTML = `<div class="darena">
+    <div class="dtop"><div class="ghead"><div class="gtools"><button id="dx" title="Chiqish">✕</button></div>
+      <span class="banner" style="flex:1">${loser < 0 ? `🤝 Durang! ${a} : ${b}` : `🏆 ${esc(D.names[win])} g'olib! ${a} : ${b}`}</span>
+      ${loser < 0 ? `<button class="gnext" id="dtie">⚡ Hal qiluvchi masala</button>` : ""}
+      ${D.mode === "book" ? `<button class="gnext" id="dset">▦ Masalalar</button>` : `<button class="gnext" id="dre">↻ Yana</button><button class="gnext" id="dset">⚙️</button>`}</div></div>
+    <div class="dboards">${half(0)}${half(1)}</div></div>`;
+  document.getElementById("dx").onclick = dnkExit;
+  const re_ = document.getElementById("dre"); if (re_) re_.onclick = () => { D.items = dnkMake(); D.i = 0; D.scores = [0, 0]; D.phase = "play"; render(); };
+  document.getElementById("dset").onclick = () => { D.phase = "setup"; render(); };
+  const tie = document.getElementById("dtie");
+  if (tie) tie.onclick = () => {
+    const last = D.items[D.items.length - 1];
+    if (last.num) D.items.push(dnkBookItem(last.num % D.bank.qs.length + 1));      // kitob rejimida — keyingi raqamli masala
+    else { const n = D.n; D.n = 1; D.items.push(dnkMake()[0]); D.n = n; }
+    D.i++; D.phase = "play"; render();
+  };
+  if (loser >= 0) dnkWheel();
+}
+
+function dnkWheel() {
+  const cv = document.getElementById("wheel"), ctx = cv.getContext("2d"), n = D.pens.length, seg = 2 * Math.PI / n;
+  const cols = ["#F0A23B", "#2D7FC1", "#D9544C", "#0E6E61", "#8B5CF6", "#E86FA6", "#3BB273", "#F2C14E"];
+  ctx.translate(300, 300);
+  for (let i = 0; i < n; i++) {
+    const a0 = -Math.PI / 2 + i * seg;
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, 290, a0, a0 + seg); ctx.closePath();
+    ctx.fillStyle = cols[i % cols.length]; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 4; ctx.stroke();
+    ctx.save(); ctx.rotate(a0 + seg / 2); ctx.fillStyle = "#fff"; ctx.textAlign = "right"; ctx.textBaseline = "middle";
+    const t = D.pens[i]; let fs = 28; ctx.font = `700 ${fs}px system-ui,sans-serif`;
+    while (ctx.measureText(t).width > 180 && fs > 14) { fs--; ctx.font = `700 ${fs}px system-ui,sans-serif`; }
+    ctx.fillText(t, 275, 0); ctx.restore();
+  }
+  ctx.beginPath(); ctx.arc(0, 0, 290, 0, 2 * Math.PI); ctx.lineWidth = 8; ctx.strokeStyle = "#fff"; ctx.stroke();
+  let rot = 0, busy = false;
+  document.getElementById("wspin").onclick = () => {
+    if (busy) return; busy = true;
+    const pick = Math.floor(Math.random() * n), deg = 360 / n;
+    const target = -(pick * deg + deg / 2) + (Math.random() - .5) * deg * .6;
+    rot += 360 * 6 + (((target - rot) % 360) + 360) % 360;
+    cv.style.transition = "transform 5s cubic-bezier(.12,.6,.12,1)"; cv.style.transform = `rotate(${rot}deg)`;
+    const res = document.getElementById("wres"); res.textContent = "Aylanmoqda…";
+    let t0 = Date.now(), last = 0;
+    const tk = setInterval(() => { const e = (Date.now() - t0) / 5000; if (e >= 1) return clearInterval(tk);
+      const gap = 60 + 500 * e * e; if (Date.now() - last > gap) { last = Date.now(); SND.tick(); } }, 30);
+    setTimeout(() => {
+      busy = false; SND.end(); haptic("success");
+      res.innerHTML = `Jazo: <b>${esc(D.pens[pick])}</b>`;
+      document.getElementById("wspin").textContent = "YANA";
+    }, 5100);
+  };
+}
+
+async function dnkExit() {
+  if (D.phase === "play" && !(await confirmBox("DNK Duel'dan chiqasizmi?"))) return;
+  clearInterval(D.timer);
+  if (D.phase !== "setup") { D.phase = "setup"; render(); return; }      // o'yindan — masalalar ro'yxatiga
+  route = history_.pop() || {v: "home"}; render();
+}
+
 // Bot o'chiq paytda saqlanib qolgan javoblarni qayta yuborish
 async function flushPending() {
   let keys = [];
@@ -1603,7 +2115,7 @@ async function load() {
   if (running) { route = {v: "intro", code: running.code}; history_ = [{v: "home"}]; }
   render();
   flushPending();
-  setInterval(async () => { if (route.v !== "exam" && route.v !== "game") { if (await load()) flushPending(); } }, 120000);
+  setInterval(async () => { if (!["exam", "game", "dnk"].includes(route.v)) { if (await load()) flushPending(); } }, 120000);
 })();
 </script>
 </body>
