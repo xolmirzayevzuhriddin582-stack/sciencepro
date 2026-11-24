@@ -387,6 +387,71 @@
     .dcv{height:42vh;flex:none}
     .wheelbox{width:min(86vw,60vh)}
   }
+  .duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:10px}
+  .tile{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;border:0;border-radius:20px;padding:14px;cursor:pointer;color:var(--text);
+    background:linear-gradient(135deg,color-mix(in srgb,var(--c) 18%,var(--bg)),var(--bg));box-shadow:var(--shadow);font:inherit}
+  .tile .ti{font-size:26px;line-height:1}
+  .tile b{font:700 17px/1.2 var(--display);margin-top:6px}
+  .tile small{color:var(--hint);font-size:12.5px}
+  .course{padding:0;overflow:hidden}
+  .course > :not(.cimg){margin-left:16px;margin-right:16px}
+  .course .cimg{display:block;width:100%;max-height:220px;object-fit:cover}
+  .course .ct{font:700 20px/1.25 var(--display);margin-top:14px;margin-bottom:8px}
+  .crows{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 10px;padding:10px 12px;background:var(--soft);border-radius:14px}
+  .crows dt{color:var(--hint);font-size:13.5px}
+  .crows dd{margin:0;font-weight:600;font-size:14.5px}
+  .cdesc{margin:0 0 12px;line-height:1.5}
+  .course .btn{margin-bottom:16px;width:calc(100% - 32px)}
+  .cok{margin-bottom:16px;padding:12px;border-radius:14px;background:color-mix(in srgb,var(--good) 14%,var(--bg));line-height:1.45}
+  .cok .btn{width:100%;margin-bottom:0}
+  .rhero{margin-top:12px;border-radius:22px;padding:18px;color:#fff;background:linear-gradient(135deg,#E08A1E,#C2410C)}
+  .rbig{font:800 46px/1 var(--display)}
+  .rlab{opacity:.92;margin-top:4px}
+  .rsch{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .rsch span{background:rgba(255,255,255,.18);border-radius:999px;padding:4px 10px;font-size:13px}
+  .rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:12px}
+  .rcard{background:var(--bg);border-radius:18px;padding:12px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;box-shadow:var(--shadow)}
+  .rimg{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;cursor:zoom-in}
+  .rav{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font:800 24px/1 var(--display);color:#fff;
+    background:linear-gradient(135deg,hsl(var(--h) 60% 50%),hsl(calc(var(--h) + 40) 65% 40%))}
+  .rcard .rn{font:700 15px/1.25 var(--display);margin-top:4px}
+  .rcard .rs{font-size:12.5px;color:var(--hint)}
+  .rcard .rm{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+  .rcard .rm i{font-style:normal;font-weight:700;color:var(--good);font-size:13px}
+  .rcard .rm em{font-style:normal;font-size:12px;color:var(--hint);background:var(--soft);border-radius:999px;padding:1px 8px}
+  .rcard small{font-size:12px;color:var(--hint)}
+  #rbg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:#0d1b3a}
+  #rbg .rbi{position:absolute;inset:-4%;background-size:cover;background-position:center;opacity:0;transform:scale(1.08);
+    transition:opacity 1.6s ease,transform 9s linear}
+  #rbg .rbi.on{opacity:1;transform:scale(1)}
+  #rbg .rbshade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,8,20,.25),rgba(5,8,20,.55) 45%,rgba(5,8,20,.8))}
+  .rpage.hasbg{color:#fff}
+  .rpage.hasbg .titlebar h1{color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+  .rpage.hasbg .rcard{background:rgba(255,255,255,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,.18);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .rpage.hasbg .rcard .rs,.rpage.hasbg .rcard small{color:rgba(255,255,255,.78)}
+  .rpage.hasbg .rcard .rm em{background:rgba(255,255,255,.16);color:#fff}
+  .rpage.hasbg .rcard .rm i{color:#7CF5C4}
+  .rpage.hasbg .secs button{background:rgba(255,255,255,.14);color:#fff;border-color:transparent}
+  .rpage.hasbg .secs button.on{background:#fff;color:#111}
+  .rslider{position:relative;margin-top:12px;border-radius:22px;min-height:150px;padding:20px 18px 30px;color:#fff;overflow:hidden;
+    background:linear-gradient(135deg,rgba(224,138,30,.92),rgba(194,65,12,.9));box-shadow:0 10px 30px rgba(0,0,0,.25);touch-action:pan-y}
+  .rpage.hasbg .rslider{background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.06));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,.22)}
+  .rsl{position:absolute;inset:20px 18px 30px;opacity:0;transform:translateX(30px);transition:opacity .6s ease,transform .6s ease;pointer-events:none}
+  .rsl.on{position:relative;inset:auto;opacity:1;transform:none;pointer-events:auto}
+  .rsl .sbig{font:800 54px/1 var(--display);text-shadow:0 4px 18px rgba(0,0,0,.25)}
+  .rsl .sname{font:800 24px/1.2 var(--display)}
+  .rsl .slab{margin-top:8px;font-size:16px;line-height:1.4;opacity:.95}
+  .rdots{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:6px;justify-content:center}
+  .rdots i{width:7px;height:7px;border-radius:99px;background:rgba(255,255,255,.4);transition:all .3s;cursor:pointer}
+  .rdots i.on{width:20px;background:#fff}
+  .rmarq{margin-top:10px;overflow:hidden;white-space:nowrap;border-radius:999px;padding:8px 0;background:rgba(0,0,0,.18);color:#fff;font-weight:600;font-size:14px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .rpage:not(.hasbg) .rmarq{background:var(--soft);color:var(--text)}
+  .rmarq div{display:inline-block;padding-left:100%;animation:marq 40s linear infinite}
+  @keyframes marq{to{transform:translateX(-100%)}}
+  #fx{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
   @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
   .opt.rv{cursor:default;position:relative;flex-wrap:wrap}
   .opt.rv.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--bg))}
@@ -769,14 +834,117 @@ function render() {
   const inExam = route.v === "exam" || route.v === "game" || route.v === "dnk";
   $nav.style.display = inExam ? "none" : "";
   [...$nav.children].forEach(b => b.classList.toggle("on", b.dataset.go === route.v ||
-    (b.dataset.go === "home" && ["section", "chapter", "intro"].includes(route.v))));
+    (b.dataset.go === "home" && ["section", "chapter", "intro", "kurslar", "natijalar"].includes(route.v))));
   if (tg && tg.BackButton) (["home", "rating", "me"].includes(route.v) ? tg.BackButton.hide() : tg.BackButton.show());
   if (tg) { try { inExam ? tg.enableClosingConfirmation() : tg.disableClosingConfirmation(); } catch (e) {} }
   // Testning mavzuli foni (masalan, Quyosh sistemasi) — faqat shu test ochiq paytda
   const ct = ["intro", "exam", "review"].includes(route.v) && DATA && DATA.open ? DATA.open.find(x => x.code === route.code) : null;
   document.documentElement.classList.toggle("th-space", !!(ct && ct.theme === "space"));
-  ({dnk: viewDnk, game: viewGame, home: viewHome, section: viewSection, chapter: viewChapter, intro: viewIntro, exam: viewExam, review: viewReview, rating: viewRating, me: viewMe})[route.v]();
+  if (route.v !== "natijalar") { const rb = document.getElementById("rbg"); if (rb) rb.remove(); clearInterval(window._rsl); }
+  FX.set(route.v === "game" || route.v === "dnk" || (route.v === "natijalar" && (DATA.results_bg || []).length) || (route.v === "exam" && !(ct && ct.theme === "space")) ? "off" : ct && ct.theme === "space" ? "space" : "soft");
+  ({kurslar: viewCourses, natijalar: viewResults, dnk: viewDnk, game: viewGame, home: viewHome, section: viewSection, chapter: viewChapter, intro: viewIntro, exam: viewExam, review: viewReview, rating: viewRating, me: viewMe})[route.v]();
 }
+
+
+// ---------------- Harakatlanuvchi fon (yengil, Canvas) ----------------
+// soft — oddiy sahifalar: sekin suzib yuruvchi pufakchalar, atomlar, molekulalar
+// space — Quyosh sistemasi foni: miltillovchi yulduzlar, aylanuvchi sayyoralar, uchar yulduz
+const FX = (() => {
+  const cv = document.createElement("canvas"); cv.id = "fx"; cv.setAttribute("aria-hidden", "true");
+  const ctx = cv.getContext("2d");
+  let W = 0, H = 0, dpr = 1, mode = "off", items = [], stars = [], meteor = null, raf = 0, last = 0, t0 = performance.now();
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  function size() {
+    dpr = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function init() {
+    const n = Math.round(Math.min(18, Math.max(9, W * H / 45000)));
+    items = Array.from({length: n}, () => ({x: rnd(0, W), y: rnd(0, H), r: rnd(14, 40), vy: rnd(-9, -3), vx: rnd(-3, 3),
+      a: rnd(0, 6.28), va: rnd(-.25, .25), k: ["bub", "bub", "atom", "hex", "dna"][Math.floor(rnd(0, 5))], o: rnd(.35, 1)}));
+    stars = Array.from({length: Math.round(W * H / 5000)}, () => ({x: rnd(0, W), y: rnd(0, H), r: rnd(.4, 1.6), p: rnd(0, 6.28), s: rnd(.6, 2.2)}));
+  }
+  const col = () => getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#0E6E61";
+  let accent = "#0E6E61";
+  function shape(it) {
+    ctx.save(); ctx.translate(it.x, it.y); ctx.rotate(it.a); ctx.strokeStyle = accent; ctx.fillStyle = accent; ctx.lineWidth = 1.6;
+    const r = it.r;
+    if (it.k === "bub") { ctx.beginPath(); ctx.arc(0, 0, r * .6, 0, 7); ctx.stroke(); ctx.beginPath(); ctx.arc(-r * .2, -r * .2, r * .12, 0, 7); ctx.fill(); }
+    else if (it.k === "atom") {
+      ctx.beginPath(); ctx.arc(0, 0, r * .12, 0, 7); ctx.fill();
+      for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.ellipse(0, 0, r * .75, r * .28, i * Math.PI / 3, 0, 7); ctx.stroke(); }
+    } else if (it.k === "hex") {
+      ctx.beginPath(); for (let i = 0; i < 6; i++) { const q = i * Math.PI / 3; ctx[i ? "lineTo" : "moveTo"](Math.cos(q) * r * .6, Math.sin(q) * r * .6); }
+      ctx.closePath(); ctx.stroke(); ctx.beginPath(); ctx.arc(0, 0, r * .32, 0, 7); ctx.stroke();
+    } else {
+      for (let i = -3; i <= 3; i++) {
+        const y = i * r * .22, x = Math.sin(i * .9 + it.a * 3) * r * .45;
+        ctx.beginPath(); ctx.arc(x, y, 2, 0, 7); ctx.arc(-x, y, 2, 0, 7); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(-x, y); ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+  function frame(now) {
+    raf = requestAnimationFrame(frame);
+    if (now - last < 33) return;              // ~30 kadr/s — batareyani tejash
+    const dt = Math.min(.1, (now - last) / 1000); last = now;
+    const t = (now - t0) / 1000;
+    ctx.clearRect(0, 0, W, H);
+    if (mode === "soft") {
+      ctx.globalAlpha = 1;
+      for (const it of items) {
+        it.x += it.vx * dt; it.y += it.vy * dt; it.a += it.va * dt;
+        if (it.y < -50) { it.y = H + 50; it.x = rnd(0, W); }
+        if (it.x < -50) it.x = W + 50; else if (it.x > W + 50) it.x = -50;
+        ctx.globalAlpha = .2 * it.o; shape(it);
+      }
+    } else if (mode === "space") {
+      for (const st of stars) {
+        ctx.globalAlpha = .25 + .75 * Math.abs(Math.sin(st.p + t * st.s));
+        ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill();
+      }
+      // Quyosh atrofida aylanuvchi sayyoralar (o'ng yuqori burchakdagi Quyosh)
+      const cx = W * .95, cy = H * .03, base = Math.max(W, H);
+      [[.28, 6.5, 5, "#8FD3FF"], [.42, 10.5, 6.5, "#E98A5B"], [.6, 17, 10, "#E8C88E"], [.82, 26, 8, "#D8B07A"]].forEach(([rr, per, pr, c], i) => {
+        const R = base * rr, a = Math.PI * .55 + (t / per) * .35 + i;
+        ctx.globalAlpha = .12; ctx.strokeStyle = "#fff"; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.ellipse(cx, cy, R, R * .55, .35, 0, 7); ctx.stroke();
+        const x = cx + Math.cos(a) * R * Math.cos(.35) - Math.sin(a) * R * .55 * Math.sin(.35);
+        const y = cy + Math.cos(a) * R * Math.sin(.35) + Math.sin(a) * R * .55 * Math.cos(.35);
+        const g = ctx.createRadialGradient(x - pr * .35, y - pr * .35, 1, x, y, pr);
+        g.addColorStop(0, "#fff"); g.addColorStop(.35, c); g.addColorStop(1, "rgba(0,0,0,.6)");
+        ctx.globalAlpha = .9; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, pr, 0, 7); ctx.fill();
+      });
+      // Uchar yulduz — har 5–9 soniyada
+      if (!meteor && Math.random() < dt / 7) meteor = {x: rnd(W * .1, W), y: rnd(0, H * .4), l: 0};
+      if (meteor) {
+        meteor.l += dt * 1.6; const k = meteor.l, x = meteor.x - k * 420, y = meteor.y + k * 220;
+        const g = ctx.createLinearGradient(x, y, x + 90, y - 47); g.addColorStop(0, "rgba(255,255,255,.9)"); g.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.globalAlpha = Math.max(0, 1 - k); ctx.strokeStyle = g; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 90, y - 47); ctx.stroke();
+        if (k > 1) meteor = null;
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  function set(m) {
+    if (reduce) m = "off";
+    accent = col();
+    if (m === mode) return;
+    mode = m;
+    if (m === "off") { cancelAnimationFrame(raf); raf = 0; ctx.clearRect(0, 0, W, H); cv.style.display = "none"; return; }
+    cv.style.display = "";
+    if (!cv.isConnected) { document.body.prepend(cv); size(); init(); }
+    if (!raf && !document.hidden) { last = 0; raf = requestAnimationFrame(frame); }
+  }
+  addEventListener("resize", () => { if (cv.isConnected) { size(); init(); } });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else if (mode !== "off" && !raf) raf = requestAnimationFrame(frame);
+  });
+  return {set, refresh: () => { accent = col(); }};
+})();
 
 // ---------------- Yordamchilar ----------------
 function places(list, idx) {
@@ -845,6 +1013,11 @@ function viewHome() {
           <span class="chip">${open.length ? T("open_n", {n: open.length}) : T("none_yet")}${fresh && fresh < open.length ? T("fresh", {n: fresh}) : ""}</span></div>
         <span class="chev">›</span></button>`;
     }).join("")}
+    ${(DATA.courses || []).length || (DATA.results || []).length ? `<div class="duo">
+      ${(DATA.courses || []).length ? `<button class="tile" style="--c:#2D7FC1" data-go2="kurslar"><span class="ti">🎓</span><b>Kurslar</b>
+        <small>${DATA.courses.length} ta kurs · yozilish</small></button>` : ""}
+      ${(DATA.results || []).length ? `<button class="tile" style="--c:#E08A1E" data-go2="natijalar"><span class="ti">🏆</span><b>Natijalar</b>
+        <small>${DATA.results.length} ta o'quvchi qabul qilindi</small></button>` : ""}</div>` : ""}
     ${DATA.game ? `<button class="cat" style="--c:var(--amber)" data-game>
         <div class="badge">${ICO('<path d="M6 21h12M12 17v4M8 3h8v6a4 4 0 0 1-8 0Z"/><path d="M4 21V12M20 21V12M2 12h4M18 12h4"/>')}</div>
         <div style="min-width:0"><div class="t">${T("g_card")}</div><div class="meta">${T("g_card_d")}</div></div>
@@ -852,10 +1025,94 @@ function viewHome() {
     <footer>${T("updated", {d: esc(DATA.updated)})}</footer>`;
   $app.querySelectorAll(".cat[data-k]").forEach(b => b.onclick = () => { haptic("sel"); go("section", {k: b.dataset.k}); });
   const gb = $app.querySelector("[data-game]"); if (gb) gb.onclick = () => { haptic("sel"); go("game"); };
+  $app.querySelectorAll("[data-go2]").forEach(b => b.onclick = () => { haptic("sel"); go(b.dataset.go2); });
   const fs = document.getElementById("fs");
   if (fs) fs.onclick = () => { haptic("sel"); tg.isFullscreen ? tg.exitFullscreen() : tg.requestFullscreen(); };
   document.getElementById("mebtn").onclick = () => { haptic("sel"); history_ = []; route = {v: "me"}; render(); };
   document.getElementById("rf").onclick = async () => { haptic("sel"); if (await load()) { toast(T("refreshed")); render(); } };
+}
+
+
+// ---------------- Kurslar va Natijalar ----------------
+function viewCourses() {
+  const cs = DATA.courses || [];
+  $app.innerHTML = `<div class="titlebar" style="--c:#2D7FC1"><div class="badge" style="font-size:22px">🎓</div><h1>Kurslar</h1></div>
+    <p class="meta" style="margin:6px 4px 4px">Kursni tanlang va «Kursga yozilish» tugmasini bosing — ustoz siz bilan bog'lanadi.</p>
+    ${cs.length ? cs.map(c => `<article class="card course">
+      ${c.img ? `<img class="cimg" src="${esc(c.img)}" alt="" loading="lazy" onerror="this.remove()">` : ""}
+      <h2 class="ct">${esc(c.title)}</h2>
+      ${c.rows.length ? `<dl class="crows">${c.rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : ""}
+      ${c.descr ? `<p class="cdesc">${esc(c.descr).replace(/\n/g, "<br>")}</p>` : ""}
+      <button class="btn" data-enroll="${c.id}">✍️ Kursga yozilish</button>
+      <div class="cok" id="cok${c.id}" hidden></div></article>`).join("")
+    : `<div class="card"><div class="empty">Hozircha kurslar qo'shilmagan.</div></div>`}`;
+  $app.querySelectorAll("[data-enroll]").forEach(b => b.onclick = async () => {
+    const id = +b.dataset.enroll, c = cs.find(x => x.id === id);
+    if (!(await confirmBox(`«${c.title}» kursiga yozilasizmi? Ustoz siz bilan bog'lanadi.`))) return;
+    haptic("sel"); b.disabled = true; b.textContent = "Yuborilmoqda…";
+    const r = await apiPost({t: "enroll", id});
+    const ok = document.getElementById("cok" + id);
+    if (r) {
+      haptic("success"); b.remove(); ok.hidden = false;
+      ok.innerHTML = `✅ <b>So'rovingiz ustozga yuborildi!</b><br>Bot chatida <b>📞 Raqamni yuborish</b> tugmasini bosing — ustoz siz bilan bog'lanadi.
+        <button class="btn" style="margin-top:10px" id="cgo${id}">Botga o'tish ›</button>`;
+      document.getElementById("cgo" + id).onclick = () => { try { tg.close(); } catch (e) {} };
+    } else if (DATA.bot) {
+      try { tg.openTelegramLink(`https://t.me/${DATA.bot}?start=kurs_${id}`); } catch (e) { location.href = `https://t.me/${DATA.bot}?start=kurs_${id}`; }
+      b.disabled = false; b.textContent = "✍️ Kursga yozilish";
+    } else { b.disabled = false; b.textContent = "✍️ Kursga yozilish"; toast(T("load_fail")); }
+  });
+}
+
+function viewResults() {
+  clearInterval(window._rsl);
+  const all = DATA.results || [], years = [...new Set(all.map(r => r.year).filter(Boolean))].sort().reverse();
+  route.y = route.y || "";
+  const list = route.y ? all.filter(r => r.year === route.y) : all;
+  const schools = {}; list.forEach(r => { if (r.school) schools[r.school] = (schools[r.school] || 0) + 1; });
+  const top = Object.entries(schools).sort((a, b) => b[1] - a[1]);
+  const ini = n => n.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join("").toUpperCase();
+  const hue = n => [...n].reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
+  // Aylanuvchi slaydlar: umumiy son → maktablar → ballari bor o'quvchilar
+  const slides = [`<div class="sbig">${list.length}</div><div class="slab">o'quvchi${route.y ? ` · ${esc(route.y)}-yil` : ""} nufuzli maktablarga qabul qilindi 🎉</div>`,
+    ...top.map(([k, n]) => `<div class="sbig">${n}</div><div class="slab">🏫 ${esc(k)}</div>`),
+    ...list.filter(r => r.score).slice(0, 6).map(r => `<div class="sname">⭐ ${esc(r.name)}</div><div class="slab">${esc(r.school)} · <b>${esc(r.score)}</b>${r.note ? `<br>${esc(r.note)}` : ""}</div>`)];
+  const bgs = DATA.results_bg || [];
+  let bg = document.getElementById("rbg");
+  if (bgs.length && !bg) {
+    bg = document.createElement("div"); bg.id = "rbg"; bg.setAttribute("aria-hidden", "true");
+    bg.innerHTML = bgs.map((u, i) => `<div class="rbi${i ? "" : " on"}" style="background-image:url('${esc(u)}')"></div>`).join("") + `<div class="rbshade"></div>`;
+    document.body.prepend(bg);
+  }
+  const names = list.map(r => esc(r.name)).join(" · ");
+  $app.innerHTML = `<div class="rpage${bgs.length ? " hasbg" : ""}">
+    <div class="titlebar" style="--c:#E08A1E"><div class="badge" style="font-size:22px">🏆</div><h1>Natijalar</h1></div>
+    <section class="rslider" id="rsl">${slides.map((h, i) => `<div class="rsl${i ? "" : " on"}">${h}</div>`).join("")}
+      <div class="rdots">${slides.map((_, i) => `<i class="${i ? "" : "on"}"></i>`).join("")}</div></section>
+    ${list.length > 3 ? `<div class="rmarq"><div>${names} · ${names} · </div></div>` : ""}
+    ${years.length > 1 ? `<div class="secs" id="ry" style="margin:12px 0 0">${["", ...years].map(y => `<button data-y="${y}" class="${y === route.y ? "on" : ""}">${y || "Hammasi"}</button>`).join("")}</div>` : ""}
+    <div class="rgrid">${list.map(r => `<article class="rcard">
+      ${r.img ? `<img class="rimg" src="${esc(r.img)}" alt="" loading="lazy">` : `<div class="rav" style="--h:${hue(r.name)}">${esc(ini(r.name))}</div>`}
+      <b class="rn">${esc(r.name)}</b>
+      ${r.school ? `<span class="rs">🏫 ${esc(r.school)}</span>` : ""}
+      <span class="rm">${r.score ? `<i>${esc(r.score)}</i>` : ""}${r.year ? `<em>${esc(r.year)}</em>` : ""}</span>
+      ${r.note ? `<small>${esc(r.note)}</small>` : ""}</article>`).join("")}</div>
+    ${list.length ? "" : `<div class="card"><div class="empty">Hozircha natijalar qo'shilmagan.</div></div>`}</div>`;
+  $app.querySelectorAll("#ry button").forEach(b => b.onclick = () => { haptic("sel"); route.y = b.dataset.y; viewResults(); });
+  $app.querySelectorAll(".rimg").forEach(im => im.onclick = () => { try { openViewer(im.src); } catch (e) {} });
+  // Slayd va fon almashinuvi
+  const sl = [...$app.querySelectorAll(".rsl")], dots = [...$app.querySelectorAll(".rdots i")], bi = bg ? [...bg.querySelectorAll(".rbi")] : [];
+  let k = 0, tick = 0;
+  const show = n => { k = (n + sl.length) % sl.length; sl.forEach((e, i) => e.classList.toggle("on", i === k)); dots.forEach((e, i) => e.classList.toggle("on", i === k)); };
+  window._rsl = setInterval(() => {
+    if (route.v !== "natijalar") { clearInterval(window._rsl); return; }
+    tick++; if (sl.length > 1) show(k + 1);
+    if (bi.length > 1 && tick % 2 === 0) { const j = (tick / 2) % bi.length; bi.forEach((e, i) => e.classList.toggle("on", i === j)); }
+  }, 3500);
+  const box = document.getElementById("rsl"); let x0 = null;
+  box.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, {passive: true});
+  box.addEventListener("touchend", e => { if (x0 === null) return; const d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 40) show(k + (d < 0 ? 1 : -1)); x0 = null; });
+  dots.forEach((d, i) => d.onclick = () => show(i));
 }
 
 // ---------------- Bo'lim ----------------
