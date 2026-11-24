@@ -451,6 +451,68 @@
   .rpage:not(.hasbg) .rmarq{background:var(--soft);color:var(--text)}
   .rmarq div{display:inline-block;padding-left:100%;animation:marq 40s linear infinite}
   @keyframes marq{to{transform:translateX(-100%)}}
+  .sbar{display:flex;align-items:center;gap:10px;margin:0 -2px 12px}
+  .sbar .brand{display:flex;align-items:center;gap:10px;min-width:0}
+  .sbar .brand img{width:42px;height:42px;border-radius:50%;box-shadow:var(--shadow);flex:none}
+  .sbar .brand b{display:block;font:800 15px/1.05 var(--display);letter-spacing:.2px}
+  .sbar .brand small{display:block;font-size:11.5px;color:var(--hint)}
+  .sbt{margin-left:auto;display:flex;gap:6px}
+  .sib{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:17px;display:grid;place-items:center;flex:none}
+  .shero{position:relative;overflow:hidden;color:var(--on-hero);border-radius:28px;padding:22px 18px 18px;
+    background:radial-gradient(120% 120% at 90% 0%,var(--hero2),var(--hero) 62%);box-shadow:0 24px 50px -30px rgba(15,61,62,.8)}
+  .shero canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.6;pointer-events:none}
+  .shero > :not(canvas){position:relative}
+  .shero .eyebrow{display:inline-block;font-weight:600;font-size:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:5px 11px}
+  .shero .hi{margin-top:14px;opacity:.85;font-weight:600}
+  .shero h1{font:800 clamp(26px,7.4vw,40px)/1.12 var(--display);letter-spacing:-.6px;margin:8px 0 10px}
+  .shero h1 span{color:#7CF5C4}
+  .shero .lead{margin:0 0 16px;opacity:.9;font-size:15px}
+  .shero .acts{display:flex;gap:10px;flex-wrap:wrap}
+  .scta{border:0;border-radius:14px;padding:12px 18px;font-weight:700;cursor:pointer;background:var(--accent);color:var(--accent-text)}
+  .scta.light{background:#fff;color:#0F3D3E}
+  .scta.ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35)}
+  .hcard{margin-top:18px;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:12px;
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .hcard img{width:62px;height:62px;border-radius:50%;flex:none;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .hst{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:center}
+  .hst div{background:rgba(255,255,255,.08);border-radius:12px;padding:8px 2px}
+  .hst b{display:block;font:800 18px/1.1 var(--display)}
+  .hst small{font-size:11px;opacity:.8}
+  .shd{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:26px 4px 12px}
+  .shd h2{font:700 21px/1.2 var(--display);letter-spacing:-.4px;margin:0}
+  .shd p{margin:4px 0 0;color:var(--hint);font-size:13.5px;flex-basis:100%}
+  .shd{flex-wrap:wrap}
+  .shd .more{border:0;background:none;color:var(--accent);font-weight:700;cursor:pointer;padding:0}
+  .stiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .stile{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;border:1px solid var(--line);background:var(--bg);
+    border-radius:20px;padding:14px;cursor:pointer;box-shadow:var(--shadow);font:inherit;color:var(--text);min-height:142px}
+  .stile::after{content:"";position:absolute;right:-34px;top:-34px;width:96px;height:96px;border-radius:50%;background:color-mix(in srgb,var(--c) 12%,transparent)}
+  .stile .ico{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-size:22px;background:color-mix(in srgb,var(--c) 16%,transparent);margin-bottom:6px}
+  .stile b{font:700 15.5px/1.2 var(--display)}
+  .stile small{color:var(--hint);font-size:12.5px;line-height:1.35}
+  .stile .go{margin-top:auto;padding-top:6px;font-weight:700;font-size:13px;color:var(--c)}
+  .stile:active{transform:scale(.98)}
+  .rmarq.home{margin-top:0;background:var(--soft);color:var(--text)}
+  .sfeat{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .sfeat div{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:14px}
+  .sfeat span{font-size:22px}
+  .sfeat b{display:block;margin:6px 0 2px;font-size:14.5px}
+  .sfeat p{margin:0;color:var(--hint);font-size:12.5px;line-height:1.4}
+  .sband{margin-top:22px;border-radius:24px;padding:20px;color:#fff;background:linear-gradient(120deg,#E08A1E,#C2410C);display:flex;flex-direction:column;gap:14px;
+    box-shadow:0 24px 50px -30px rgba(194,65,12,.7)}
+  .sband h2{font:800 22px/1.2 var(--display);margin:0}
+  .sband p{margin:6px 0 0;opacity:.92}
+  .sband .scta{align-self:flex-start}
+  .lnk{border:0;background:none;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:0}
+  .sdrawer{position:fixed;inset:0;z-index:40}
+  .sdrawer .shade{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+  .sdrawer .panel{position:absolute;right:0;top:0;bottom:0;width:min(310px,86vw);background:var(--bg);padding:calc(14px + var(--safe-top)) 14px 14px;
+    display:flex;flex-direction:column;gap:2px;box-shadow:-20px 0 50px rgba(0,0,0,.25);animation:sdr .22s ease;overflow:auto}
+  @keyframes sdr{from{transform:translateX(30px);opacity:0}}
+  .sdrawer header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font:700 17px var(--display)}
+  .sdrawer .l{display:flex;align-items:center;gap:12px;border:0;background:none;text-align:left;font:600 16px/1 inherit;font-family:inherit;padding:13px 10px;border-radius:12px;cursor:pointer;color:var(--text)}
+  .sdrawer .l:active,.sdrawer .l:hover{background:var(--soft);color:var(--accent)}
+  .sdrawer .l span{width:26px;text-align:center}
   #fx{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
   @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
   .opt.rv{cursor:default;position:relative;flex-wrap:wrap}
@@ -689,7 +751,8 @@ const store = {
   del(k) { try { localStorage.removeItem("sp:" + k); } catch (e) {} },
 };
 function applyTheme() {
-  const dark = tg && tg.colorScheme ? tg.colorScheme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  const man = store.get("theme", "");
+  const dark = man ? man === "dark" : tg && tg.colorScheme ? tg.colorScheme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
   document.documentElement.dataset.theme = dark ? "dark" : "light";
   document.documentElement.dataset.bg = store.get("bg", "grid");
 }
@@ -697,7 +760,7 @@ function paintChrome() {
   if (!tg || !tg.isVersionAtLeast || !tg.isVersionAtLeast("6.9")) return;
   const cs = getComputedStyle(document.documentElement);
   try {
-    tg.setHeaderColor((route.v === "home" ? cs.getPropertyValue("--hero") : cs.getPropertyValue("--page")).trim());
+    tg.setHeaderColor(cs.getPropertyValue("--page").trim());
     tg.setBackgroundColor(cs.getPropertyValue("--page").trim());
   } catch (e) {}
 }
@@ -834,7 +897,7 @@ function render() {
   const inExam = route.v === "exam" || route.v === "game" || route.v === "dnk";
   $nav.style.display = inExam ? "none" : "";
   [...$nav.children].forEach(b => b.classList.toggle("on", b.dataset.go === route.v ||
-    (b.dataset.go === "home" && ["section", "chapter", "intro", "kurslar", "natijalar"].includes(route.v))));
+    (b.dataset.go === "home" && ["section", "chapter", "intro", "kurslar", "natijalar", "testlar", "biz", "aloqa"].includes(route.v))));
   if (tg && tg.BackButton) (["home", "rating", "me"].includes(route.v) ? tg.BackButton.hide() : tg.BackButton.show());
   if (tg) { try { inExam ? tg.enableClosingConfirmation() : tg.disableClosingConfirmation(); } catch (e) {} }
   // Testning mavzuli foni (masalan, Quyosh sistemasi) — faqat shu test ochiq paytda
@@ -842,7 +905,7 @@ function render() {
   document.documentElement.classList.toggle("th-space", !!(ct && ct.theme === "space"));
   if (route.v !== "natijalar") { const rb = document.getElementById("rbg"); if (rb) rb.remove(); clearInterval(window._rsl); }
   FX.set(route.v === "game" || route.v === "dnk" || (route.v === "natijalar" && (DATA.results_bg || []).length) || (route.v === "exam" && !(ct && ct.theme === "space")) ? "off" : ct && ct.theme === "space" ? "space" : "soft");
-  ({kurslar: viewCourses, natijalar: viewResults, dnk: viewDnk, game: viewGame, home: viewHome, section: viewSection, chapter: viewChapter, intro: viewIntro, exam: viewExam, review: viewReview, rating: viewRating, me: viewMe})[route.v]();
+  ({testlar: viewTests, biz: viewAbout, aloqa: viewContact, kurslar: viewCourses, natijalar: viewResults, dnk: viewDnk, game: viewGame, home: viewHome, section: viewSection, chapter: viewChapter, intro: viewIntro, exam: viewExam, review: viewReview, rating: viewRating, me: viewMe})[route.v]();
 }
 
 
@@ -983,27 +1046,109 @@ function viewHome() {
   const best = tests.length ? Math.min(...tests.map(t => t[5] || 99)) : 0;
   const name = PROFILE ? PROFILE.name : "";
   const first = name ? (name.split(" ").slice(-1)[0] || name) : "";
+  const mockOpen = DATA.open.filter(t => t.kind === "mock").length;
+  const totalTests = DATA.open.filter(t => t.kind !== "battle").length;
+  const res = DATA.results || [];
   $app.innerHTML = `
-    <section class="hero">
-      ${HERO_ART}
-      <div class="top"><div class="logo img"><img src="${LOGO}" alt="Science Pro"></div><div><b>Science Pro</b><span class="meta">Dream School · Ibn Sino</span></div>
-        <span style="margin-left:auto;display:flex;gap:8px;align-items:center">
-          <button class="icon-btn" id="rf" aria-label="${T("refresh")}">↻</button>
-          ${canFS() ? `<button class="icon-btn" id="fs" aria-label="Fullscreen">${tg.isFullscreen ? "🗗" : "⛶"}</button>` : ""}
-          <button class="me-btn" id="mebtn" aria-label="${T("nav_profile")}">${avatar(name || "?", "", true)}</button>
-        </span></div>
-      <div class="hrow"><div>
-        <div class="hello">${first ? esc(T("hello_name", {n: first})) : T("hello")}</div>
-        <h1 class="h1">${T("h1")}</h1></div>
-        <img class="hlogo" src="${LOGO}" alt="Science Pro"></div>
-      <div class="stats">
-        <div><b>${tests.length}</b><span>${T("st_done")}</span></div>
-        <div><b>${tests.length ? avg + "%" : "—"}</b><span>${T("st_avg")}</span></div>
-        <div><b>${best ? T("place", {n: best}) : "—"}</b><span>${T("st_best")}</span></div>
-      </div>
+    <header class="sbar"><div class="brand"><img src="${LOGO}" alt=""><span><b>SCIENCE PRO</b><small>Ibn Sino maktabiga tayyorlov</small></span></div>
+      <span class="sbt">
+        <button class="sib" id="th" aria-label="Tungi rejim">${document.documentElement.dataset.theme === "dark" ? "☀️" : "🌙"}</button>
+        ${canFS() ? `<button class="sib" id="fs" aria-label="To'liq ekran">${tg.isFullscreen ? "🗗" : "⛶"}</button>` : ""}
+        <button class="sib" id="mn" aria-label="Menyu">☰</button></span></header>
+    <section class="shero"><canvas id="shc"></canvas>
+      <span class="eyebrow">✦ Ibn Sino va ixtisoslashtirilgan maktablarga tayyorlov</span>
+      ${first ? `<div class="hi">${esc(T("hello_name", {n: first}))}</div>` : ""}
+      <h1>SCIENCE PRO — <span>bilimni sinab</span>, maqsadga yeting</h1>
+      <p class="lead">Darslik bo'yicha onlayn testlar, imtihon formatidagi mock exam, mavzular tahlili va reyting — barchasi bir joyda.</p>
+      <div class="acts"><button class="scta light" id="go1">Testni boshlash ✦</button><button class="scta ghost" id="go2">Kurslar</button></div>
+      <div class="hcard"><img src="${LOGO}" alt="">
+        <div class="hst"><div><b>${tests.length}</b><small>${T("st_done")}</small></div><div><b>${tests.length ? avg + "%" : "—"}</b><small>${T("st_avg")}</small></div>
+          <div><b>${best ? T("place", {n: best}) : "—"}</b><small>${T("st_best")}</small></div></div></div>
     </section>
     ${DATA.banner ? `<img class="banner-img" src="${esc(DATA.banner)}" alt="" onerror="this.remove()">` : ""}
-    <h2 class="catalog-h">${T("sections")}</h2>
+    <div class="shd"><h2>Bo'limlar</h2><p>Kerakli bo'limni tanlang</p></div>
+    <div class="stiles">
+      ${stile("mock", "🧪", "var(--c-mock)", "Mock Exam", mockOpen ? `${mockOpen} ta imtihon ochiq` : "Imtihon formatida sinov")}
+      ${stile("testlar", "📝", "var(--c-sinf5)", "Testlar", `${totalTests} ta ochiq test`)}
+      ${stile("kurslar", "🎓", "#2D7FC1", "Kurslar", (DATA.courses || []).length ? `${DATA.courses.length} ta kurs · yozilish` : "Tayyorlov kurslari")}
+      ${stile("natijalar", "🏆", "#E08A1E", "Natijalar", res.length ? `${res.length} ta o'quvchi qabul qilindi` : "O'quvchilar yutuqlari")}
+      ${stile("biz", "🏫", "var(--c-dnk)", "Maktabimiz", "Biz haqimizda")}
+      ${stile("aloqa", "💬", "var(--c-ingliz)", "Bog'lanish", "Kanal va bot")}
+      ${DATA.game ? stile("game", "⚔️", "var(--amber)", T("g_card"), "Ustoz uchun 🔐") : ""}
+    </div>
+    ${res.length ? `<div class="shd"><h2>Natijalarimiz</h2><button class="more" data-go2="natijalar">Barchasi ›</button></div>
+      <div class="rmarq home"><div>${res.map(r => "🎓 " + esc(r.name)).join(" · ")} · </div></div>` : ""}
+    <div class="shd"><h2>Nega Science Pro?</h2></div>
+    <div class="sfeat">
+      <div><span>⏱️</span><b>HEMIS uslubida</b><p>Teskari sanoq, savollar jadvali, belgilash.</p></div>
+      <div><span>📊</span><b>Darhol natija</b><p>Ball, foiz va mavzular tahlili.</p></div>
+      <div><span>🏅</span><b>Reyting</b><p>Har test va bo'lim bo'yicha.</p></div>
+      <div><span>🧬</span><b>DNK Duel</b><p>Ikki doska, jazo g'ildiragi.</p></div>
+    </div>
+    <section class="sband"><div><h2>Bilimingizni sinang</h2><p>Onlayn testni yeching va natijangizni darhol biling.</p></div>
+      <button class="scta light" id="go3">Testni boshlash ✦</button></section>
+    <footer>${T("updated", {d: esc(DATA.updated)})} · <button class="lnk" id="rf">↻ ${T("refresh")}</button></footer>`;
+  $app.querySelectorAll("[data-go2]").forEach(b => b.onclick = () => { haptic("sel"); goPage(b.dataset.go2); });
+  const start = () => { haptic("sel"); mockOpen ? go("section", {k: "mock"}) : go("testlar"); };
+  document.getElementById("go1").onclick = start; document.getElementById("go3").onclick = start;
+  document.getElementById("go2").onclick = () => { haptic("sel"); go("kurslar"); };
+  document.getElementById("mn").onclick = openMenu;
+  document.getElementById("th").onclick = () => {
+    haptic("sel"); store.set("theme", document.documentElement.dataset.theme === "dark" ? "light" : "dark"); applyTheme(); render();
+  };
+  const fs = document.getElementById("fs");
+  if (fs) fs.onclick = () => { haptic("sel"); tg.isFullscreen ? tg.exitFullscreen() : tg.requestFullscreen(); };
+  document.getElementById("rf").onclick = async () => { haptic("sel"); if (await load()) { toast(T("refreshed")); render(); } };
+  heroMolecules();
+}
+const stile = (k, ico, c, t, d) => `<button class="stile" style="--c:${c}" data-go2="${k}"><span class="ico">${ico}</span><b>${esc(t)}</b><small>${esc(d)}</small><span class="go">Ochish →</span></button>`;
+function goPage(k) {
+  if (k === "mock") return go("section", {k: "mock"});
+  if (k === "game") return go("game");
+  go(k);
+}
+const MENU = [["home", "🏠", "Bosh sahifa"], ["mock", "🧪", "Mock Exam"], ["testlar", "📝", "Testlar"], ["kurslar", "🎓", "Kurslar"], ["natijalar", "🏆", "Natijalar"],
+  ["rating", "🏅", "Reyting"], ["biz", "🏫", "Maktabimiz"], ["aloqa", "💬", "Bog'lanish"], ["me", "👤", "Profil"]];
+function openMenu() {
+  haptic("sel");
+  const d = document.createElement("div"); d.className = "sdrawer";
+  d.innerHTML = `<div class="shade"></div><nav class="panel"><header><b>Menyu</b><button class="sib" aria-label="Yopish">✕</button></header>
+    ${MENU.map(([k, i, t]) => `<button class="l" data-m="${k}"><span>${i}</span>${t}</button>`).join("")}</nav>`;
+  document.body.appendChild(d);
+  const close = () => d.remove();
+  d.querySelector(".shade").onclick = close; d.querySelector("header button").onclick = close;
+  d.querySelectorAll("[data-m]").forEach(b => b.onclick = () => {
+    close(); const k = b.dataset.m;
+    if (k === "home") { history_ = []; route = {v: "home"}; render(); }
+    else if (k === "rating" || k === "me") { history_ = []; route = {v: k}; render(); }
+    else goPage(k);
+  });
+}
+function heroMolecules() {
+  const cv = document.getElementById("shc"); if (!cv || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const ctx = cv.getContext("2d"), dpr = Math.min(2, devicePixelRatio || 1);
+  const W = cv.clientWidth, H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const P = Array.from({length: Math.max(14, Math.round(W * H / 9000))}, () => ({x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3}));
+  let last = 0;
+  const step = now => {
+    if (!cv.isConnected) return;
+    requestAnimationFrame(step);
+    if (now - last < 33 || document.hidden) return; last = now;
+    ctx.clearRect(0, 0, W, H);
+    for (const p of P) { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1; }
+    for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) {
+      const dd = Math.hypot(P[i].x - P[j].x, P[i].y - P[j].y);
+      if (dd < 110) { ctx.strokeStyle = `rgba(124,245,196,${(1 - dd / 110) * .35})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(P[i].x, P[i].y); ctx.lineTo(P[j].x, P[j].y); ctx.stroke(); }
+    }
+    ctx.fillStyle = "rgba(190,255,232,.85)"; for (const p of P) { ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, 7); ctx.fill(); }
+  };
+  requestAnimationFrame(step);
+}
+
+// ---------------- Testlar, Maktabimiz, Bog'lanish ----------------
+function viewTests() {
+  $app.innerHTML = `<div class="titlebar" style="--c:var(--c-sinf5)"><div class="badge" style="font-size:22px">📝</div><h1>Testlar</h1></div>
+    <p class="meta" style="margin:6px 4px 0">Bo'limni tanlang — testlar HEMIS uslubida, natija darhol chiqadi.</p>
     ${DATA.sections.map(([k]) => {
       const s = SEC[k] || SEC.mavzu, open = DATA.open.filter(t => t.kind === k);
       const fresh = open.filter(t => !isDone(t.code)).length;
@@ -1012,26 +1157,30 @@ function viewHome() {
         <div style="min-width:0"><div class="t">${esc(secName(k))}</div><div class="meta">${T(s.d)}</div>
           <span class="chip">${open.length ? T("open_n", {n: open.length}) : T("none_yet")}${fresh && fresh < open.length ? T("fresh", {n: fresh}) : ""}</span></div>
         <span class="chev">›</span></button>`;
-    }).join("")}
-    ${(DATA.courses || []).length || (DATA.results || []).length ? `<div class="duo">
-      ${(DATA.courses || []).length ? `<button class="tile" style="--c:#2D7FC1" data-go2="kurslar"><span class="ti">🎓</span><b>Kurslar</b>
-        <small>${DATA.courses.length} ta kurs · yozilish</small></button>` : ""}
-      ${(DATA.results || []).length ? `<button class="tile" style="--c:#E08A1E" data-go2="natijalar"><span class="ti">🏆</span><b>Natijalar</b>
-        <small>${DATA.results.length} ta o'quvchi qabul qilindi</small></button>` : ""}</div>` : ""}
-    ${DATA.game ? `<button class="cat" style="--c:var(--amber)" data-game>
-        <div class="badge">${ICO('<path d="M6 21h12M12 17v4M8 3h8v6a4 4 0 0 1-8 0Z"/><path d="M4 21V12M20 21V12M2 12h4M18 12h4"/>')}</div>
-        <div style="min-width:0"><div class="t">${T("g_card")}</div><div class="meta">${T("g_card_d")}</div></div>
-        <span class="chev">🔐</span></button>` : ""}
-    <footer>${T("updated", {d: esc(DATA.updated)})}</footer>`;
+    }).join("")}`;
   $app.querySelectorAll(".cat[data-k]").forEach(b => b.onclick = () => { haptic("sel"); go("section", {k: b.dataset.k}); });
-  const gb = $app.querySelector("[data-game]"); if (gb) gb.onclick = () => { haptic("sel"); go("game"); };
-  $app.querySelectorAll("[data-go2]").forEach(b => b.onclick = () => { haptic("sel"); go(b.dataset.go2); });
-  const fs = document.getElementById("fs");
-  if (fs) fs.onclick = () => { haptic("sel"); tg.isFullscreen ? tg.exitFullscreen() : tg.requestFullscreen(); };
-  document.getElementById("mebtn").onclick = () => { haptic("sel"); history_ = []; route = {v: "me"}; render(); };
-  document.getElementById("rf").onclick = async () => { haptic("sel"); if (await load()) { toast(T("refreshed")); render(); } };
 }
-
+function viewAbout() {
+  $app.innerHTML = `<div class="titlebar" style="--c:var(--c-dnk)"><div class="badge" style="font-size:22px">🏫</div><h1>Maktabimiz</h1></div>
+    <div class="card"><div class="meta">Ustoz</div><h2 style="margin:4px 0 6px;font:700 20px/1.25 var(--display)">Zuhriddin Xolmirzayev</h2>
+      <p style="margin:0 0 10px">Tabiiy fanlar o'qituvchisi. Science Pro bot, testlar va mock imtihonlar muallifi.</p>
+      <p style="margin:0" class="meta">Darslik boblari bo'yicha testlar, Ibn Sino formatidagi mock imtihonlar, mavzular kesimida tahlil va reyting orqali
+        Ibn Sino va ixtisoslashtirilgan maktablarga tayyorlaymiz.</p></div>
+    <div class="sfeat" style="margin-top:12px">
+      <div><span>📚</span><b>Darslik asosida</b><p>5–6-sinf darsliklari boblari bo'yicha.</p></div>
+      <div><span>🎯</span><b>Imtihon formati</b><p>Vaqt, savollar jadvali, darhol natija.</p></div>
+      <div><span>🔍</span><b>Tahlil</b><p>Qaysi mavzuda xato — aniq ko'rsatadi.</p></div>
+      <div><span>⚔️</span><b>Sinfda o'yin</b><p>Science Battle va DNK Duel.</p></div></div>`;
+}
+function viewContact() {
+  const bot = DATA.bot || "Sciencepro_dreambot";
+  $app.innerHTML = `<div class="titlebar" style="--c:var(--c-ingliz)"><div class="badge" style="font-size:22px">💬</div><h1>Bog'lanish</h1></div>
+    <button class="cat" style="--c:#2D7FC1" data-l="https://t.me/ibnsino_tabiiy"><div class="badge">📣</div>
+      <div style="min-width:0"><div class="t">Telegram kanal</div><div class="meta">@ibnsino_tabiiy — yangiliklar, testlar, natijalar</div></div><span class="chev">›</span></button>
+    <button class="cat" style="--c:var(--accent)" data-l="https://t.me/${esc(bot)}"><div class="badge">🤖</div>
+      <div style="min-width:0"><div class="t">Science Pro bot</div><div class="meta">Savolingizni botga yozing — ustozga yetkaziladi</div></div><span class="chev">›</span></button>`;
+  $app.querySelectorAll("[data-l]").forEach(b => b.onclick = () => { haptic("sel"); try { tg.openTelegramLink(b.dataset.l); } catch (e) { location.href = b.dataset.l; } });
+}
 
 // ---------------- Kurslar va Natijalar ----------------
 function viewCourses() {
