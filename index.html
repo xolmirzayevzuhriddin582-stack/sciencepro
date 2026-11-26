@@ -513,6 +513,21 @@
   .sdrawer .l{display:flex;align-items:center;gap:12px;border:0;background:none;text-align:left;font:600 16px/1 inherit;font-family:inherit;padding:13px 10px;border-radius:12px;cursor:pointer;color:var(--text)}
   .sdrawer .l:active,.sdrawer .l:hover{background:var(--soft);color:var(--accent)}
   .sdrawer .l span{width:26px;text-align:center}
+  .pmhero{margin-top:4px;border-radius:26px;padding:26px 20px;color:#fff;text-align:center;background:linear-gradient(135deg,#5B21B6,#8B5CF6 45%,#E08A1E);
+    box-shadow:0 24px 50px -28px rgba(91,33,182,.8)}
+  .pmgem{font-size:54px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.3));animation:gem 3s ease-in-out infinite}
+  @keyframes gem{50%{transform:translateY(-6px) rotate(-6deg)}}
+  .pmhero h1{font:800 24px/1.2 var(--display);margin:8px 0 4px}
+  .pmhero p{margin:0;opacity:.92}
+  .pmprice{display:inline-flex;align-items:baseline;gap:6px;margin-top:14px;background:rgba(255,255,255,.16);border-radius:16px;padding:10px 18px}
+  .pmprice b{font:800 26px/1 var(--display)} .pmprice span{opacity:.85}
+  .pmlist{list-style:none;margin:0;padding:0;display:grid;gap:10px} .pmlist li{font-size:15px}
+  .pmsteps{margin:10px 0 14px;padding-left:20px;display:grid;gap:6px;color:var(--hint)}
+  .ggrp{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:2px solid var(--line);background:var(--soft);border-radius:14px;
+    padding:12px 14px;cursor:pointer;font:inherit;color:var(--text)}
+  .ggrp b{flex:1;font-family:var(--display);font-size:16px}
+  .ggrp em{font-style:normal;color:var(--hint);font-size:13px}
+  .ggrpi{display:grid;gap:8px;padding-left:14px;border-left:3px solid var(--line);margin-left:8px}
   #fx{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
   @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
   .opt.rv{cursor:default;position:relative;flex-wrap:wrap}
@@ -823,7 +838,10 @@ const HERO_ART = `<svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xM
 </svg>`;
 const secName = k => { const t = T("k_" + k); return t === "k_" + k ? ((DATA.sections.find(s => s[0] === k) || [k, k])[1]) : t; };
 
-let DATA = null, ME = null, PROFILE = null, myHash = params.get("u") || "";
+let DATA = null, ME = null, PROFILE = null, PREM = 0, myHash = params.get("u") || "";
+const isPrem = () => PREM > Date.now();
+// Premium testlar GitHub'da emas — bot (API) orqali, faqat premium o'quvchiga beriladi
+const tsrc = t => t.premium ? `${DATA.api || ""}/p/${encodeURIComponent(AUTH)}/${t.code}/test.json` : t.src;
 let route = {v: "home"}, history_ = [];
 // Botdagi "🏆 Reytingni ko'rish" tugmasi: ?go=chapter&k=sinf5&b=4 yoki ?go=rating
 if (params.get("go") === "chapter" && params.get("k")) { history_ = [{v: "home"}]; route = {v: "chapter", k: params.get("k"), b: +params.get("b") || 0}; }
@@ -897,7 +915,7 @@ function render() {
   const inExam = route.v === "exam" || route.v === "game" || route.v === "dnk";
   $nav.style.display = inExam ? "none" : "";
   [...$nav.children].forEach(b => b.classList.toggle("on", b.dataset.go === route.v ||
-    (b.dataset.go === "home" && ["section", "chapter", "intro", "kurslar", "natijalar", "testlar", "biz", "aloqa"].includes(route.v))));
+    (b.dataset.go === "home" && ["section", "chapter", "intro", "kurslar", "natijalar", "testlar", "biz", "aloqa", "premium"].includes(route.v))));
   if (tg && tg.BackButton) (["home", "rating", "me"].includes(route.v) ? tg.BackButton.hide() : tg.BackButton.show());
   if (tg) { try { inExam ? tg.enableClosingConfirmation() : tg.disableClosingConfirmation(); } catch (e) {} }
   // Testning mavzuli foni (masalan, Quyosh sistemasi) — faqat shu test ochiq paytda
@@ -905,7 +923,7 @@ function render() {
   document.documentElement.classList.toggle("th-space", !!(ct && ct.theme === "space"));
   if (route.v !== "natijalar") { const rb = document.getElementById("rbg"); if (rb) rb.remove(); clearInterval(window._rsl); }
   FX.set(route.v === "game" || route.v === "dnk" || (route.v === "natijalar" && (DATA.results_bg || []).length) || (route.v === "exam" && !(ct && ct.theme === "space")) ? "off" : ct && ct.theme === "space" ? "space" : "soft");
-  ({testlar: viewTests, biz: viewAbout, aloqa: viewContact, kurslar: viewCourses, natijalar: viewResults, dnk: viewDnk, game: viewGame, home: viewHome, section: viewSection, chapter: viewChapter, intro: viewIntro, exam: viewExam, review: viewReview, rating: viewRating, me: viewMe})[route.v]();
+  ({premium: viewPremium, testlar: viewTests, biz: viewAbout, aloqa: viewContact, kurslar: viewCourses, natijalar: viewResults, dnk: viewDnk, game: viewGame, home: viewHome, section: viewSection, chapter: viewChapter, intro: viewIntro, exam: viewExam, review: viewReview, rating: viewRating, me: viewMe})[route.v]();
 }
 
 
@@ -1074,6 +1092,7 @@ function viewHome() {
       ${stile("natijalar", "🏆", "#E08A1E", "Natijalar", res.length ? `${res.length} ta o'quvchi qabul qilindi` : "O'quvchilar yutuqlari")}
       ${stile("biz", "🏫", "var(--c-dnk)", "Maktabimiz", "Biz haqimizda")}
       ${stile("aloqa", "💬", "var(--c-ingliz)", "Bog'lanish", "Kanal va bot")}
+      ${DATA.premium ? stile("premium", "💎", "#8B5CF6", "Premium", isPrem() ? "✅ Faol" : `${DATA.open.filter(t => t.premium).length} ta pullik test`) : ""}
       ${DATA.game ? stile("game", "⚔️", "var(--amber)", T("g_card"), "Ustoz uchun 🔐") : ""}
     </div>
     ${res.length ? `<div class="shd"><h2>Natijalarimiz</h2><button class="more" data-go2="natijalar">Barchasi ›</button></div>
@@ -1108,7 +1127,7 @@ function goPage(k) {
   go(k);
 }
 const MENU = [["home", "🏠", "Bosh sahifa"], ["mock", "🧪", "Mock Exam"], ["testlar", "📝", "Testlar"], ["kurslar", "🎓", "Kurslar"], ["natijalar", "🏆", "Natijalar"],
-  ["rating", "🏅", "Reyting"], ["biz", "🏫", "Maktabimiz"], ["aloqa", "💬", "Bog'lanish"], ["me", "👤", "Profil"]];
+  ["rating", "🏅", "Reyting"], ["premium", "💎", "Premium"], ["biz", "🏫", "Maktabimiz"], ["aloqa", "💬", "Bog'lanish"], ["me", "👤", "Profil"]];
 function openMenu() {
   haptic("sel");
   const d = document.createElement("div"); d.className = "sdrawer";
@@ -1143,6 +1162,40 @@ function heroMolecules() {
     ctx.fillStyle = "rgba(190,255,232,.85)"; for (const p of P) { ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, 7); ctx.fill(); }
   };
   requestAnimationFrame(step);
+}
+
+// ---------------- 💎 Premium ----------------
+function viewPremium() {
+  const pr = DATA.premium, n = DATA.open.filter(t => t.premium).length, on = isPrem();
+  const until = on ? new Date(PREM) : null;
+  $app.innerHTML = `<section class="pmhero"><div class="pmgem">💎</div><h1>Science Pro Premium</h1>
+      ${on ? `<p>✅ Premium faol: <b>${until.toLocaleDateString("uz-UZ")}</b> gacha</p>` : `<p>Barcha pullik testlarni oching</p>`}
+      ${pr ? `<div class="pmprice"><b>${esc(pr.price)}</b><span>/ ${pr.days} kun</span></div>` : ""}</section>
+    <div class="card"><ul class="pmlist">
+      <li>💎 <b>${n}</b> ta pullik test${n ? " — hammasi ochiladi" : ""}</li>
+      <li>⏱️ HEMIS uslubida, darhol natija va tahlil</li>
+      <li>🏅 Reytingda ishtirok</li>
+      <li>🔁 Xatolar ustida qayta ishlash</li></ul></div>
+    ${pr ? `<div class="card"><b>Qanday olinadi?</b><ol class="pmsteps"><li>«Premium olish» tugmasini bosing — bot karta raqamini yuboradi</li>
+      <li>Kartaga to'lov qiling</li><li>Chek rasmini (skrinshot) botga yuboring</li><li>Ustoz tasdiqlagach, Premium darhol ochiladi</li></ol>
+      <button class="btn" id="buy" style="background:linear-gradient(135deg,#8B5CF6,#E08A1E)">💎 ${on ? "Muddatni uzaytirish" : "Premium olish"}</button>
+      <div id="bok" class="cok" hidden></div></div>`
+    : `<div class="card"><div class="empty">Premium hozircha sozlanmagan.</div></div>`}`;
+  const b = document.getElementById("buy");
+  if (b) b.onclick = async () => {
+    haptic("sel"); b.disabled = true;
+    const r = await apiPost({t: "buy"});
+    if (r) {
+      b.remove(); const ok = document.getElementById("bok"); ok.hidden = false;
+      ok.innerHTML = `✅ <b>Bot chatiga karta raqami va yo'riqnoma yuborildi.</b><br>To'lovdan keyin chek rasmini botga yuboring.
+        <button class="btn" style="margin-top:10px" id="bgo">Botga o'tish ›</button>`;
+      document.getElementById("bgo").onclick = () => { try { tg.close(); } catch (e) {} };
+    } else {
+      b.disabled = false;
+      const u = `https://t.me/${DATA.bot || "Sciencepro_dreambot"}?start=premium`;
+      try { tg.openTelegramLink(u); } catch (e) { location.href = u; }
+    }
+  };
 }
 
 // ---------------- Testlar, Maktabimiz, Bog'lanish ----------------
@@ -1268,7 +1321,7 @@ function viewResults() {
 function openCard(t) {
   return `<div class="card tst" data-code="${esc(t.code)}">
     <div style="display:flex;justify-content:space-between;gap:10px;align-items:start">
-      <h3>${esc(t.title)}</h3>${isDone(t.code) ? `<span class="done-tag">${T("done_tag")}</span>` : `<span class="chev">›</span>`}</div>
+      <h3>${t.premium ? "💎 " : ""}${esc(t.title)}</h3>${isDone(t.code) ? `<span class="done-tag">${T("done_tag")}</span>` : `<span class="chev">›</span>`}</div>
     <div class="chips"><span>📋 ${T("q_n", {n: t.n})}</span>${t.minutes ? `<span>⏱ ${T("min_n", {n: t.minutes})}</span>` : ""}
       ${winTxt(t) ? `<span>🗓 ${esc(winTxt(t))}</span>` : `<span>📅 ${esc(t.date)}</span>`}
       ${t.live ? `<span>⚡️ ${T("instant")}</span>` : ""}
@@ -1281,7 +1334,7 @@ function openCard(t) {
 }
 function finishedCard(t) {
   return `<div class="card fold">
-    <div style="display:flex;justify-content:space-between;gap:8px"><h3 style="margin:0;font-size:16px;font-family:var(--display)">${esc(t.title)}</h3><span class="chev">›</span></div>
+    <div style="display:flex;justify-content:space-between;gap:8px"><h3 style="margin:0;font-size:16px;font-family:var(--display)">${t.premium ? "💎 " : ""}${esc(t.title)}</h3><span class="chev">›</span></div>
     <div class="meta">${esc(t.date)} · ${T("people_n", {n: t.results.length})} · ${T("q_n", {n: t.n})}</div>
     ${bars([...t.topics].sort((a, b) => a[1] - b[1]))}
     <div class="results">${rankRows(t.results, 1, r => `<span class="score">${r[1]}/${t.n}</span>`)}</div>
@@ -1397,7 +1450,11 @@ function viewIntro() {
   if (!t) { $app.innerHTML = `<div class="card"><div class="empty">${T("not_found")}</div></div>`; return; }
   const st = store.get("ex:" + t.code, null), done = isDone(t.code), ws = state(t);
   let action;
-  if (done) action = `<div class="tip" style="background:color-mix(in srgb,var(--good) 14%,transparent)">${T(t.live ? "done_live" : "done_wait")}</div>
+  if (t.premium && !isPrem() && !done) action = `<div class="tip" style="background:linear-gradient(135deg,rgba(139,92,246,.16),rgba(240,162,59,.16))">
+      💎 <b>Premium test.</b> Bu test faqat Premium o'quvchilar uchun.${DATA.premium ? ` Narxi: <b>${esc(DATA.premium.price)}</b> / ${DATA.premium.days} kun.` : ""}</div>
+      <button class="btn" id="pm" style="background:linear-gradient(135deg,#8B5CF6,#E08A1E)">💎 Premium olish</button>`;
+  else if (t.premium && !DATA.api && !done) action = `<div class="tip">💎 Premium testlar bot yoqiq paytda ochiladi. Birozdan keyin qayta urinib ko'ring.</div>`;
+  else if (done) action = `<div class="tip" style="background:color-mix(in srgb,var(--good) 14%,transparent)">${T(t.live ? "done_live" : "done_wait")}</div>
       <button class="btn" id="rv">🔍 ${T("rv_btn")}</button>
       ${DATA.api && AUTH ? `<button class="btn ghost" id="pr" style="margin-top:10px">🔁 ${T(store.get("px:" + t.code, null) ? "pr_resume" : "pr_btn")}</button>
       <div class="meta" style="text-align:center;margin-top:6px">${T("pr_note")}</div>` : ""}`;
@@ -1436,6 +1493,8 @@ function viewIntro() {
   if (rvb) rvb.onclick = () => { RV.code = null; RV.msgs = null; haptic("sel"); go("review", {code: t.code}); };
   const prb = document.getElementById("pr");
   if (prb) prb.onclick = () => { haptic("sel"); go("exam", {code: t.code, practice: true}); };
+  const pmb = document.getElementById("pm");
+  if (pmb) pmb.onclick = () => { haptic("sel"); go("premium"); };
   const b = document.getElementById("go");
   if (b) b.onclick = async () => {
     const mins = Math.floor((deadline(t, Date.now()) - Date.now()) / 60000);
@@ -1453,7 +1512,7 @@ async function viewReview() {
   if (RV.code !== t.code) {
     $app.innerHTML = `<div class="card" style="text-align:center;padding:40px 18px"><div class="spin"></div><p>${T("loading_q")}</p></div>`;
     let test;
-    try { test = await (await fetch(t.src + "?v=" + encodeURIComponent(DATA.updated), {cache: "no-cache"})).json(); }
+    try { test = await (await fetch(tsrc(t) + "?v=" + encodeURIComponent(DATA.updated), {cache: "no-cache"})).json(); }
     catch (e) { $app.innerHTML = `<div class="card"><div class="empty">${T("load_fail")}</div></div>`; return; }
     const r = await apiPost({t: "review", c: t.code});
     const local = store.get("ans:" + t.code, null);
@@ -1461,7 +1520,7 @@ async function viewReview() {
     RV.data = r ? r : (local ? {ans: local, offline: true} : null);
     const m = RV.data && RV.data.marks; RV.sel = m && m.indexOf(0) >= 0 ? m.indexOf(0) : 0;
   }
-  const {test, data} = RV, base = t.src.replace(/test\.json$/, ""), n = test.questions.length;
+  const {test, data} = RV, base = tsrc(t).replace(/test\.json$/, ""), n = test.questions.length;
   if (!data) { $app.innerHTML = `<div class="card"><div class="empty">${T("rv_none")}</div></div>`; return; }
   const ans = data.ans || "", marks = data.marks, key = data.key;
   const wrong = marks ? marks.reduce((c, m) => c + (m ? 0 : 1), 0) : 0, okN = marks ? n - wrong : null;
@@ -1516,12 +1575,12 @@ async function viewExam() {
   if (!EX || EX.t.code !== t.code || !!EX.practice !== pr) {
     $app.innerHTML = `<div class="empty">${T("loading_q")}</div>`;
     let test;
-    try { test = await (await fetch(t.src + "?v=" + encodeURIComponent(DATA.updated), {cache: "no-cache"})).json(); }
+    try { test = await (await fetch(tsrc(t) + "?v=" + encodeURIComponent(DATA.updated), {cache: "no-cache"})).json(); }
     catch (e) { $app.innerHTML = `<div class="card"><div class="empty">${T("load_fail")}</div></div>`; return; }
     const key = (pr ? "px:" : "ex:") + t.code;
     const st = store.get(key, null) || {start: Date.now(), ans: {}, flag: {}, i: 0};
     store.set(key, st);
-    EX = {t, test, st, key, practice: pr, base: t.src.replace(/test\.json$/, ""), warned: false};
+    EX = {t, test, st, key, practice: pr, base: tsrc(t).replace(/test\.json$/, ""), warned: false};
   }
   drawQ();
   if (EX.t.minutes || EX.t.closes) {
@@ -1871,6 +1930,24 @@ function gamePin() {
   setTimeout(() => inp.focus(), 50);
 }
 
+// Bir xil nomli variantlar («O'rta darajadagi MOCK — 1-variant» …) bitta ochiladigan guruhga yig'iladi
+function groupBattle(list, btn) {
+  const vn = t => +((t.title.match(/(\d+)\s*-\s*variant/i) || [])[1] || 0);
+  const key = t => { const m = t.title.match(/^(.*?)\s*[—–-]\s*\d+\s*-\s*variant\s*$/i); return m ? m[1].trim() : null; };
+  const groups = new Map(), order = [];
+  list.forEach(t => { const k = key(t) || "\u0000" + t.code; if (!groups.has(k)) { groups.set(k, []); order.push(k); } groups.get(k).push(t); });
+  G.grp = G.grp || {};
+  return order.map(k => {
+    const items = groups.get(k);
+    if (items.length < 2) return items.map(btn).join("");
+    items.sort((a, b) => vn(a) - vn(b));
+    const open = G.grp[k] !== undefined ? G.grp[k] : items.some(t => t.code === G.sel);
+    G.grp[k] = open;
+    return `<button class="ggrp" data-grp="${esc(k)}"><span>${open ? "▾" : "▸"}</span><b>${esc(k)}</b><em>${items.length} ta variant</em></button>
+      ${open ? `<div class="ggrpi">${items.map(btn).join("")}</div>` : ""}`;
+  }).join("");
+}
+
 function gameSetup() {
   const tests = DATA.game.tests;
   G.sel = G.sel || (tests[0] && tests[0].code);
@@ -1882,7 +1959,7 @@ function gameSetup() {
         <div style="flex:1;min-width:0"><b>${esc(t.title)}</b><div class="meta">${label(t)} · ${T("q_n", {n: t.n})}</div></div></button>`;
   $app.innerHTML = `<div class="gpanel"><h1>🏁 ${T("g_title")}</h1>
     <div class="card"><h2 class="sec">${T("g_pick")}</h2>
-      ${tests.length ? `<div class="gtests">${mine.length ? mine.map(btn).join("") : `<div class="meta" style="padding:4px 2px">${T("g_nomine")}</div>`}
+      ${tests.length ? `<div class="gtests">${mine.length ? groupBattle(mine, btn) : `<div class="meta" style="padding:4px 2px">${T("g_nomine")}</div>`}
         ${other.length ? `<button id="gother" style="justify-self:start;border:0;background:none;color:var(--accent);font:inherit;font-weight:600;padding:6px 2px;cursor:pointer">${G.showOther ? "▾" : "▸"} ${T("g_others", {n: other.length})}</button>
         ${G.showOther ? other.map(btn).join("") : ""}` : ""}</div>`
         : `<div class="empty">${T("g_empty")}</div>`}</div>
@@ -1893,6 +1970,9 @@ function gameSetup() {
       <div class="secs">${[15, 20, 30, 45, 60].map(n => `<button data-s="${n}" class="${n === G.secs ? "on" : ""}">${T("g_sec", {n})}</button>`).join("")}</div>
     </div>
     ${tests.length ? `<button class="btn" id="gstart">${T("g_start")} ›</button>` : ""}</div>`;
+  $app.querySelectorAll("[data-grp]").forEach(b => b.onclick = () => {
+    haptic("sel"); G.grp = G.grp || {}; G.grp[b.dataset.grp] = !G.grp[b.dataset.grp]; gameSetup();
+  });
   const go2 = document.getElementById("gother");
   if (go2) go2.onclick = () => { G.showOther = !G.showOther; saveTeams(); gameSetup(); };
   $app.querySelectorAll(".gtest").forEach(b => b.onclick = () => { G.sel = b.dataset.c; haptic("sel"); saveTeams(); gameSetup(); });
@@ -2506,6 +2586,7 @@ async function load() {
   DATA.open = DATA.open || []; DATA.kinds = DATA.kinds || {}; DATA.students = DATA.students || {};
   const me = myHash && DATA.students[myHash];
   ME = me && me.tests && me.tests.length ? me : null;
+  PREM = me && me.prem || 0;
   PROFILE = me ? {name: me.name, notify: me.notify !== false, lang: me.lang || "uz"} : null;
   DRAFT = null;
   return true;
